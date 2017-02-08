@@ -66,5 +66,26 @@ namespace Tugas_Akhir
             this.gambar  = gambar.MakeBitmap(gambar,1);
             pictureBox1.Image = this.gambar;
         }
+        public void cropImage(object sender, EventArgs e)
+        {
+            Image<Gray, byte> grayImage = new Image<Gray, byte>(gambar);
+            Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
+            Image<Bgr, byte> colorImgage2 = new Image<Bgr, byte>(gambar);
+            Rectangle[] kotaks = haar[0].DetectMultiScale(grayImage, 1.01, 4, new Size(40, 40), new Size(1600, 1600));
+            foreach (Rectangle kotak in kotaks)
+            {
+                colorImgage.Draw(kotak, new Bgr(0, 255, 255), 3);
+            }
+            pictureBox1.Image = colorImgage.ToBitmap();
+            MessageBox.Show("Selesai");
+            ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
+            Bitmap[] hasilCrop = Croper.getImages();
+            foreach(Bitmap cropImage in hasilCrop)
+            {
+                tampilHasilCrop form = new tampilHasilCrop(cropImage);
+                form.Show();
+            }
+            System.Diagnostics.Debug.Write("\n__________________________________________________________\n");
+        }
     }
 }

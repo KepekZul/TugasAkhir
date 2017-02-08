@@ -10,3 +10,4 @@ E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x64\Debug\Emgu.CV.World.dll
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x64\Debug\Emgu.CV.World.xml
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.haar_training_set.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.tampilHasilCrop.resources
