@@ -1,0 +1,16 @@
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Tugas Akhir.exe.config
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x86\Debug\Tugas Akhir.csprojResolveAssemblyReference.cache
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x86\Debug\Tugas_Akhir.Form1.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x86\Debug\Tugas_Akhir.Properties.Resources.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x86\Debug\Tugas Akhir.csproj.GenerateResource.Cache
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Tugas Akhir.exe
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Tugas Akhir.pdb
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Emgu.CV.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Emgu.CV.UI.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Emgu.Util.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\ZedGraph.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Emgu.CV.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Emgu.CV.UI.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x86\Debug\Emgu.Util.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x86\Debug\Tugas Akhir.exe
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x86\Debug\Tugas Akhir.pdb

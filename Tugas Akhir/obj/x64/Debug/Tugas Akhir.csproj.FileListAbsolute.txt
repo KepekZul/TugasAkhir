@@ -1,0 +1,12 @@
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x64\Debug\Tugas Akhir.exe.config
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x64\Debug\Tugas Akhir.exe
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x64\Debug\Tugas Akhir.pdb
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Form1.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Properties.Resources.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.csproj.GenerateResource.Cache
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.exe
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.pdb
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.csprojResolveAssemblyReference.cache
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x64\Debug\Emgu.CV.World.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\bin\x64\Debug\Emgu.CV.World.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.haar_training_set.resources
