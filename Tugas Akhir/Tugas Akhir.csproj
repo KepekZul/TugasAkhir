@@ -92,6 +92,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChiSquareDissimilarity.cs" />
+    <Compile Include="Control Panel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Control Panel.Designer.cs">
+      <DependentUpon>Control Panel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="daftarData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="daftarData.Designer.cs">
+      <DependentUpon>daftarData.cs</DependentUpon>
+    </Compile>
     <Compile Include="haar_training_set.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,11 +111,11 @@
     </Compile>
     <Compile Include="ImageCrop.cs" />
     <Compile Include="LocalDirectionalPattern.cs" />
-    <Compile Include="Main.cs">
+    <Compile Include="ujiKodingan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
+    <Compile Include="ujiKodingan.Designer.cs">
+      <DependentUpon>ujiKodingan.cs</DependentUpon>
     </Compile>
     <Compile Include="PortableGrayImage.cs" />
     <Compile Include="Program.cs" />
@@ -114,12 +126,18 @@
     <Compile Include="tampilHasilCrop.Designer.cs">
       <DependentUpon>tampilHasilCrop.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Control Panel.resx">
+      <DependentUpon>Control Panel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="daftarData.resx">
+      <DependentUpon>daftarData.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="haar_training_set.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>haar_training_set.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
+    <EmbeddedResource Include="ujiKodingan.resx">
+      <DependentUpon>ujiKodingan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

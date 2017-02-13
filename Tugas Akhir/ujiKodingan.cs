@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Emgu.Util;
 using Emgu.CV;
 using Emgu.CV.Structure;
-using Emgu.CV.CvEnum;
 
 namespace Tugas_Akhir
 {
-    public partial class Form1 : Form
+    public partial class ujikoding : Form
     {
         CascadeClassifier[] haar = new CascadeClassifier[1];
         Bitmap gambar;
-        public Form1()
+        public ujikoding()
         {
             InitializeComponent();
         }
@@ -37,10 +31,16 @@ namespace Tugas_Akhir
             Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
             for (int i = 0; i < haar.Length; i++)
             {
-                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(40, 40), new Size(1600, 1600));
+                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(480, 480));//extended yale b
+                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(80, 80), new Size(300, 300));//yaleface
+                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(60, 60), new Size(100, 100));//orlface
+                int warna = 255;
+                int nomor = 1;
                 foreach (Rectangle kotak in kotaks)
                 {
-                    colorImgage.Draw(kotak, new Bgr(0, 255, 255), 3);
+                    colorImgage.Draw(kotak, new Bgr(0, warna, warna), 3);
+                    System.Diagnostics.Debug.WriteLine("Rectangle #"+nomor++.ToString()+" lebar: "+kotak.Width.ToString()+". tinggi: "+kotak.Height.ToString()+".");
+                    warna -= 50;
                 }
                 if (kotaks.Length > 0)
                 {
@@ -65,6 +65,7 @@ namespace Tugas_Akhir
             PortableGrayMap gambar = new PortableGrayMap(pilihDialog.FileName);
             this.gambar  = gambar.MakeBitmap(gambar,1);
             pictureBox1.Image = this.gambar;
+            System.Diagnostics.Debug.WriteLine("Lebar: "+this.gambar.Width.ToString()+"Pixel\nTinggi: "+this.gambar.Height.ToString()+"Pixel");
         }
         public void cropImage(object sender, EventArgs e)
         {
