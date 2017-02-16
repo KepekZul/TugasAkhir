@@ -15,6 +15,8 @@ namespace Tugas_Akhir
         string pathSumber;
         string pathTarget;
         string[] allSourceFiles;
+        int minSize;
+        int maxSize;
         public Control_Panel()
         {
             InitializeComponent();
@@ -34,9 +36,10 @@ namespace Tugas_Akhir
                 else {
                     allSourceFiles = Directory.GetFiles(this.pathSumber, "*.*", SearchOption.AllDirectories).Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")).ToArray();
                 }
-                daftarData dd = new daftarData();
-                dd.datas = allSourceFiles;
-                dd.Show();
+                //keperluan debugging daftar file yang terambil
+                //daftarData dd = new daftarData();
+                //dd.datas = allSourceFiles;
+                //dd.Show();
             }
         }
 
@@ -46,6 +49,22 @@ namespace Tugas_Akhir
             folderDialog.ShowDialog();
             this.pathTarget = folderDialog.SelectedPath;
             textBox2.Text = this.pathTarget;
+        }
+
+        private void cropSelectedFiles(object sender, EventArgs e)
+        {
+            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
+            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
+            foreach (string filePath in this.allSourceFiles)
+            {
+                ImageCrop cropImages = new ImageCrop(new Bitmap(filePath), this.minSize, this.maxSize);
+                Bitmap[] hasil = cropImages.getImages();
+                foreach(Bitmap gambar in hasil)
+                {
+                    string[] namaFile = filePath.Split('/');
+                    gambar.Save(this.pathTarget+"/"+namaFile[namaFile.Length-1]);
+                }
+            }
         }
     }
 }

@@ -33,12 +33,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sourceDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.targetDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pgmCheck = new System.Windows.Forms.CheckBox();
+            this.MinSizeBox = new System.Windows.Forms.TextBox();
+            this.MaxSizeBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,18 +86,7 @@
             this.button1.TabIndex = 5;
             this.button1.Text = "Crop";
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "ORL Face",
-            "Yale Face",
-            "Extended Yale B"});
-            this.comboBox1.Location = new System.Drawing.Point(127, 103);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(226, 21);
-            this.comboBox1.TabIndex = 6;
+            this.button1.Click += new System.EventHandler(this.cropSelectedFiles);
             // 
             // menuStrip1
             // 
@@ -140,13 +131,38 @@
             this.pgmCheck.Text = "PGM Image Files";
             this.pgmCheck.UseVisualStyleBackColor = true;
             // 
+            // MinSizeBox
+            // 
+            this.MinSizeBox.Location = new System.Drawing.Point(127, 104);
+            this.MinSizeBox.Name = "MinSizeBox";
+            this.MinSizeBox.Size = new System.Drawing.Size(100, 20);
+            this.MinSizeBox.TabIndex = 9;
+            // 
+            // MaxSizeBox
+            // 
+            this.MaxSizeBox.Location = new System.Drawing.Point(234, 104);
+            this.MaxSizeBox.Name = "MaxSizeBox";
+            this.MaxSizeBox.Size = new System.Drawing.Size(100, 20);
+            this.MaxSizeBox.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 104);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Face Size";
+            // 
             // Control_Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 180);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.MaxSizeBox);
+            this.Controls.Add(this.MinSizeBox);
             this.Controls.Add(this.pgmCheck);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -170,11 +186,13 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sourceDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem targetDirectoryToolStripMenuItem;
         private System.Windows.Forms.CheckBox pgmCheck;
+        private System.Windows.Forms.TextBox MinSizeBox;
+        private System.Windows.Forms.TextBox MaxSizeBox;
+        private System.Windows.Forms.Label label3;
     }
 }

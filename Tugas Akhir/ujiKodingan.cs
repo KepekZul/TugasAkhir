@@ -31,9 +31,10 @@ namespace Tugas_Akhir
             Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
             for (int i = 0; i < haar.Length; i++)
             {
-                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(480, 480));//extended yale b
+                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(1200, 1200));//bebas
+                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(480, 480));//extended yale b
                 //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(80, 80), new Size(300, 300));//yaleface
-                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(60, 60), new Size(100, 100));//orlface
+                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(60, 60), new Size(100, 100));//orlface
                 int warna = 255;
                 int nomor = 1;
                 foreach (Rectangle kotak in kotaks)
@@ -73,13 +74,14 @@ namespace Tugas_Akhir
             Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
             Image<Bgr, byte> colorImgage2 = new Image<Bgr, byte>(gambar);
             Rectangle[] kotaks = haar[0].DetectMultiScale(grayImage, 1.01, 4, new Size(40, 40), new Size(1600, 1600));
-            foreach (Rectangle kotak in kotaks)
-            {
-                colorImgage.Draw(kotak, new Bgr(0, 255, 255), 3);
-            }
-            pictureBox1.Image = colorImgage.ToBitmap();
+            //foreach (Rectangle kotak in kotaks)
+            //{
+            //    colorImgage.Draw(kotak, new Bgr(0, 255, 255), 3);
+            //}
+            //pictureBox1.Image = colorImgage.ToBitmap();
             MessageBox.Show("Selesai");
-            ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
+            //ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
+            ImageCrop Croper = new ImageCrop(gambar, 170, 400);
             Bitmap[] hasilCrop = Croper.getImages();
             foreach(Bitmap cropImage in hasilCrop)
             {
