@@ -74,10 +74,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV.World">
-      <HintPath>..\..\..\..\..\..\..\program files\emgucv-windesktop 3.1.0.2504\bin\Emgu.CV.World.dll</HintPath>
+      <HintPath>..\..\..\emgu opencv\emgucv-windesktop 3.1.0.2504\bin\Emgu.CV.World.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -111,6 +112,7 @@
     </Compile>
     <Compile Include="ImageCrop.cs" />
     <Compile Include="LocalDirectionalPattern.cs" />
+    <Compile Include="PpmToBitmap.cs" />
     <Compile Include="ujiKodingan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,7 +164,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

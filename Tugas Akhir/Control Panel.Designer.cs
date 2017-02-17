@@ -37,10 +37,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sourceDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.targetDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pgmCheck = new System.Windows.Forms.CheckBox();
             this.MinSizeBox = new System.Windows.Forms.TextBox();
             this.MaxSizeBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -121,16 +121,6 @@
             this.targetDirectoryToolStripMenuItem.Text = "Target Directory";
             this.targetDirectoryToolStripMenuItem.Click += new System.EventHandler(this.destinationFolderToolStripMenuItem_Click);
             // 
-            // pgmCheck
-            // 
-            this.pgmCheck.AutoSize = true;
-            this.pgmCheck.Location = new System.Drawing.Point(670, 43);
-            this.pgmCheck.Name = "pgmCheck";
-            this.pgmCheck.Size = new System.Drawing.Size(106, 17);
-            this.pgmCheck.TabIndex = 8;
-            this.pgmCheck.Text = "PGM Image Files";
-            this.pgmCheck.UseVisualStyleBackColor = true;
-            // 
             // MinSizeBox
             // 
             this.MinSizeBox.Location = new System.Drawing.Point(127, 104);
@@ -154,15 +144,23 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "Face Size";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(670, 43);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 12;
+            // 
             // Control_Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 180);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.MaxSizeBox);
             this.Controls.Add(this.MinSizeBox);
-            this.Controls.Add(this.pgmCheck);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -190,9 +188,9 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sourceDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem targetDirectoryToolStripMenuItem;
-        private System.Windows.Forms.CheckBox pgmCheck;
         private System.Windows.Forms.TextBox MinSizeBox;
         private System.Windows.Forms.TextBox MaxSizeBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

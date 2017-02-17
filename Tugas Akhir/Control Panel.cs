@@ -20,6 +20,17 @@ namespace Tugas_Akhir
         public Control_Panel()
         {
             InitializeComponent();
+            ComboboxItem ppm = new ComboboxItem() , pgm = new ComboboxItem(), all = new ComboboxItem();
+            ppm.Text = "ppm file";
+            ppm.Value = "*ppm";
+            pgm.Text = "pgm file";
+            pgm.Value = "*.pgm";
+            all.Text = "bitmap";
+            all.Value = "*.*";
+            comboBox1.Items.Add(ppm);
+            comboBox1.Items.Add(pgm);
+            comboBox1.Items.Add(all);
+            comboBox1.SelectedIndex = 2;
         }
         public void sourceFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -29,17 +40,11 @@ namespace Tugas_Akhir
             textBox1.Text = this.pathSumber;
             if (result == DialogResult.OK)
             {
-                if (this.pgmCheck.Checked == true)
-                {
-                    allSourceFiles = Directory.GetFiles(this.pathSumber, "*.pgm", SearchOption.AllDirectories);
-                }
-                else {
-                    allSourceFiles = Directory.GetFiles(this.pathSumber, "*.*", SearchOption.AllDirectories).Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")).ToArray();
-                }
+                allSourceFiles = Directory.GetFiles(this.pathSumber, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories).Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")).ToArray();
                 //keperluan debugging daftar file yang terambil
-                //daftarData dd = new daftarData();
-                //dd.datas = allSourceFiles;
-                //dd.Show();
+                daftarData dd = new daftarData();
+                dd.datas = allSourceFiles;
+                dd.Show();
             }
         }
 
@@ -57,14 +62,55 @@ namespace Tugas_Akhir
             this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
             foreach (string filePath in this.allSourceFiles)
             {
-                ImageCrop cropImages = new ImageCrop(new Bitmap(filePath), this.minSize, this.maxSize);
+                System.Diagnostics.Debug.WriteLine("proses file "+filePath+" min");
+                ImageCrop cropImages;
+                if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*ppm")
+                {
+                    cropImages = new ImageCrop(PPMReader.ReadBitmapFromPPM(filePath), this.minSize, this.maxSize);
+                } else if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*.pgm")
+                {
+                    PortableGrayMap pgmBaru = new PortableGrayMap(filePath);
+                    cropImages = new ImageCrop(pgmBaru.MakeBitmap(pgmBaru, 1), this.minSize, this.maxSize);
+                    pgmBaru = null;
+                }else
+                {
+                    cropImages = new ImageCrop(new Bitmap(filePath), this.minSize, this.maxSize);
+                }
                 Bitmap[] hasil = cropImages.getImages();
+                int i = 1;
+                if(hasil.Length==0)
+                {
+                    if((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*.ppm")
+                    {
+                        new Bitmap(PPMReader.ReadBitmapFromPPM(filePath)).Save(Path.GetFullPath(pathTarget) + "/" + Path.GetFileName(Path.GetFileNameWithoutExtension(filePath)) + " gagal crop" + ".gif");
+                    }
+                    else if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() =="*.pgm")
+                    {
+                        PortableGrayMap pgm = new PortableGrayMap(filePath);
+                        new Bitmap(pgm.MakeBitmap(pgm,1)).Save(Path.GetFullPath(pathTarget) + "/" + Path.GetFileName(Path.GetFileNameWithoutExtension(filePath)) + "gagal crop" + ".gif");
+                        pgm = null;
+                    }
+                    else
+                    {
+                        new Bitmap(filePath).Save(Path.GetFullPath(pathTarget) + "/" + Path.GetFileName(filePath) + "gagal crop" + ".gif");
+                    }
+                }
                 foreach(Bitmap gambar in hasil)
                 {
-                    string[] namaFile = filePath.Split('/');
-                    gambar.Save(this.pathTarget+"/"+namaFile[namaFile.Length-1]);
+                    gambar.Save(Path.GetFullPath(pathTarget)+"/"+Path.GetFileName(filePath)+i.ToString()+".gif");
+                    i++;
                 }
             }
+        }
+    }
+    public class ComboboxItem
+    {
+        public string Text { get; set; }
+        public object Value { get; set; }
+
+        public override string ToString()
+        {
+            return Text;
         }
     }
 }

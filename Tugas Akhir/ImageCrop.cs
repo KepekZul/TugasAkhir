@@ -12,7 +12,7 @@ namespace Tugas_Akhir
         int Min;
         int Max;
         Rectangle[] CropRectangle;
-        CascadeClassifier haarCascade = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_alt.xml");
+        CascadeClassifier haarCascade = new CascadeClassifier(System.Configuration.ConfigurationManager.AppSettings["1"]);
         public ImageCrop(Bitmap gambarAsal, Rectangle[] areaCrop)
         {
             this.Gambar = gambarAsal;
@@ -43,6 +43,7 @@ namespace Tugas_Akhir
         }
         private void getFace()
         {
+            System.Diagnostics.Debug.WriteLine("getfaces");
             Image<Gray, byte> grayImage = new Image<Gray, byte>(this.Gambar);
             this.CropRectangle = haarCascade.DetectMultiScale(grayImage, 1.01, 4, new Size(this.Min, this.Min), new Size(this.Max, this.Max));
         }

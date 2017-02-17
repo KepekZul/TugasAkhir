@@ -13,3 +13,18 @@ E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Control_Panel.resources
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.ujikoding.resources
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program Tugas Akhir\Tugas Akhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.daftarData.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\bin\x64\Debug\Tugas Akhir.exe.config
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\bin\x64\Debug\Tugas Akhir.exe
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\bin\x64\Debug\Tugas Akhir.pdb
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\bin\x64\Debug\Emgu.CV.World.dll
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\bin\x64\Debug\Emgu.CV.World.xml
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.daftarData.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.haar_training_set.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.ujikoding.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Properties.Resources.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.tampilHasilCrop.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas Akhir.csproj.GenerateResource.Cache
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas Akhir.exe
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas Akhir.pdb
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas Akhir.csprojResolveAssemblyReference.cache
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir-master\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Control_Panel.resources

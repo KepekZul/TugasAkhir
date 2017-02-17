@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.Configuration;
 
 namespace Tugas_Akhir
 {
@@ -12,13 +13,15 @@ namespace Tugas_Akhir
     {
         CascadeClassifier[] haar = new CascadeClassifier[1];
         Bitmap gambar;
+        string imagePath;
         public ujikoding()
         {
             InitializeComponent();
         }
         private void Form1_Load(object sender, EventArgs e)
-        { 
-            haar[0] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_alt.xml");
+        {
+            //MessageBox.Show(ConfigurationManager.AppSettings["haar_cascade_path"]);
+            haar[0] = new CascadeClassifier(ConfigurationManager.AppSettings["1"]);
             //haar[1] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_alt_tree.xml");
             //haar[2] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_alt2.xml");
             //haar[3] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_default.xml");
@@ -58,6 +61,7 @@ namespace Tugas_Akhir
             pilihDialog.ShowDialog();
             gambar = new Bitmap(pilihDialog.FileName);
             pictureBox1.Image = gambar;
+            this.imagePath = pilihDialog.FileName;
         }
         public void pilihGambarPGM(object sender, EventArgs e)
         {
@@ -81,7 +85,7 @@ namespace Tugas_Akhir
             //pictureBox1.Image = colorImgage.ToBitmap();
             MessageBox.Show("Selesai");
             //ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
-            ImageCrop Croper = new ImageCrop(gambar, 170, 400);
+            ImageCrop Croper = new ImageCrop(new Bitmap(imagePath), 170, 400);
             Bitmap[] hasilCrop = Croper.getImages();
             foreach(Bitmap cropImage in hasilCrop)
             {
@@ -89,6 +93,15 @@ namespace Tugas_Akhir
                 form.Show();
             }
             System.Diagnostics.Debug.Write("\n__________________________________________________________\n");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog pilihDialog = new OpenFileDialog();
+            pilihDialog.ShowDialog();
+            this.gambar = PPMReader.ReadBitmapFromPPM(pilihDialog.FileName);
+            pictureBox1.Image = this.gambar;
+            System.Diagnostics.Debug.WriteLine("Lebar: " + this.gambar.Width.ToString() + "Pixel\nTinggi: " + this.gambar.Height.ToString() + "Pixel");
         }
     }
 }
