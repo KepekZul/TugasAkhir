@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using System.Configuration;
@@ -14,6 +15,7 @@ namespace Tugas_Akhir
         CascadeClassifier[] haar = new CascadeClassifier[1];
         Bitmap gambar;
         string imagePath;
+        List<string> listhapus = new List<string>();
         public ujikoding()
         {
             InitializeComponent();
@@ -102,6 +104,55 @@ namespace Tugas_Akhir
             this.gambar = PPMReader.ReadBitmapFromPPM(pilihDialog.FileName);
             pictureBox1.Image = this.gambar;
             System.Diagnostics.Debug.WriteLine("Lebar: " + this.gambar.Width.ToString() + "Pixel\nTinggi: " + this.gambar.Height.ToString() + "Pixel");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string[] allSourceFiles;
+            string selekpeth = pilihFolderHapus();
+            if (selekpeth == "" || selekpeth == null)
+                return;
+            allSourceFiles = Directory.GetFiles(selekpeth);
+            for (int i=0; i<allSourceFiles.Length-1; i++)
+            {
+                if (allSourceFiles[i].EndsWith(".pgm2.gif"))
+                {
+                    if (Path.GetFileName(allSourceFiles[i - 1]).StartsWith(Path.GetFileName(allSourceFiles[i]).Substring(0, 20)))
+                    {
+                        deleteGambar satu = new deleteGambar(allSourceFiles[i - 1], allSourceFiles[i]);
+                        satu.ShowDialog();
+                        this.listhapus.Add(satu.yangDihapus);
+                    }
+                }
+            }
+            foreach(string berkas in listhapus)
+            {
+                richTextBox1.AppendText(berkas+"\n");
+            }
+        }
+        private string pilihFolderHapus()
+        {
+            FolderBrowserDialog folderdialog = new FolderBrowserDialog();
+            folderdialog.ShowDialog();
+            return folderdialog.SelectedPath;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string[] hapus = richTextBox2.Text.Split('\n');
+            foreach (string berkas in hapus)
+            {
+                System.Diagnostics.Debug.WriteLine(berkas);
+                File.Delete(berkas);
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Image<Gray, byte> gambar = new Image<Gray, byte>(this.gambar);
+            gambar._EqualizeHist();
+            this.gambar = gambar.ToBitmap();
+            this.pictureBox1.Image = gambar.ToBitmap();
         }
     }
 }
