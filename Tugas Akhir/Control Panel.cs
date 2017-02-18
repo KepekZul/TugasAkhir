@@ -40,7 +40,8 @@ namespace Tugas_Akhir
             textBox1.Text = this.pathSumber;
             if (result == DialogResult.OK)
             {
-                allSourceFiles = Directory.GetFiles(this.pathSumber, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories).Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")).ToArray();
+                allSourceFiles = Directory.GetFiles(this.pathSumber, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
+                    .Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")|| !s.EndsWith("*.ini")).ToArray();
                 //keperluan debugging daftar file yang terambil
                 daftarData dd = new daftarData();
                 dd.datas = allSourceFiles;
@@ -58,6 +59,7 @@ namespace Tugas_Akhir
 
         private void cropSelectedFiles(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(this.checkBox1.Checked.ToString());//debugging
             this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
             this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
             foreach (string filePath in this.allSourceFiles)
@@ -66,15 +68,15 @@ namespace Tugas_Akhir
                 ImageCrop cropImages;
                 if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*ppm")
                 {
-                    cropImages = new ImageCrop(PPMReader.ReadBitmapFromPPM(filePath), this.minSize, this.maxSize);
+                    cropImages = new ImageCrop(PPMReader.ReadBitmapFromPPM(filePath), this.minSize, this.maxSize, this.checkBox1.Checked);
                 } else if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*.pgm")
                 {
                     PortableGrayMap pgmBaru = new PortableGrayMap(filePath);
-                    cropImages = new ImageCrop(pgmBaru.MakeBitmap(pgmBaru, 1), this.minSize, this.maxSize);
+                    cropImages = new ImageCrop(pgmBaru.MakeBitmap(pgmBaru, 1), this.minSize, this.maxSize, this.checkBox1.Checked);
                     pgmBaru = null;
                 }else
                 {
-                    cropImages = new ImageCrop(new Bitmap(filePath), this.minSize, this.maxSize);
+                    cropImages = new ImageCrop(new Bitmap(filePath), this.minSize, this.maxSize, this.checkBox1.Checked);
                 }
                 Bitmap[] hasil = cropImages.getImages();
                 int i = 1;

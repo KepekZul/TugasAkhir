@@ -15,6 +15,7 @@ namespace Tugas_Akhir
         CascadeClassifier[] haar = new CascadeClassifier[1];
         Bitmap gambar;
         string imagePath;
+        bool usehisteq = false;
         List<string> listhapus = new List<string>();
         public ujikoding()
         {
@@ -87,7 +88,7 @@ namespace Tugas_Akhir
             //pictureBox1.Image = colorImgage.ToBitmap();
             MessageBox.Show("Selesai");
             //ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
-            ImageCrop Croper = new ImageCrop(new Bitmap(imagePath), 170, 400);
+            ImageCrop Croper = new ImageCrop(new Bitmap(imagePath), 170, 400, true);
             Bitmap[] hasilCrop = Croper.getImages();
             foreach(Bitmap cropImage in hasilCrop)
             {
@@ -115,7 +116,7 @@ namespace Tugas_Akhir
             allSourceFiles = Directory.GetFiles(selekpeth);
             for (int i=0; i<allSourceFiles.Length-1; i++)
             {
-                if (allSourceFiles[i].EndsWith(".pgm2.gif"))
+                if (allSourceFiles[i].EndsWith("2.gif"))
                 {
                     if (Path.GetFileName(allSourceFiles[i - 1]).StartsWith(Path.GetFileName(allSourceFiles[i]).Substring(0, 20)))
                     {

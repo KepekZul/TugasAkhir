@@ -11,6 +11,7 @@ namespace Tugas_Akhir
         Bitmap Gambar;
         int Min;
         int Max;
+        bool UseHistogramEqualiztion;
         Rectangle[] CropRectangle;
         CascadeClassifier haarCascade = new CascadeClassifier(System.Configuration.ConfigurationManager.AppSettings["1"]);
         public ImageCrop(Bitmap gambarAsal, Rectangle[] areaCrop)
@@ -18,11 +19,12 @@ namespace Tugas_Akhir
             this.Gambar = gambarAsal;
             this.CropRectangle = areaCrop;
         }
-        public ImageCrop(Bitmap gambarAsal, int min, int max)
+        public ImageCrop(Bitmap gambarAsal, int min, int max, bool useHisteq)
         {
             this.Gambar = gambarAsal;
             this.Min = min;
             this.Max = max;
+            this.UseHistogramEqualiztion = useHisteq;
             getFace();
         }
         public Bitmap[] getImages()
@@ -45,6 +47,10 @@ namespace Tugas_Akhir
         {
             System.Diagnostics.Debug.WriteLine("getfaces");
             Image<Gray, byte> grayImage = new Image<Gray, byte>(this.Gambar);
+            if (this.UseHistogramEqualiztion == true)
+            {
+                grayImage._EqualizeHist();
+            }
             this.CropRectangle = haarCascade.DetectMultiScale(grayImage, 1.01, 4, new Size(this.Min, this.Min), new Size(this.Max, this.Max));
         }
     }
