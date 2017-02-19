@@ -5,14 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.IO;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Tugas_Akhir
 {
     public partial class Control_Panel : Form
     {
-        string pathSumber;
+        string pathSource;
         string pathTarget;
         string[] allSourceFiles;
         int minSize;
@@ -32,24 +32,26 @@ namespace Tugas_Akhir
             comboBox1.Items.Add(all);
             comboBox1.SelectedIndex = 2;
         }
-        public void sourceFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        public void sourceFolder(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             DialogResult result = folderDialog.ShowDialog();
-            this.pathSumber = folderDialog.SelectedPath;
-            textBox1.Text = this.pathSumber;
+            this.pathSource = folderDialog.SelectedPath;
+            textBox1.Text = this.pathSource;
             if (result == DialogResult.OK)
             {
-                allSourceFiles = Directory.GetFiles(this.pathSumber, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
+                allSourceFiles = Directory.GetFiles(this.pathSource, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
                     .Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")|| !s.EndsWith("*.ini")).ToArray();
+                #region
                 //keperluan debugging daftar file yang terambil
                 daftarData dd = new daftarData();
                 dd.datas = allSourceFiles;
                 dd.Show();
+                #endregion
             }
         }
 
-        public void destinationFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        public void destinationFolder(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             folderDialog.ShowDialog();
@@ -59,52 +61,30 @@ namespace Tugas_Akhir
 
         private void cropSelectedFiles(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(this.checkBox1.Checked.ToString());//debugging
             this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
             this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            foreach (string filePath in this.allSourceFiles)
+            System.Diagnostics.Debug.WriteLine(this.checkBox1.Checked.ToString());//debugging
+            MultiCrop[] cropThread = new MultiCrop[2];
+            string[] partisiAwal = new string[allSourceFiles.Length/2];
+            for(int i=0; i<allSourceFiles.Length/2; i++)
             {
-                System.Diagnostics.Debug.WriteLine("proses file "+filePath+" min");
-                ImageCrop cropImages;
-                if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*ppm")
-                {
-                    cropImages = new ImageCrop(PPMReader.ReadBitmapFromPPM(filePath), this.minSize, this.maxSize, this.checkBox1.Checked);
-                } else if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*.pgm")
-                {
-                    PortableGrayMap pgmBaru = new PortableGrayMap(filePath);
-                    cropImages = new ImageCrop(pgmBaru.MakeBitmap(pgmBaru, 1), this.minSize, this.maxSize, this.checkBox1.Checked);
-                    pgmBaru = null;
-                }else
-                {
-                    cropImages = new ImageCrop(new Bitmap(filePath), this.minSize, this.maxSize, this.checkBox1.Checked);
-                }
-                Bitmap[] hasil = cropImages.getImages();
-                int i = 1;
-                if(hasil.Length==0)
-                {
-                    if((comboBox1.SelectedItem as ComboboxItem).Value.ToString() == "*.ppm")
-                    {
-                        new Bitmap(PPMReader.ReadBitmapFromPPM(filePath)).Save(Path.GetFullPath(pathTarget) + "/" + Path.GetFileName(Path.GetFileNameWithoutExtension(filePath)) + " gagal crop" + ".gif");
-                    }
-                    else if ((comboBox1.SelectedItem as ComboboxItem).Value.ToString() =="*.pgm")
-                    {
-                        PortableGrayMap pgm = new PortableGrayMap(filePath);
-                        new Bitmap(pgm.MakeBitmap(pgm,1)).Save(Path.GetFullPath(pathTarget) + "/" + Path.GetFileName(Path.GetFileNameWithoutExtension(filePath)) + "gagal crop" + ".gif");
-                        pgm = null;
-                    }
-                    else
-                    {
-                        new Bitmap(filePath).Save(Path.GetFullPath(pathTarget) + "/" + Path.GetFileName(filePath) + "gagal crop" + ".gif");
-                    }
-                }
-                foreach(Bitmap gambar in hasil)
-                {
-                    gambar.Save(Path.GetFullPath(pathTarget)+"/"+Path.GetFileName(filePath)+i.ToString()+".gif");
-                    i++;
-                }
+                partisiAwal[i] = allSourceFiles[i];
             }
+            string[] partisiAkhir = new string[allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
+            for(int i =0; i< allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0); i++)
+            {
+                partisiAkhir[i] = allSourceFiles[i+ allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
+            }
+            cropThread[0] = new MultiCrop(partisiAwal, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
+            cropThread[1] = new MultiCrop(partisiAkhir, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
+            Thread[] cropingThread = new Thread[2];
+            cropingThread[0] = new Thread(new ThreadStart(cropThread[0].CropStart));
+            cropingThread[1] = new Thread(new ThreadStart(cropThread[1].CropStart));
+            cropingThread[0].Start();
+            cropingThread[1].Start();
         }
     }
+    //selfmade class for dropddown list item
     public class ComboboxItem
     {
         public string Text { get; set; }
@@ -115,4 +95,5 @@ namespace Tugas_Akhir
             return Text;
         }
     }
+
 }

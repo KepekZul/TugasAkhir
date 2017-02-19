@@ -45,7 +45,7 @@ namespace Tugas_Akhir
         }
         private void getFace()
         {
-            System.Diagnostics.Debug.WriteLine("getfaces");
+            //System.Diagnostics.Debug.WriteLine("getfaces");//debugging
             Image<Gray, byte> grayImage = new Image<Gray, byte>(this.Gambar);
             if (this.UseHistogramEqualiztion == true)
             {

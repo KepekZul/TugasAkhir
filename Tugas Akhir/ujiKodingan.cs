@@ -15,7 +15,6 @@ namespace Tugas_Akhir
         CascadeClassifier[] haar = new CascadeClassifier[1];
         Bitmap gambar;
         string imagePath;
-        bool usehisteq = false;
         List<string> listhapus = new List<string>();
         public ujikoding()
         {
@@ -38,8 +37,8 @@ namespace Tugas_Akhir
             for (int i = 0; i < haar.Length; i++)
             {
                 //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(1200, 1200));//bebas
-                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(480, 480));//extended yale b
-                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(80, 80), new Size(300, 300));//yaleface
+                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(480, 480));//extended yale b
+                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(80, 80), new Size(300, 300));//yaleface
                 //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(60, 60), new Size(100, 100));//orlface
                 int warna = 255;
                 int nomor = 1;

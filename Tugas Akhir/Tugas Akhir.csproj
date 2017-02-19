@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="ImageCrop.cs" />
     <Compile Include="LocalDirectionalPattern.cs" />
+    <Compile Include="MultiCrop.cs" />
     <Compile Include="PpmToBitmap.cs" />
     <Compile Include="ujiKodingan.cs">
       <SubType>Form</SubType>
