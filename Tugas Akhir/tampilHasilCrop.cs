@@ -25,5 +25,16 @@ namespace Tugas_Akhir
             this.pictureBox1.Image = gambar;
             System.Diagnostics.Debug.WriteLine("masuk ini");
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            DialogResult result = sd.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                gambar.Save(sd.FileName+".gif");
+                this.Close();
+            }
+        }
     }
 }

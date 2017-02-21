@@ -25,6 +25,8 @@ namespace Tugas_Akhir
         {
             foreach(string filepath in CropTargets)
             {
+                if (filepath == "")
+                    continue;
                 ImageCrop imageCroper;
                 if (Path.GetExtension(filepath) == ".ppm")
                 {

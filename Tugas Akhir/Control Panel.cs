@@ -36,18 +36,31 @@ namespace Tugas_Akhir
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             DialogResult result = folderDialog.ShowDialog();
-            this.pathSource = folderDialog.SelectedPath;
-            textBox1.Text = this.pathSource;
             if (result == DialogResult.OK)
             {
+                this.pathSource = folderDialog.SelectedPath;
+                textBox1.Text = this.pathSource;
                 allSourceFiles = Directory.GetFiles(this.pathSource, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
                     .Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")|| !s.EndsWith("*.ini")).ToArray();
-                #region
+                string[] keepFile = FilenameFilterBox.Text.Split(' ');
+                for(int i=0; i<allSourceFiles.Length; i++)
+                {
+                    for (int j = 0; j < keepFile.Length; j++)
+                    {
+                        if (Path.GetFileName(allSourceFiles[i]).Contains(keepFile[j]))
+                        {
+                            break;
+                        }
+                        if (j == keepFile.Length-1)
+                        {
+                            allSourceFiles[i] = "";
+                        }
+                    }
+                }
                 //keperluan debugging daftar file yang terambil
                 daftarData dd = new daftarData();
                 dd.datas = allSourceFiles;
                 dd.Show();
-                #endregion
             }
         }
 
@@ -73,7 +86,7 @@ namespace Tugas_Akhir
             string[] partisiAkhir = new string[allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
             for(int i =0; i< allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0); i++)
             {
-                partisiAkhir[i] = allSourceFiles[i+ allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
+                partisiAkhir[i] = allSourceFiles[i+ allSourceFiles.Length / 2];
             }
             cropThread[0] = new MultiCrop(partisiAwal, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
             cropThread[1] = new MultiCrop(partisiAkhir, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);

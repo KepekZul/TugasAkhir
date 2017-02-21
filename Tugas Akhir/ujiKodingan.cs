@@ -15,6 +15,8 @@ namespace Tugas_Akhir
         CascadeClassifier[] haar = new CascadeClassifier[1];
         Bitmap gambar;
         string imagePath;
+        int min;
+        int max;
         List<string> listhapus = new List<string>();
         public ujikoding()
         {
@@ -32,13 +34,15 @@ namespace Tugas_Akhir
         }
         private void deteksiWajah(object sender, EventArgs e)
         {
+            this.min = Convert.ToInt32(MinBox.Text);
+            this.max = Convert.ToInt32(MaxBox.Text);
             Image<Gray, byte> grayImage = new Image<Gray, byte>(gambar);
             Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
             for (int i = 0; i < haar.Length; i++)
             {
                 //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(1200, 1200));//bebas
                 //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(480, 480));//extended yale b
-                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(80, 80), new Size(300, 300));//yaleface
+                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(this.min,this.min), new Size(this.max, this.max));//yaleface
                 //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(60, 60), new Size(100, 100));//orlface
                 int warna = 255;
                 int nomor = 1;
@@ -76,10 +80,12 @@ namespace Tugas_Akhir
         }
         public void cropImage(object sender, EventArgs e)
         {
+            this.min = Convert.ToInt32(MinBox.Text);
+            this.max = Convert.ToInt32(MaxBox.Text);
             Image<Gray, byte> grayImage = new Image<Gray, byte>(gambar);
             Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
             Image<Bgr, byte> colorImgage2 = new Image<Bgr, byte>(gambar);
-            Rectangle[] kotaks = haar[0].DetectMultiScale(grayImage, 1.01, 4, new Size(40, 40), new Size(1600, 1600));
+            Rectangle[] kotaks = haar[0].DetectMultiScale(grayImage, 1.01, 4, new Size(this.min, this.min), new Size(this.max, this.max));
             //foreach (Rectangle kotak in kotaks)
             //{
             //    colorImgage.Draw(kotak, new Bgr(0, 255, 255), 3);
@@ -87,7 +93,7 @@ namespace Tugas_Akhir
             //pictureBox1.Image = colorImgage.ToBitmap();
             MessageBox.Show("Selesai");
             //ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
-            ImageCrop Croper = new ImageCrop(new Bitmap(imagePath), 170, 400, true);
+            ImageCrop Croper = new ImageCrop(new Bitmap(imagePath), this.min, this.max, true);
             Bitmap[] hasilCrop = Croper.getImages();
             foreach(Bitmap cropImage in hasilCrop)
             {

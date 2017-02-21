@@ -52,7 +52,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(127, 43);
+            this.textBox1.Location = new System.Drawing.Point(127, 54);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(536, 20);
             this.textBox1.TabIndex = 0;
@@ -60,7 +60,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(127, 77);
+            this.textBox2.Location = new System.Drawing.Point(126, 80);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(536, 20);
             this.textBox2.TabIndex = 2;
@@ -69,7 +69,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 44);
+            this.label1.Location = new System.Drawing.Point(16, 57);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 3;
@@ -78,7 +78,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 77);
+            this.label2.Location = new System.Drawing.Point(15, 83);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 13);
             this.label2.TabIndex = 4;
@@ -86,7 +86,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(127, 159);
+            this.button1.Location = new System.Drawing.Point(126, 144);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -129,14 +129,14 @@
             // 
             // MinSizeBox
             // 
-            this.MinSizeBox.Location = new System.Drawing.Point(154, 131);
+            this.MinSizeBox.Location = new System.Drawing.Point(153, 106);
             this.MinSizeBox.Name = "MinSizeBox";
             this.MinSizeBox.Size = new System.Drawing.Size(100, 20);
             this.MinSizeBox.TabIndex = 9;
             // 
             // MaxSizeBox
             // 
-            this.MaxSizeBox.Location = new System.Drawing.Point(293, 131);
+            this.MaxSizeBox.Location = new System.Drawing.Point(292, 106);
             this.MaxSizeBox.Name = "MaxSizeBox";
             this.MaxSizeBox.Size = new System.Drawing.Size(100, 20);
             this.MaxSizeBox.TabIndex = 10;
@@ -144,7 +144,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 134);
+            this.label3.Location = new System.Drawing.Point(15, 109);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 11;
@@ -153,7 +153,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(127, 104);
+            this.comboBox1.Location = new System.Drawing.Point(127, 27);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 12;
@@ -161,7 +161,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(399, 134);
+            this.checkBox1.Location = new System.Drawing.Point(398, 108);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(133, 17);
             this.checkBox1.TabIndex = 13;
@@ -171,7 +171,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(124, 134);
+            this.label4.Location = new System.Drawing.Point(123, 109);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 13);
             this.label4.TabIndex = 14;
@@ -180,7 +180,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(260, 134);
+            this.label5.Location = new System.Drawing.Point(259, 109);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(27, 13);
             this.label5.TabIndex = 15;
@@ -189,7 +189,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 104);
+            this.label6.Location = new System.Drawing.Point(16, 30);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 13);
             this.label6.TabIndex = 16;
@@ -198,7 +198,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(263, 103);
+            this.label7.Location = new System.Drawing.Point(260, 30);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(74, 13);
             this.label7.TabIndex = 17;
@@ -206,7 +206,7 @@
             // 
             // FilenameFilterBox
             // 
-            this.FilenameFilterBox.Location = new System.Drawing.Point(344, 104);
+            this.FilenameFilterBox.Location = new System.Drawing.Point(344, 27);
             this.FilenameFilterBox.Name = "FilenameFilterBox";
             this.FilenameFilterBox.Size = new System.Drawing.Size(319, 20);
             this.FilenameFilterBox.TabIndex = 18;
@@ -215,7 +215,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 212);
+            this.ClientSize = new System.Drawing.Size(807, 186);
             this.Controls.Add(this.FilenameFilterBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);

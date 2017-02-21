@@ -13,7 +13,7 @@ namespace Program
         Bitmap originalImage;
         int[] originalMatrix;
         List<List<int>> ldpResult;
-        private void init()
+        private void initMask()
         {
             this.kirschMask = new int[8, 3, 3] {   { {-3, -3, 5}, {-3, 0, 5}, {-3, -3, 5} },
                                               { {-3, 5,  5}, {-3, 0, 5}, {-3, -3,-3} },
@@ -28,12 +28,12 @@ namespace Program
         }
         public LocalDirectionalPattern(Bitmap inputImage)
         {
-            init();
+            initMask();
             this.originalImage = new Bitmap(inputImage);
         }
         public LocalDirectionalPattern(int[] inputMatrix)
         {
-            init();
+            initMask();
             this.originalMatrix = inputMatrix;
         }
         private string maskConvolute()

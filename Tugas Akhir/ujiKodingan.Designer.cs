@@ -39,6 +39,8 @@
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
+            this.MinBox = new System.Windows.Forms.TextBox();
+            this.MaxBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +50,7 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(476, 447);
+            this.pictureBox1.Size = new System.Drawing.Size(476, 413);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -148,11 +150,27 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // MinBox
+            // 
+            this.MinBox.Location = new System.Drawing.Point(13, 432);
+            this.MinBox.Name = "MinBox";
+            this.MinBox.Size = new System.Drawing.Size(100, 20);
+            this.MinBox.TabIndex = 11;
+            // 
+            // MaxBox
+            // 
+            this.MaxBox.Location = new System.Drawing.Point(120, 432);
+            this.MaxBox.Name = "MaxBox";
+            this.MaxBox.Size = new System.Drawing.Size(100, 20);
+            this.MaxBox.TabIndex = 12;
+            // 
             // ujikoding
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 500);
+            this.Controls.Add(this.MaxBox);
+            this.Controls.Add(this.MinBox);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.richTextBox2);
@@ -169,6 +187,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -186,6 +205,8 @@
         private System.Windows.Forms.RichTextBox richTextBox2;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.TextBox MinBox;
+        private System.Windows.Forms.TextBox MaxBox;
     }
 }
 
