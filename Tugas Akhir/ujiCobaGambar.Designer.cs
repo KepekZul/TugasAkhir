@@ -1,6 +1,6 @@
 ﻿namespace Tugas_Akhir
 {
-    partial class ujikoding
+    partial class ujiCobaGambar
     {
         /// <summary>
         /// Required designer variable.

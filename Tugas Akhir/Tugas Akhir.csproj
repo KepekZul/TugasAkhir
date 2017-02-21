@@ -120,11 +120,11 @@
     <Compile Include="LocalDirectionalPattern.cs" />
     <Compile Include="MultiCrop.cs" />
     <Compile Include="PpmToBitmap.cs" />
-    <Compile Include="ujiKodingan.cs">
+    <Compile Include="ujiCobaGambar.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ujiKodingan.Designer.cs">
-      <DependentUpon>ujiKodingan.cs</DependentUpon>
+    <Compile Include="ujiCobaGambar.Designer.cs">
+      <DependentUpon>ujiCobaGambar.cs</DependentUpon>
     </Compile>
     <Compile Include="PortableGrayImage.cs" />
     <Compile Include="Program.cs" />
@@ -148,8 +148,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>haar_training_set.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ujiKodingan.resx">
-      <DependentUpon>ujiKodingan.cs</DependentUpon>
+    <EmbeddedResource Include="ujiCobaGambar.resx">
+      <DependentUpon>ujiCobaGambar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

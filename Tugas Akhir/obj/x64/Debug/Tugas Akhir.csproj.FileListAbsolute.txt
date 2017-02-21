@@ -40,7 +40,7 @@ C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\D
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.daftarData.resources
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.deleteGambar.resources
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.haar_training_set.resources
-C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.ujikoding.resources
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Properties.Resources.resources
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.tampilHasilCrop.resources
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.csproj.GenerateResource.Cache
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.ujiCobaGambar.resources

@@ -17,7 +17,7 @@ namespace Tugas_Akhir
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Control_Panel());
-            Application.Run(new ujikoding());
+            Application.Run(new ujiCobaGambar());
         }
     }
 }

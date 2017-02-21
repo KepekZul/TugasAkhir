@@ -10,7 +10,7 @@ using System.Configuration;
 
 namespace Tugas_Akhir
 {
-    public partial class ujikoding : Form
+    public partial class ujiCobaGambar : Form
     {
         CascadeClassifier[] haar = new CascadeClassifier[1];
         Bitmap gambar;
@@ -18,7 +18,7 @@ namespace Tugas_Akhir
         int min;
         int max;
         List<string> listhapus = new List<string>();
-        public ujikoding()
+        public ujiCobaGambar()
         {
             InitializeComponent();
         }
@@ -64,7 +64,9 @@ namespace Tugas_Akhir
         public void pilihGambar(object sender, EventArgs e)
         {
             OpenFileDialog pilihDialog = new OpenFileDialog();
-            pilihDialog.ShowDialog();
+            DialogResult hasil = pilihDialog.ShowDialog();
+            if (hasil != DialogResult.OK)
+                return;
             gambar = new Bitmap(pilihDialog.FileName);
             pictureBox1.Image = gambar;
             this.imagePath = pilihDialog.FileName;
@@ -72,8 +74,9 @@ namespace Tugas_Akhir
         public void pilihGambarPGM(object sender, EventArgs e)
         {
             OpenFileDialog pilihDialog = new OpenFileDialog();
-            pilihDialog.ShowDialog();
-            PortableGrayMap gambar = new PortableGrayMap(pilihDialog.FileName);
+            DialogResult hasil = pilihDialog.ShowDialog();
+            if (hasil != DialogResult.OK)
+                return; PortableGrayMap gambar = new PortableGrayMap(pilihDialog.FileName);
             this.gambar  = gambar.MakeBitmap(gambar,1);
             pictureBox1.Image = this.gambar;
             System.Diagnostics.Debug.WriteLine("Lebar: "+this.gambar.Width.ToString()+"Pixel\nTinggi: "+this.gambar.Height.ToString()+"Pixel");
@@ -106,7 +109,9 @@ namespace Tugas_Akhir
         private void button5_Click(object sender, EventArgs e)
         {
             OpenFileDialog pilihDialog = new OpenFileDialog();
-            pilihDialog.ShowDialog();
+            DialogResult hasil = pilihDialog.ShowDialog();
+            if (hasil != DialogResult.OK)
+                return;
             this.gambar = PPMReader.ReadBitmapFromPPM(pilihDialog.FileName);
             pictureBox1.Image = this.gambar;
             System.Diagnostics.Debug.WriteLine("Lebar: " + this.gambar.Width.ToString() + "Pixel\nTinggi: " + this.gambar.Height.ToString() + "Pixel");
