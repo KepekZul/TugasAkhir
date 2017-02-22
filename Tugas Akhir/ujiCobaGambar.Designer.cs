@@ -41,16 +41,22 @@
             this.button8 = new System.Windows.Forms.Button();
             this.MinBox = new System.Windows.Forms.TextBox();
             this.MaxBox = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.pilihGambarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bitmapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pPMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pGMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 42);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(476, 413);
+            this.pictureBox1.Size = new System.Drawing.Size(476, 383);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -102,23 +108,23 @@
             this.button5.TabIndex = 5;
             this.button5.Text = "PPM Image";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button5.Click += new System.EventHandler(this.pilihGambarPPM);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(495, 12);
+            this.button6.Location = new System.Drawing.Point(494, 42);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 6;
             this.button6.Text = "filter duplikat";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button6.Click += new System.EventHandler(this.piluhFolderDuplikat);
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(495, 42);
+            this.richTextBox1.Location = new System.Drawing.Point(495, 77);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(308, 134);
+            this.richTextBox1.Size = new System.Drawing.Size(308, 99);
             this.richTextBox1.TabIndex = 7;
             this.richTextBox1.Text = "";
             // 
@@ -138,7 +144,7 @@
             this.button7.TabIndex = 9;
             this.button7.Text = "delete";
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button7.Click += new System.EventHandler(this.hapusFile);
             // 
             // button8
             // 
@@ -148,7 +154,7 @@
             this.button8.TabIndex = 10;
             this.button8.Text = "histeq";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.button8.Click += new System.EventHandler(this.applyHisteq);
             // 
             // MinBox
             // 
@@ -164,7 +170,47 @@
             this.MaxBox.Size = new System.Drawing.Size(100, 20);
             this.MaxBox.TabIndex = 12;
             // 
-            // ujikoding
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pilihGambarToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(815, 24);
+            this.menuStrip1.TabIndex = 13;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // pilihGambarToolStripMenuItem
+            // 
+            this.pilihGambarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bitmapToolStripMenuItem,
+            this.pPMToolStripMenuItem,
+            this.pGMToolStripMenuItem});
+            this.pilihGambarToolStripMenuItem.Name = "pilihGambarToolStripMenuItem";
+            this.pilihGambarToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.pilihGambarToolStripMenuItem.Text = "Pilih Gambar";
+            // 
+            // bitmapToolStripMenuItem
+            // 
+            this.bitmapToolStripMenuItem.Name = "bitmapToolStripMenuItem";
+            this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bitmapToolStripMenuItem.Text = "Bitmap";
+            this.bitmapToolStripMenuItem.Click += new System.EventHandler(this.pilihGambar);
+            // 
+            // pPMToolStripMenuItem
+            // 
+            this.pPMToolStripMenuItem.Name = "pPMToolStripMenuItem";
+            this.pPMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pPMToolStripMenuItem.Text = "PPM";
+            // 
+            // pGMToolStripMenuItem
+            // 
+            this.pGMToolStripMenuItem.Name = "pGMToolStripMenuItem";
+            this.pGMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pGMToolStripMenuItem.Text = "PGM";
+            this.pGMToolStripMenuItem.Click += new System.EventHandler(this.pilihGambarPGM);
+            // 
+            // ujiCobaGambar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -182,10 +228,14 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "ujikoding";
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "ujiCobaGambar";
             this.Text = "ujikoding";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,6 +257,11 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.TextBox MinBox;
         private System.Windows.Forms.TextBox MaxBox;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem pilihGambarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bitmapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pPMToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pGMToolStripMenuItem;
     }
 }
 

@@ -55,7 +55,7 @@ namespace Program
                     acumulation += mask[i] * imageMat[j];
                 }
             }
-            return (acumulation>0)?acumulation:-acumulation; //result converted to keep always positive
+            return (acumulation>0)?acumulation:-acumulation; //result converted to keep the result always positive
         }
         public int ldpCode(int[] matrixBlock)
         {
@@ -70,7 +70,7 @@ namespace Program
                 }
                 ldpMatrixSequence[i] = convoluteMask(subMask, matrixBlock);
             }
-            int[] topThree = getMax(ldpMatrixSequence);
+            int[] topThree = getMax(ldpMatrixSequence,3);
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 3; j++)
@@ -91,13 +91,14 @@ namespace Program
             ldpBinaryCode = ldpMatrixSequence[9].ToString() + ldpBinaryCode;
             return Convert.ToInt32(ldpBinaryCode, 2);
         }
-        private int[] getMax(int[] data)//to get three most significatn bit
+        private int[] getMax(int[] data, int ammount)//to get most significatn bit
         {
             data.OrderBy(h => h);
             int[] result = new int[3];
-            result[0] = data[0];
-            result[1] = data[1];
-            result[2] = data[2];
+            for(int i=0; i<ammount; i++)
+            {
+                result[i] = data[i];
+            }
             return result;
         }
     }

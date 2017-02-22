@@ -106,7 +106,7 @@ namespace Tugas_Akhir
             System.Diagnostics.Debug.Write("\n__________________________________________________________\n");
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void pilihGambarPPM(object sender, EventArgs e)
         {
             OpenFileDialog pilihDialog = new OpenFileDialog();
             DialogResult hasil = pilihDialog.ShowDialog();
@@ -117,7 +117,7 @@ namespace Tugas_Akhir
             System.Diagnostics.Debug.WriteLine("Lebar: " + this.gambar.Width.ToString() + "Pixel\nTinggi: " + this.gambar.Height.ToString() + "Pixel");
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void piluhFolderDuplikat(object sender, EventArgs e)
         {
             string[] allSourceFiles;
             string selekpeth = pilihFolderHapus();
@@ -148,7 +148,7 @@ namespace Tugas_Akhir
             return folderdialog.SelectedPath;
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void hapusFile(object sender, EventArgs e)
         {
             string[] hapus = richTextBox2.Text.Split('\n');
             foreach (string berkas in hapus)
@@ -158,7 +158,7 @@ namespace Tugas_Akhir
             }
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void applyHisteq(object sender, EventArgs e)
         {
             Image<Gray, byte> gambar = new Image<Gray, byte>(this.gambar);
             gambar._EqualizeHist();
