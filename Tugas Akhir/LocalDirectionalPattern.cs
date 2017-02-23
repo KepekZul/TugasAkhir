@@ -10,9 +10,8 @@ namespace Program
     class LocalDirectionalPattern
     {
         int[,] kirschMask;
-        Bitmap originalImage;
         int[,] originalMatrix;
-        List<List<int>> ldpResult;
+        int[,] ldpResult;
         private void initMask()
         {
             this.kirschMask = new int[9, 9] { { 5, 5,-3, 5, 0,-3,-3,-3,-3},//m3
@@ -25,22 +24,21 @@ namespace Program
                                               {-3,-3,-3,-3, 0,-3, 5, 5, 5},//m6
                                               {-3,-3,-3,-3, 0, 5,-3, 5, 5},//m7
                                           };
-            this.ldpResult = new List<List<int>>();
+            //this.ldpResult = new List<List<int>>();
         }
         public LocalDirectionalPattern(Bitmap inputImage)
         {
             initMask();
-            this.originalImage = new Bitmap(inputImage);
-            generateInitialMatrix();
+            generateInitialMatrix(inputImage);
         }
-        private void generateInitialMatrix()
+        private void generateInitialMatrix(Bitmap inputImage)
         {
-            this.originalMatrix = new int[this.originalImage.Width, this.originalImage.Height];
-            for(int i=0; i<this.originalImage.Width; i++)
+            this.originalMatrix = new int[inputImage.Width, inputImage.Height];
+            for(int i=0; i<inputImage.Width; i++)
             {
-                for(int j=0; j<this.originalImage.Height; j++)
+                for(int j=0; j<inputImage.Height; j++)
                 {
-                    this.originalMatrix[i, j] = Convert.ToInt32(this.originalImage.GetPixel(i, j).G.ToString());
+                    this.originalMatrix[i, j] = Convert.ToInt32(inputImage.GetPixel(i, j).G.ToString());
                 }
             }
         }
@@ -100,6 +98,25 @@ namespace Program
                 result[i] = data[i];
             }
             return result;
+        }
+        public void getLdpCodedImage()
+        {
+            this.ldpResult = new int[this.originalMatrix.GetLength(0),this.originalMatrix.GetLength(1)];
+            for(int i=0; i<this.originalMatrix.GetLength(0); i++)
+            {
+                for(int j=0; j<this.originalMatrix.GetLength(1); j++)
+                {
+                    int[] matrixChunks = new int[9];
+                    for(int x=-1; x<2; x++)
+                    {
+                        for(int y=-1; y<2; y++)
+                        {
+                            matrixChunks[y + 1 + x + 1] = this.originalMatrix[i + x, j + y];
+                        }
+                    }
+                    //this.ldpResult[i,]=ldpCode(matrixChunks);
+                }
+            }
         }
     }
 }

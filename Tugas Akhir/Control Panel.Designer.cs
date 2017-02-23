@@ -47,6 +47,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.FilenameFilterBox = new System.Windows.Forms.TextBox();
+            this.resizeButton = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -211,11 +212,22 @@
             this.FilenameFilterBox.Size = new System.Drawing.Size(319, 20);
             this.FilenameFilterBox.TabIndex = 18;
             // 
+            // resizeButton
+            // 
+            this.resizeButton.Location = new System.Drawing.Point(208, 144);
+            this.resizeButton.Name = "resizeButton";
+            this.resizeButton.Size = new System.Drawing.Size(75, 23);
+            this.resizeButton.TabIndex = 19;
+            this.resizeButton.Text = "Resize";
+            this.resizeButton.UseVisualStyleBackColor = true;
+            this.resizeButton.Click += new System.EventHandler(this.resize);
+            // 
             // Control_Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 186);
+            this.Controls.Add(this.resizeButton);
             this.Controls.Add(this.FilenameFilterBox);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -263,5 +275,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox FilenameFilterBox;
+        private System.Windows.Forms.Button resizeButton;
     }
 }

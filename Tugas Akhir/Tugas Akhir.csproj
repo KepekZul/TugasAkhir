@@ -119,6 +119,7 @@
     <Compile Include="ImageCrop.cs" />
     <Compile Include="LocalDirectionalPattern.cs" />
     <Compile Include="MultiCrop.cs" />
+    <Compile Include="MultiResize.cs" />
     <Compile Include="PpmToBitmap.cs" />
     <Compile Include="ujiCobaGambar.cs">
       <SubType>Form</SubType>

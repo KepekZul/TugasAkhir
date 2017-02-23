@@ -96,6 +96,29 @@ namespace Tugas_Akhir
             cropingThread[0].Start();
             cropingThread[1].Start();
         }
+        private void resize(object sender, EventArgs e)
+        {
+            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
+            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
+            MultiResize[] resizeThread = new MultiResize[2];
+            string[] partisiAwal = new string[allSourceFiles.Length/2];
+            string[] partisiAkhir = new string[allSourceFiles.Length/2 + ((allSourceFiles.Length%2==1)?1:0)];
+            for(int i=0; i<this.allSourceFiles.Length/2; i++)
+            {
+                partisiAwal[i] = allSourceFiles[i];
+            }
+            for (int i = 0; i < allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0); i++)
+            {
+                partisiAkhir[i] = allSourceFiles[i + allSourceFiles.Length / 2];
+            }
+            resizeThread[0] = new MultiResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
+            resizeThread[1] = new MultiResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
+            Thread[] runningThread = new Thread[2];
+            runningThread[0] = new Thread(new ThreadStart(resizeThread[0].Resize));
+            runningThread[1] = new Thread(new ThreadStart(resizeThread[1].Resize));
+            runningThread[0].Start();
+            runningThread[1].Start();
+        }
     }
     //selfmade class for dropddown list item
     public class ComboboxItem
