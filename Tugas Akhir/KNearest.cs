@@ -22,7 +22,7 @@ namespace Tugas_Akhir
                 this.dataTrain = dataTrain;
                 for (int i = 0; i < labelTrain.Length; i++)
                 {
-                    chiDistances.Add(coupleObj);
+                    chiDistances.Add(new Couple(0, labelTrain[i]));
                 }
             }
         }
@@ -32,37 +32,37 @@ namespace Tugas_Akhir
             foreach (int[] feature in dataTrain)
             {
                 ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(this.dataTest, feature);
-                Couple coupleObj = new Couple(chiObj.CalculateDissimilarityValue(), chiDistances[counter].)
-                coupleObj.distance = chiObj.CalculateDissimilarityValue();
-                coupleObj.label = chiDistances[counter].label;
-                chiDistances[counter] = coupleObj;
+                chiDistances[counter].Distance = chiObj.CalculateDissimilarityValue();
                 counter++;
             }
+            chiDistances.Sort((s1, s2) => s1.Distance.CompareTo(s2.Distance));
         }
         private string getClass()
         {
             calculateDistances();
-            chiDistances.Sort((s1, s2) => s1.distance.CompareTo(s2.distance));
-            string label = getMostNeighbour();
-            return label;
+            chiDistances.Sort((s1, s2) => s1.);
+            return getMostNeighbour();
         }
         private string getMostNeighbour()
         {
-            List<Couple> topK = new List<Couple>();
+            List<Pair> topK = new List<Pair>();
             for(int i=0; i<this.K_constanta; i++)
             {
                 for(int j=0; j<topK.Count; j++)
                 {
-                    if (topK[j].Key == chiDistances[i].label)
+                    if (topK[j].Key == chiDistances[i].Label)
                     {
                         topK[j].Value++;
+                        break;
                     }
-                    if (i = this.K_constanta - 1)
+                    if (j == this.K_constanta - 1)
                     {
-                        
+                        Pair pairObj = new Pair(chiDistances[i].Label);
                     }
                 }
             }
+            topK.Sort((s1, s2) => s1.Value.CompareTo(s2.Value));
+            return topK[0].Key;
         }
     }
 }
