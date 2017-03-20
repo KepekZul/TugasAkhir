@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.IO;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using Gabor;
 using System.Configuration;
+using MySql.Data;
 
 namespace Tugas_Akhir
 {
@@ -67,6 +70,7 @@ namespace Tugas_Akhir
             DialogResult hasil = pilihDialog.ShowDialog();
             if (hasil != DialogResult.OK)
                 return;
+            this.imagePath = pilihDialog.FileName;
             gambar = new Bitmap(pilihDialog.FileName);
             pictureBox1.Image = gambar;
             this.imagePath = pilihDialog.FileName;
@@ -77,6 +81,7 @@ namespace Tugas_Akhir
             DialogResult hasil = pilihDialog.ShowDialog();
             if (hasil != DialogResult.OK)
                 return; PortableGrayMap gambar = new PortableGrayMap(pilihDialog.FileName);
+            this.imagePath = pilihDialog.FileName;
             this.gambar  = gambar.MakeBitmap(gambar,1);
             pictureBox1.Image = this.gambar;
             System.Diagnostics.Debug.WriteLine("Lebar: "+this.gambar.Width.ToString()+"Pixel\nTinggi: "+this.gambar.Height.ToString()+"Pixel");
@@ -96,7 +101,7 @@ namespace Tugas_Akhir
             //pictureBox1.Image = colorImgage.ToBitmap();
             MessageBox.Show("Selesai");
             //ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
-            ImageCrop Croper = new ImageCrop(new Bitmap(imagePath), this.min, this.max, true);
+            ImageCrop Croper = new ImageCrop(this.gambar , this.min, this.max, true);
             Bitmap[] hasilCrop = Croper.getImages();
             foreach(Bitmap cropImage in hasilCrop)
             {
@@ -112,12 +117,13 @@ namespace Tugas_Akhir
             DialogResult hasil = pilihDialog.ShowDialog();
             if (hasil != DialogResult.OK)
                 return;
+            this.imagePath = pilihDialog.FileName;
             this.gambar = PPMReader.ReadBitmapFromPPM(pilihDialog.FileName);
             pictureBox1.Image = this.gambar;
             System.Diagnostics.Debug.WriteLine("Lebar: " + this.gambar.Width.ToString() + "Pixel\nTinggi: " + this.gambar.Height.ToString() + "Pixel");
         }
 
-        private void piluhFolderDuplikat(object sender, EventArgs e)
+        private void pilihFolderDuplikat(object sender, EventArgs e)
         {
             string[] allSourceFiles;
             string selekpeth = pilihFolderHapus();
@@ -164,6 +170,43 @@ namespace Tugas_Akhir
             gambar._EqualizeHist();
             this.gambar = gambar.ToBitmap();
             this.pictureBox1.Image = gambar.ToBitmap();
+        }
+
+        private void gaborFilter(object sender, EventArgs e)
+        {
+            GaborKernel krnl, krnle2;
+            GaborFilter filter;
+            krnl = new GaborKernel(0, 4);
+            krnle2 = new GaborKernel(4, 2);
+            filter = new GaborFilter();
+            Image<Gray, float> gaborGambar = new Image<Gray, float>(this.gambar);
+            Image<Gray, float> tr = filter.Convolution(gaborGambar, krnl, GABOR_TYPE.GABOR_MAG);
+            Image<Gray, float> tr2 = filter.Convolution(gaborGambar, krnle2, GABOR_TYPE.GABOR_MAG);
+            tampilHasilCrop ini = new tampilHasilCrop(tr.ToBitmap());
+            tampilHasilCrop itu = new tampilHasilCrop(tr2.ToBitmap());
+            ini.Show();
+            itu.Show();
+        }
+
+        private void screenShot_Click(object sender, EventArgs e)
+        {
+            Bitmap captureBitmap = new Bitmap(1024, 768, PixelFormat.Format32bppArgb);
+
+            //Bitmap captureBitmap = new Bitmap(int width, int height, PixelFormat);
+            //Creating a Rectangle object which will  
+            //capture our Current Screen
+            Rectangle captureRectangle = Screen.AllScreens[0].Bounds;
+
+            //Creating a New Graphics Object
+            Graphics captureGraphics = Graphics.FromImage(captureBitmap);
+
+            //Copying Image from The Screen
+            captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
+
+            //Saving the Image File (I am here Saving it in My E drive).
+            pictureBox1.Image = captureBitmap;
+
+            //Displaying the Successfull Result
         }
     }
 }

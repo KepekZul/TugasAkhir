@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace Program
+namespace Tugas_Akhir
 {
     class LocalDirectionalPattern
     {
@@ -18,13 +18,12 @@ namespace Program
                                               { 5, 5, 5,-3, 0,-3,-3,-3,-3},//m2
                                               {-3, 5, 5,-3, 0, 5,-3,-3,-3},//m1
                                               { 5,-3,-3, 5, 0,-3, 5,-3,-3},//m4
-                                              { 0, 0, 0, 0, 0, 0, 0, 0, 0},//mpas
+                                              { 0, 0, 0, 0, 0, 0, 0, 0, 0},//filler
                                               {-3,-3, 5,-3, 0, 5,-3,-3, 5},//m0
                                               {-3,-3,-3, 5, 0,-3, 5, 5,-3},//m5
                                               {-3,-3,-3,-3, 0,-3, 5, 5, 5},//m6
                                               {-3,-3,-3,-3, 0, 5,-3, 5, 5},//m7
                                           };
-            //this.ldpResult = new List<List<int>>();
         }
         public LocalDirectionalPattern(Bitmap inputImage)
         {

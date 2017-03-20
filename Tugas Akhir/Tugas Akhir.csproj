@@ -76,6 +76,10 @@
     <Reference Include="Emgu.CV.World">
       <HintPath>..\..\..\emgu opencv\emgucv-windesktop 3.1.0.2504\bin\Emgu.CV.World.dll</HintPath>
     </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.9\lib\net45\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -111,6 +115,8 @@
     <Compile Include="deleteGambar.Designer.cs">
       <DependentUpon>deleteGambar.cs</DependentUpon>
     </Compile>
+    <Compile Include="GaborFilter.cs" />
+    <Compile Include="GaborKernel.cs" />
     <Compile Include="haar_training_set.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,6 +170,7 @@
     <EmbeddedResource Include="tampilHasilCrop.resx">
       <DependentUpon>tampilHasilCrop.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

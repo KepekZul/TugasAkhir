@@ -44,3 +44,4 @@ C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\D
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.tampilHasilCrop.resources
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.csproj.GenerateResource.Cache
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.ujiCobaGambar.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\MySql.Data.dll

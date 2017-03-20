@@ -44,6 +44,8 @@
             this.pGMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lainlainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pakaiHisteqToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gaborFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.screenShot = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -86,7 +88,7 @@
             this.button6.TabIndex = 6;
             this.button6.Text = "pilih duplikat";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.piluhFolderDuplikat);
+            this.button6.Click += new System.EventHandler(this.pilihFolderDuplikat);
             // 
             // richTextBox1
             // 
@@ -152,28 +154,29 @@
             // bitmapToolStripMenuItem
             // 
             this.bitmapToolStripMenuItem.Name = "bitmapToolStripMenuItem";
-            this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.bitmapToolStripMenuItem.Text = "Bitmap";
             this.bitmapToolStripMenuItem.Click += new System.EventHandler(this.pilihGambar);
             // 
             // pPMToolStripMenuItem
             // 
             this.pPMToolStripMenuItem.Name = "pPMToolStripMenuItem";
-            this.pPMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pPMToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.pPMToolStripMenuItem.Text = "PPM";
             this.pPMToolStripMenuItem.Click += new System.EventHandler(this.pilihGambarPPM);
             // 
             // pGMToolStripMenuItem
             // 
             this.pGMToolStripMenuItem.Name = "pGMToolStripMenuItem";
-            this.pGMToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pGMToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.pGMToolStripMenuItem.Text = "PGM";
             this.pGMToolStripMenuItem.Click += new System.EventHandler(this.pilihGambarPGM);
             // 
             // lainlainToolStripMenuItem
             // 
             this.lainlainToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pakaiHisteqToolStripMenuItem});
+            this.pakaiHisteqToolStripMenuItem,
+            this.gaborFilterToolStripMenuItem});
             this.lainlainToolStripMenuItem.Name = "lainlainToolStripMenuItem";
             this.lainlainToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.lainlainToolStripMenuItem.Text = "Lain-lain";
@@ -181,15 +184,33 @@
             // pakaiHisteqToolStripMenuItem
             // 
             this.pakaiHisteqToolStripMenuItem.Name = "pakaiHisteqToolStripMenuItem";
-            this.pakaiHisteqToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pakaiHisteqToolStripMenuItem.Text = "Pakai Histeq";
+            this.pakaiHisteqToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.pakaiHisteqToolStripMenuItem.Text = "Histogram Equalization";
             this.pakaiHisteqToolStripMenuItem.Click += new System.EventHandler(this.applyHisteq);
+            // 
+            // gaborFilterToolStripMenuItem
+            // 
+            this.gaborFilterToolStripMenuItem.Name = "gaborFilterToolStripMenuItem";
+            this.gaborFilterToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.gaborFilterToolStripMenuItem.Text = "Gabor Filter";
+            this.gaborFilterToolStripMenuItem.Click += new System.EventHandler(this.gaborFilter);
+            // 
+            // screenShot
+            // 
+            this.screenShot.Location = new System.Drawing.Point(433, 290);
+            this.screenShot.Name = "screenShot";
+            this.screenShot.Size = new System.Drawing.Size(75, 23);
+            this.screenShot.TabIndex = 14;
+            this.screenShot.Text = "Skrinsut";
+            this.screenShot.UseVisualStyleBackColor = true;
+            this.screenShot.Click += new System.EventHandler(this.screenShot_Click);
             // 
             // ujiCobaGambar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 459);
+            this.Controls.Add(this.screenShot);
             this.Controls.Add(this.MaxBox);
             this.Controls.Add(this.MinBox);
             this.Controls.Add(this.button7);
@@ -231,6 +252,8 @@
         private System.Windows.Forms.ToolStripMenuItem pGMToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lainlainToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pakaiHisteqToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gaborFilterToolStripMenuItem;
+        private System.Windows.Forms.Button screenShot;
     }
 }
 
