@@ -123,10 +123,13 @@
       <DependentUpon>haar_training_set.resx</DependentUpon>
     </Compile>
     <Compile Include="ImageCrop.cs" />
+    <Compile Include="KNearest.cs" />
     <Compile Include="LocalDirectionalPattern.cs" />
     <Compile Include="MultiCrop.cs" />
     <Compile Include="MultiResize.cs" />
     <Compile Include="PpmToBitmap.cs" />
+    <Compile Include="Selfmade DataStructure\Couple.cs" />
+    <Compile Include="Selfmade DataStructure\Pair.cs" />
     <Compile Include="ujiCobaGambar.cs">
       <SubType>Form</SubType>
     </Compile>

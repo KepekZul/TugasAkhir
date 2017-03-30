@@ -14,12 +14,11 @@ namespace Tugas_Akhir
         int[,] ldpResult;
         private void initMask()
         {
-            this.kirschMask = new int[9, 9] { { 5, 5,-3, 5, 0,-3,-3,-3,-3},//m3
-                                              { 5, 5, 5,-3, 0,-3,-3,-3,-3},//m2
+            this.kirschMask = new int[8, 9] { {-3,-3, 5,-3, 0, 5,-3,-3, 5},//m0
                                               {-3, 5, 5,-3, 0, 5,-3,-3,-3},//m1
+                                              { 5, 5, 5,-3, 0,-3,-3,-3,-3},//m2
+                                              { 5, 5,-3, 5, 0,-3,-3,-3,-3},//m3
                                               { 5,-3,-3, 5, 0,-3, 5,-3,-3},//m4
-                                              { 0, 0, 0, 0, 0, 0, 0, 0, 0},//filler
-                                              {-3,-3, 5,-3, 0, 5,-3,-3, 5},//m0
                                               {-3,-3,-3, 5, 0,-3, 5, 5,-3},//m5
                                               {-3,-3,-3,-3, 0,-3, 5, 5, 5},//m6
                                               {-3,-3,-3,-3, 0, 5,-3, 5, 5},//m7
@@ -42,7 +41,7 @@ namespace Tugas_Akhir
             }
         }
 
-        private int convoluteMask(int[] mask, int[] imageMat)
+        private int correlateMask(int[] mask, int[] imageMat)
         {
             int acumulation = 0;
             for(int i=0; i<9; i++)
@@ -65,7 +64,7 @@ namespace Tugas_Akhir
                 {
                     subMask[j] = this.kirschMask[i, j];
                 }
-                ldpMatrixSequence[i] = convoluteMask(subMask, matrixBlock);
+                ldpMatrixSequence[i] = correlateMask(subMask, matrixBlock);
             }
             int[] topThree = getMax(ldpMatrixSequence,3);
             for (int i = 0; i < 9; i++)
@@ -78,14 +77,19 @@ namespace Tugas_Akhir
                         ldpMatrixSequence[i] = 0;
                 }
             }
-            ldpBinaryCode = ldpMatrixSequence[6].ToString() + ldpBinaryCode;
-            ldpBinaryCode = ldpMatrixSequence[3].ToString() + ldpBinaryCode;
-            ldpBinaryCode = ldpMatrixSequence[2].ToString() + ldpBinaryCode;
-            ldpBinaryCode = ldpMatrixSequence[1].ToString() + ldpBinaryCode;
-            ldpBinaryCode = ldpMatrixSequence[4].ToString() + ldpBinaryCode;
-            ldpBinaryCode = ldpMatrixSequence[7].ToString() + ldpBinaryCode;
-            ldpBinaryCode = ldpMatrixSequence[8].ToString() + ldpBinaryCode;
-            ldpBinaryCode = ldpMatrixSequence[9].ToString() + ldpBinaryCode;
+            for(int i=0; i<9; i++)
+            {
+                ldpBinaryCode += ldpMatrixSequence[i].ToString();
+            }
+            //obsolete
+            //ldpBinaryCode = ldpMatrixSequence[6].ToString() + ldpBinaryCode;
+            //ldpBinaryCode = ldpMatrixSequence[3].ToString() + ldpBinaryCode;
+            //ldpBinaryCode = ldpMatrixSequence[2].ToString() + ldpBinaryCode;
+            //ldpBinaryCode = ldpMatrixSequence[1].ToString() + ldpBinaryCode;
+            //ldpBinaryCode = ldpMatrixSequence[4].ToString() + ldpBinaryCode;
+            //ldpBinaryCode = ldpMatrixSequence[7].ToString() + ldpBinaryCode;
+            //ldpBinaryCode = ldpMatrixSequence[8].ToString() + ldpBinaryCode;
+            //ldpBinaryCode = ldpMatrixSequence[9].ToString() + ldpBinaryCode;
             return Convert.ToInt32(ldpBinaryCode, 2);
         }
         private int[] getMax(int[] data, int ammount)//to get most significatn bit
@@ -101,9 +105,9 @@ namespace Tugas_Akhir
         public void getLdpCodedImage()
         {
             this.ldpResult = new int[this.originalMatrix.GetLength(0),this.originalMatrix.GetLength(1)];
-            for(int i=0; i<this.originalMatrix.GetLength(0); i++)
+            for(int i=1; i<this.originalMatrix.GetLength(0)-1; i++)
             {
-                for(int j=0; j<this.originalMatrix.GetLength(1); j++)
+                for(int j=1; j<this.originalMatrix.GetLength(1)-1; j++)
                 {
                     int[] matrixChunks = new int[9];
                     for(int x=-1; x<2; x++)
@@ -113,7 +117,7 @@ namespace Tugas_Akhir
                             matrixChunks[y + 1 + x + 1] = this.originalMatrix[i + x, j + y];
                         }
                     }
-                    //this.ldpResult[i,]=ldpCode(matrixChunks);
+                    this.ldpResult[i,j]=ldpCode(matrixChunks);
                 }
             }
         }
