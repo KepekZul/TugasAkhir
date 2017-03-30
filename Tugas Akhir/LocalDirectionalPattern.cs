@@ -12,6 +12,8 @@ namespace Tugas_Akhir
         int[,] kirschMask;
         int[,] originalMatrix;
         int[,] ldpResult;
+
+        int[,] drldpMatrix;
         private void initMask()
         {
             this.kirschMask = new int[8, 9] { {-3,-3, 5,-3, 0, 5,-3,-3, 5},//m0
@@ -53,7 +55,7 @@ namespace Tugas_Akhir
             }
             return (acumulation>0)?acumulation:-acumulation; //result converted to keep the result always positive
         }
-        public int ldpCode(int[] matrixBlock)
+        private int ldpCode(int[] matrixBlock)
         {
             string ldpBinaryCode = "";
             int[] ldpMatrixSequence = new int[9];
@@ -81,20 +83,11 @@ namespace Tugas_Akhir
             {
                 ldpBinaryCode += ldpMatrixSequence[i].ToString();
             }
-            //obsolete
-            //ldpBinaryCode = ldpMatrixSequence[6].ToString() + ldpBinaryCode;
-            //ldpBinaryCode = ldpMatrixSequence[3].ToString() + ldpBinaryCode;
-            //ldpBinaryCode = ldpMatrixSequence[2].ToString() + ldpBinaryCode;
-            //ldpBinaryCode = ldpMatrixSequence[1].ToString() + ldpBinaryCode;
-            //ldpBinaryCode = ldpMatrixSequence[4].ToString() + ldpBinaryCode;
-            //ldpBinaryCode = ldpMatrixSequence[7].ToString() + ldpBinaryCode;
-            //ldpBinaryCode = ldpMatrixSequence[8].ToString() + ldpBinaryCode;
-            //ldpBinaryCode = ldpMatrixSequence[9].ToString() + ldpBinaryCode;
             return Convert.ToInt32(ldpBinaryCode, 2);
         }
         private int[] getMax(int[] data, int ammount)//to get most significatn bit
         {
-            data.OrderBy(h => h);
+            Array.Sort<int>(data, new Comparison<int>((a, b) => (b.CompareTo(a));
             int[] result = new int[3];
             for(int i=0; i<ammount; i++)
             {
@@ -102,7 +95,7 @@ namespace Tugas_Akhir
             }
             return result;
         }
-        public void getLdpCodedImage()
+        private void getLdpCodedImage()
         {
             this.ldpResult = new int[this.originalMatrix.GetLength(0),this.originalMatrix.GetLength(1)];
             for(int i=1; i<this.originalMatrix.GetLength(0)-1; i++)
@@ -118,6 +111,17 @@ namespace Tugas_Akhir
                         }
                     }
                     this.ldpResult[i,j]=ldpCode(matrixChunks);
+                }
+            }
+        }
+        private void dimensionReduction()
+        {
+            int size = this.ldpResult.GetLength(0);
+            for(int i=0;    i<size; i += 3)
+            {
+                for(int j=0;   j<size; j += 3)
+                {
+
                 }
             }
         }
