@@ -46,6 +46,7 @@
             this.pakaiHisteqToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gaborFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.screenShot = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -205,11 +206,22 @@
             this.screenShot.UseVisualStyleBackColor = true;
             this.screenShot.Click += new System.EventHandler(this.screenShot_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(434, 320);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "DRLDP";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ujiCobaGambar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 459);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.screenShot);
             this.Controls.Add(this.MaxBox);
             this.Controls.Add(this.MinBox);
@@ -254,6 +266,7 @@
         private System.Windows.Forms.ToolStripMenuItem pakaiHisteqToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gaborFilterToolStripMenuItem;
         private System.Windows.Forms.Button screenShot;
+        private System.Windows.Forms.Button button1;
     }
 }
 

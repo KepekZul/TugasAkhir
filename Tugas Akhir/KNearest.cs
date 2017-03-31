@@ -40,7 +40,7 @@ namespace Tugas_Akhir
         private string getClass()
         {
             calculateDistances();
-            chiDistances.Sort((s1, s2) => s1.);
+            chiDistances.Sort((s1, s2)=> s1.Distance.CompareTo(s2.Distance));
             return getMostNeighbour();
         }
         private string getMostNeighbour()
