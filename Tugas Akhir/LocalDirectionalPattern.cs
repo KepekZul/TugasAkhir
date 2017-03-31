@@ -114,16 +114,43 @@ namespace Tugas_Akhir
                 }
             }
         }
-        private void dimensionReduction()
+        private void dimensionReduction()//reduce dimension by xor operation
         {
             int size = this.ldpResult.GetLength(0);
             for(int i=0;    i<size; i += 3)
             {
                 for(int j=0;   j<size; j += 3)
                 {
-
+                    var drldpcode=0;
+                    drldpcode = drldpcode ^ this.ldpResult[i, j];
                 }
             }
+        }
+        private string binaryChecker(string input)//to check that maximum '1' occurs three times in a binary string
+        {
+            int oneCounter = 0;
+            char[] result = input.ToCharArray();
+            for (int i = 0; i < result.Length; i++)
+            {
+                //System.Diagnostics.Debug.WriteLine("get in loop");
+                //System.Diagnostics.Debug.WriteLine(result[i]);
+                if (result[i] == '1')
+                {
+                    oneCounter++;
+                    //System.Diagnostics.Debug.WriteLine("detect 1");
+                }
+                if (oneCounter >= 3)
+                {
+                    //System.Diagnostics.Debug.WriteLine("set rest as zero");
+                    for (int j = i + 1; j < result.Length; j++)
+                    {
+                        result[j] = '0';
+                    }
+                    break;
+                }
+            }
+            //System.Diagnostics.Debug.WriteLine(new string(result));
+            return new string(result);
         }
     }
 }
