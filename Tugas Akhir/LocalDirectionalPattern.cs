@@ -53,6 +53,7 @@ namespace Tugas_Akhir
             //System.Diagnostics.Debug.WriteLine("Hasil korelasi: "+acumulation.ToString());
             return (acumulation>0)?acumulation:-acumulation; //result converted to keep the result always positive
         }
+        //ultimate wrong here
         private int getLdpCode(int[] matrixBlock)//get ldpcode for each pixel block of image
         {
             string ldpBinaryCode = "";
@@ -100,6 +101,8 @@ namespace Tugas_Akhir
             }
             return result;
         }
+
+        //wrong is here
         private void getLdpCodedImage()//do the ldp generating code to the entire image
         {
             this.ldpResult = new int[this.originalMatrix.GetLength(0),this.originalMatrix.GetLength(1)];
@@ -114,10 +117,13 @@ namespace Tugas_Akhir
                         {
                             //something wrong here!!!!!!!!!!!
                             matrixChunks[y + 1 + x + 1] = this.originalMatrix[i + x, j + y];//fetching the pixel value
-                            //System.Diagnostics.Debug.WriteLine(matrixChunks[y + 1 + x + 1].ToString());
+                            System.Diagnostics.Debug.Write(matrixChunks[y + 1 + x + 1].ToString()+" ");
                         }
                     }
-                    this.ldpResult[i,j]=getLdpCode(matrixChunks);
+                    //System.Diagnostics.Debug.Write(string.Join("", matrixChunks));
+                    System.Diagnostics.Debug.Write(" to be ");
+                    this.ldpResult[i,j]=getLdpCode(matrixChunks);//or here
+                    System.Diagnostics.Debug.WriteLine(this.ldpResult[i, j].ToString());
                 }
             }
         }
@@ -129,6 +135,7 @@ namespace Tugas_Akhir
             {
                 for(int j=0;   j<size; j += 3)
                 {
+                    //System.Diagnostics.Debug.WriteLine(this.ldpResult[i,j].ToString());
                     int drldpcode=0;
                     for(int x=0; x<3; x++)
                     {
@@ -151,7 +158,7 @@ namespace Tugas_Akhir
             return this.drldpMatrix;
         }
         //this part of code is finished and tested.
-        static private int binaryChecker(int input)//to check that maximum '1' occurs three times in a binary string
+        private int binaryChecker(int input)//to check that maximum '1' occurs three times in a binary string
         {
             int oneCounter = 0;
             char[] result = Convert.ToString(input, 2).ToCharArray();
@@ -175,7 +182,7 @@ namespace Tugas_Akhir
                     }
                 }
             }
-            System.Diagnostics.Debug.WriteLine("result in char " + new string(result));
+            //System.Diagnostics.Debug.WriteLine("result in char " + new string(result) + " typeof " + result.ToString());
             return Convert.ToInt32(new string(result), 2);//return decimal integer
         }
     }
