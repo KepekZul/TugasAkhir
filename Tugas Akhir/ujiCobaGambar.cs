@@ -213,15 +213,15 @@ namespace Tugas_Akhir
         {
             LocalDirectionalPattern ldp = new LocalDirectionalPattern(this.gambar);
             ldp.getDRLDPMatrix();
-            int lebar = ldp.ldpResult.GetLength(0);
-            int tinggi = ldp.ldpResult.GetLength(0);
+            int lebar = ldp.drldpMatrix.GetLength(0);
+            int tinggi = ldp.drldpMatrix.GetLength(0);
             Bitmap hasil = new Bitmap(lebar, tinggi);
             for(int i=0; i<lebar; i++)
             {
                 for(int j=0; j<tinggi; j++)
                 {
-                    //System.Diagnostics.Debug.WriteLine(ldp.ldpResult[i, j].ToString());
-                    hasil.SetPixel(i, j, Color.FromArgb(ldp.ldpResult[i, j], ldp.ldpResult[i, j], ldp.ldpResult[i, j]));
+                    //System.Diagnostics.Debug.Write(ldp.ldpResult[i, j].ToString()+" ");
+                    hasil.SetPixel(i, j, Color.FromArgb(ldp.drldpMatrix[i, j], ldp.drldpMatrix[i, j], ldp.drldpMatrix[i, j]));
                 }
             }
             pictureBox1.Image = hasil;

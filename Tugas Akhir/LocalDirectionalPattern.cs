@@ -49,55 +49,70 @@ namespace Tugas_Akhir
             for(int i=0; i<9; i++)
             {
                 acumulation += mask[i] * imageMat[i];
+                //System.Diagnostics.Debug.Write(mask[i].ToString()+" X "+imageMat[i].ToString()+" = " + (mask[i] * imageMat[i]).ToString()+". ");
             }
+            //System.Diagnostics.Debug.WriteLine("");
             //System.Diagnostics.Debug.WriteLine("Hasil korelasi: "+acumulation.ToString());
             return (acumulation>0)?acumulation:-acumulation; //result converted to keep the result always positive
         }
-        //ultimate wrong here
+
         private int getLdpCode(int[] matrixBlock)//get ldpcode for each pixel block of image
         {
             string ldpBinaryCode = "";
             int[] ldpMatrixSequence = new int[9];//1x9 matrix containing the result of correlation matrix
-            for(int i=0; i<8; i++)
+            for (int i=0; i<8; i++)
             {
                 int[] subMask = new int[9];//used to fetch mask from 2 dimension array to 1 dimension array
                 for(int j=0; j<9; j++)
                 {
                     subMask[j] = this.kirschMask[i, j];
                 }
+                //System.Diagnostics.Debug.WriteLine(string.Join("",subMask));
                 ldpMatrixSequence[i] = correlateMask(subMask, matrixBlock);
             }
-            int[] topThree = getMax(ldpMatrixSequence,3);//get the k (in this case is 3) most significant bit
-            //for debugging
-            //for (int i = 0; i < ldpMatrixSequence.GetLength(0); i++)
-            //{
-            //    System.Diagnostics.Debug.Write(ldpMatrixSequence[i]);
-            //    System.Diagnostics.Debug.WriteLine("");
-            //}
+            //System.Diagnostics.Debug.WriteLine("");
+            int[] arrayInt = getMax(ldpMatrixSequence,3);//get the k (in this case is 3) most significant bit
+            List<int> topThree = new List<int>();
+            for(int i =0; i<arrayInt.Length; i++)
+            {
+                topThree.Add(arrayInt[i]);
+            }
+            //System.Diagnostics.Debug.Write("\ntop three "+topThree[0].ToString() + " " + topThree[1].ToString() + " " + topThree[2].ToString() + "\n");
+            //System.Diagnostics.Debug.Write("ldp sequence ");
             for (int i = 0; i < 9; i++)
             {
-                for (int j = 0; j < 3; j++)
+                //System.Diagnostics.Debug.Write(ldpMatrixSequence[i].ToString()+" ");
+                if (topThree.Contains(ldpMatrixSequence[i]))
                 {
-                    if (ldpMatrixSequence[i] == topThree[j])//set the most significant bit value to 1
-                        ldpMatrixSequence[i] = 1;
-                    else if (j == 2)
-                        ldpMatrixSequence[i] = 0;//and other else as 0
+                    //System.Diagnostics.Debug.Write(ldpMatrixSequence[i].ToString()+" == " +topThree.Contains(ldpMatrixSequence[i]));
+                    topThree.Remove(ldpMatrixSequence[i]);
+                    //System.Diagnostics.Debug.Write(ldpMatrixSequence[i].ToString()+" ");
+                    ldpMatrixSequence[i] = 1;
+                }else
+                {
+                    ldpMatrixSequence[i] = 0;
                 }
             }
-            for(int i=0; i<9; i++)
+            //System.Diagnostics.Debug.WriteLine("");
+            for(int i=8; i>=0; i--)
             {
                 ldpBinaryCode += ldpMatrixSequence[i].ToString();//concatenating binary to string
             }
+            //System.Diagnostics.Debug.WriteLine("binary code "+ldpBinaryCode);
             //System.Diagnostics.Debug.WriteLine(Convert.ToInt32(ldpBinaryCode, 2).ToString());
             return Convert.ToInt32(ldpBinaryCode, 2);//convert from binary string to decimal integers has been tested
         }
-        private int[] getMax(int[] data, int ammount)//to get most significatn bit
+        private int[] getMax(int[] asli, int ammount)//to get most significatn bit
         {
+            int[] data = new int[9];
+            asli.CopyTo(data, 0);
             Array.Sort<int>(data, new Comparison<int>((a, b) => (b.CompareTo(a))));//sort descending, lambda expression has been tested
             int[] result = new int[3];
+            //System.Diagnostics.Debug.WriteLine("top three ");
             for(int i=0; i<ammount; i++)
             {
                 result[i] = data[i];
+                //System.Diagnostics.Debug.Write(result[i].ToString()+" ");
             }
             return result;
         }
@@ -106,24 +121,24 @@ namespace Tugas_Akhir
         private void getLdpCodedImage()//do the ldp generating code to the entire image
         {
             this.ldpResult = new int[this.originalMatrix.GetLength(0),this.originalMatrix.GetLength(1)];
-            for(int i=1; i<this.originalMatrix.GetLength(0)-1; i++)
+            for(int x=1; x<this.originalMatrix.GetLength(0)-1; x++)
             {
-                for(int j=1; j<this.originalMatrix.GetLength(1)-1; j++)
+                for(int y=1; y<this.originalMatrix.GetLength(1)-1; y++)
                 {
                     int[] matrixChunks = new int[9];//block of image needed to be correlated with the kirsch mask
-                    for(int x=-1; x<2; x++)
+                    int matIndex = 0;
+                    for(int i=-1; i<2; i++)
                     {
-                        for(int y=-1; y<2; y++)
+                        for(int j=-1; j<2; j++)
                         {
-                            //something wrong here!!!!!!!!!!!
-                            matrixChunks[y + 1 + x + 1] = this.originalMatrix[i + x, j + y];//fetching the pixel value
-                            System.Diagnostics.Debug.Write(matrixChunks[y + 1 + x + 1].ToString()+" ");
+                            matrixChunks[matIndex] = originalMatrix[x + i, y + j];
+                            //System.Diagnostics.Debug.Write(matrixChunks[matIndex].ToString() + " ");
+                            matIndex++;
                         }
                     }
-                    //System.Diagnostics.Debug.Write(string.Join("", matrixChunks));
-                    System.Diagnostics.Debug.Write(" to be ");
-                    this.ldpResult[i,j]=getLdpCode(matrixChunks);//or here
-                    System.Diagnostics.Debug.WriteLine(this.ldpResult[i, j].ToString());
+                    //System.Diagnostics.Debug.WriteLine(" <<input");
+                    this.ldpResult[x,y]=getLdpCode(matrixChunks);//or here
+                    //System.Diagnostics.Debug.WriteLine(this.ldpResult[x, y].ToString());
                 }
             }
         }
