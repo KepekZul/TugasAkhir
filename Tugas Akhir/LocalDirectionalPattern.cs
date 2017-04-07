@@ -120,7 +120,7 @@ namespace Tugas_Akhir
         //wrong is here
         private void getLdpCodedImage()//do the ldp generating code to the entire image
         {
-            this.ldpResult = new int[this.originalMatrix.GetLength(0),this.originalMatrix.GetLength(1)];
+            this.ldpResult = new int[this.originalMatrix.GetLength(0)-2,this.originalMatrix.GetLength(1)-2];
             for(int x=1; x<this.originalMatrix.GetLength(0)-1; x++)
             {
                 for(int y=1; y<this.originalMatrix.GetLength(1)-1; y++)
@@ -137,7 +137,8 @@ namespace Tugas_Akhir
                         }
                     }
                     //System.Diagnostics.Debug.WriteLine(" <<input");
-                    this.ldpResult[x,y]=getLdpCode(matrixChunks);//or here
+                    //System.Diagnostics.Debug.WriteLine("x: "+x.ToString()+" y:"+y.ToString());
+                    this.ldpResult[x-1,y-1]=getLdpCode(matrixChunks);//or here
                     //System.Diagnostics.Debug.WriteLine(this.ldpResult[x, y].ToString());
                 }
             }
@@ -146,6 +147,7 @@ namespace Tugas_Akhir
         {
             int size = this.ldpResult.GetLength(0);
             this.drldpMatrix = new int[size/3, size/3];
+            System.Diagnostics.Debug.WriteLine(size.ToString());
             for(int i=0;    i<size; i += 3)
             {
                 for(int j=0;   j<size; j += 3)

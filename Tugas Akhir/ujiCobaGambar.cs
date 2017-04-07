@@ -220,11 +220,24 @@ namespace Tugas_Akhir
             {
                 for(int j=0; j<tinggi; j++)
                 {
-                    //System.Diagnostics.Debug.Write(ldp.ldpResult[i, j].ToString()+" ");
                     hasil.SetPixel(i, j, Color.FromArgb(ldp.drldpMatrix[i, j], ldp.drldpMatrix[i, j], ldp.drldpMatrix[i, j]));
                 }
             }
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.Image = hasil;
+            System.Diagnostics.Debug.WriteLine(tinggi.ToString() + " ");
+            lebar = ldp.ldpResult.GetLength(0);
+            tinggi = ldp.ldpResult.GetLength(0);
+            hasil = new Bitmap(lebar, tinggi);
+            for (int i = 0; i < lebar; i++)
+            {
+                for (int j = 0; j < tinggi; j++)
+                {
+                    hasil.SetPixel(i, j, Color.FromArgb(ldp.ldpResult[i, j], ldp.ldpResult[i, j], ldp.ldpResult[i, j]));
+                }
+            }
             pictureBox1.Image = hasil;
+            System.Diagnostics.Debug.Write(tinggi.ToString());
         }
     }
 }

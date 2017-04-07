@@ -47,8 +47,10 @@
             this.gaborFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.screenShot = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -57,13 +59,13 @@
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Location = new System.Drawing.Point(12, 42);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(415, 383);
+            this.pictureBox1.Size = new System.Drawing.Size(319, 300);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(226, 432);
+            this.button2.Location = new System.Drawing.Point(223, 349);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -73,7 +75,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(307, 432);
+            this.button4.Location = new System.Drawing.Point(304, 349);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 4;
@@ -83,7 +85,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(433, 261);
+            this.button6.Location = new System.Drawing.Point(571, 290);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 6;
@@ -93,23 +95,23 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(433, 42);
+            this.richTextBox1.Location = new System.Drawing.Point(571, 42);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(176, 213);
+            this.richTextBox1.Size = new System.Drawing.Size(232, 110);
             this.richTextBox1.TabIndex = 7;
             this.richTextBox1.Text = "";
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(615, 42);
+            this.richTextBox2.Location = new System.Drawing.Point(571, 162);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(188, 213);
+            this.richTextBox2.Size = new System.Drawing.Size(232, 93);
             this.richTextBox2.TabIndex = 8;
             this.richTextBox2.Text = "";
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(615, 261);
+            this.button7.Location = new System.Drawing.Point(571, 261);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 9;
@@ -119,14 +121,14 @@
             // 
             // MinBox
             // 
-            this.MinBox.Location = new System.Drawing.Point(13, 432);
+            this.MinBox.Location = new System.Drawing.Point(10, 349);
             this.MinBox.Name = "MinBox";
             this.MinBox.Size = new System.Drawing.Size(100, 20);
             this.MinBox.TabIndex = 11;
             // 
             // MaxBox
             // 
-            this.MaxBox.Location = new System.Drawing.Point(120, 432);
+            this.MaxBox.Location = new System.Drawing.Point(117, 349);
             this.MaxBox.Name = "MaxBox";
             this.MaxBox.Size = new System.Drawing.Size(100, 20);
             this.MaxBox.TabIndex = 12;
@@ -198,7 +200,7 @@
             // 
             // screenShot
             // 
-            this.screenShot.Location = new System.Drawing.Point(433, 290);
+            this.screenShot.Location = new System.Drawing.Point(571, 319);
             this.screenShot.Name = "screenShot";
             this.screenShot.Size = new System.Drawing.Size(75, 23);
             this.screenShot.TabIndex = 14;
@@ -208,7 +210,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(434, 320);
+            this.button1.Location = new System.Drawing.Point(572, 349);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 15;
@@ -216,11 +218,21 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox2.Location = new System.Drawing.Point(337, 42);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(228, 213);
+            this.pictureBox2.TabIndex = 16;
+            this.pictureBox2.TabStop = false;
+            // 
             // ujiCobaGambar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(815, 459);
+            this.ClientSize = new System.Drawing.Size(815, 380);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.screenShot);
             this.Controls.Add(this.MaxBox);
@@ -240,6 +252,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -267,6 +280,7 @@
         private System.Windows.Forms.ToolStripMenuItem gaborFilterToolStripMenuItem;
         private System.Windows.Forms.Button screenShot;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 
