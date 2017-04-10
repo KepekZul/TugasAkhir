@@ -48,6 +48,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.FilenameFilterBox = new System.Windows.Forms.TextBox();
             this.resizeButton = new System.Windows.Forms.Button();
+            this.ExtractImage = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -222,11 +223,22 @@
             this.resizeButton.UseVisualStyleBackColor = true;
             this.resizeButton.Click += new System.EventHandler(this.resize);
             // 
+            // ExtractImage
+            // 
+            this.ExtractImage.Location = new System.Drawing.Point(669, 51);
+            this.ExtractImage.Name = "ExtractImage";
+            this.ExtractImage.Size = new System.Drawing.Size(75, 23);
+            this.ExtractImage.TabIndex = 20;
+            this.ExtractImage.Text = "Extract";
+            this.ExtractImage.UseVisualStyleBackColor = true;
+            this.ExtractImage.Click += new System.EventHandler(this.ExtractImage_Click);
+            // 
             // Control_Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 186);
+            this.Controls.Add(this.ExtractImage);
             this.Controls.Add(this.resizeButton);
             this.Controls.Add(this.FilenameFilterBox);
             this.Controls.Add(this.label7);
@@ -276,5 +288,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox FilenameFilterBox;
         private System.Windows.Forms.Button resizeButton;
+        private System.Windows.Forms.Button ExtractImage;
     }
 }

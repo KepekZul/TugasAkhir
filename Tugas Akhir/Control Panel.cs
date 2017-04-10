@@ -119,6 +119,11 @@ namespace Tugas_Akhir
             runningThread[0].Start();
             runningThread[1].Start();
         }
+
+        private void ExtractImage_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
     //selfmade class for dropddown list item
     public class ComboboxItem

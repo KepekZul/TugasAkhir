@@ -115,6 +115,7 @@
     <Compile Include="deleteGambar.Designer.cs">
       <DependentUpon>deleteGambar.cs</DependentUpon>
     </Compile>
+    <Compile Include="DRLDPDataModel.cs" />
     <Compile Include="GaborFilter.cs" />
     <Compile Include="GaborKernel.cs" />
     <Compile Include="haar_training_set.Designer.cs">
@@ -124,8 +125,9 @@
     </Compile>
     <Compile Include="ImageCrop.cs" />
     <Compile Include="KNearest.cs" />
-    <Compile Include="LocalDirectionalPattern.cs" />
+    <Compile Include="DRLocalDirectionalPattern.cs" />
     <Compile Include="MultiCrop.cs" />
+    <Compile Include="MultiExtract.cs" />
     <Compile Include="MultiResize.cs" />
     <Compile Include="PpmToBitmap.cs" />
     <Compile Include="Selfmade DataStructure\Couple.cs" />

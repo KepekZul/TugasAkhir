@@ -209,9 +209,9 @@ namespace Tugas_Akhir
             //Displaying the Successfull Result
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void DRLDPClick(object sender, EventArgs e)
         {
-            LocalDirectionalPattern ldp = new LocalDirectionalPattern(this.gambar);
+            DRLocalDirectionalPattern ldp = new DRLocalDirectionalPattern(this.gambar);
             ldp.getDRLDPMatrix();
             int lebar = ldp.drldpMatrix.GetLength(0);
             int tinggi = ldp.drldpMatrix.GetLength(0);
