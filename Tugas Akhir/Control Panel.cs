@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -77,7 +77,7 @@ namespace Tugas_Akhir
             this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
             this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
             System.Diagnostics.Debug.WriteLine(this.checkBox1.Checked.ToString());//debugging
-            MultiCrop[] cropThread = new MultiCrop[2];
+            ThreadToCrop[] cropThread = new ThreadToCrop[2];
             string[] partisiAwal = new string[allSourceFiles.Length/2];
             for(int i=0; i<allSourceFiles.Length/2; i++)
             {
@@ -88,8 +88,8 @@ namespace Tugas_Akhir
             {
                 partisiAkhir[i] = allSourceFiles[i+ allSourceFiles.Length / 2];
             }
-            cropThread[0] = new MultiCrop(partisiAwal, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
-            cropThread[1] = new MultiCrop(partisiAkhir, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
+            cropThread[0] = new ThreadToCrop(partisiAwal, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
+            cropThread[1] = new ThreadToCrop(partisiAkhir, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
             Thread[] cropingThread = new Thread[2];
             cropingThread[0] = new Thread(new ThreadStart(cropThread[0].CropStart));
             cropingThread[1] = new Thread(new ThreadStart(cropThread[1].CropStart));
@@ -100,7 +100,7 @@ namespace Tugas_Akhir
         {
             this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
             this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            MultiResize[] resizeThread = new MultiResize[2];
+            ThreadToResize[] resizeThread = new ThreadToResize[2];
             string[] partisiAwal = new string[allSourceFiles.Length/2];
             string[] partisiAkhir = new string[allSourceFiles.Length/2 + ((allSourceFiles.Length%2==1)?1:0)];
             for(int i=0; i<this.allSourceFiles.Length/2; i++)
@@ -111,8 +111,8 @@ namespace Tugas_Akhir
             {
                 partisiAkhir[i] = allSourceFiles[i + allSourceFiles.Length / 2];
             }
-            resizeThread[0] = new MultiResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
-            resizeThread[1] = new MultiResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
+            resizeThread[0] = new ThreadToResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
+            resizeThread[1] = new ThreadToResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
             Thread[] runningThread = new Thread[2];
             runningThread[0] = new Thread(new ThreadStart(resizeThread[0].Resize));
             runningThread[1] = new Thread(new ThreadStart(resizeThread[1].Resize));
@@ -122,7 +122,12 @@ namespace Tugas_Akhir
 
         private void ExtractImage_Click(object sender, EventArgs e)
         {
-            
+            ConcurrentQueue<string> filePipe = new ConcurrentQueue<string>();
+            ConcurrentQueue<DRLDPDataModel> fileResult = new ConcurrentQueue<DRLDPDataModel>();
+            for(int i=0; i<allSourceFiles.GetLength(0); i++)
+            {
+                filePipe.Enqueue(allSourceFiles[i]);
+            }
         }
     }
     //selfmade class for dropddown list item

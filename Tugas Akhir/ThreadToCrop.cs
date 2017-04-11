@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Tugas_Akhir
 {
-    class MultiCrop
+    class ThreadToCrop
     {
         string[] CropTargets;
         string Foldertarget;
         int MinSize;
         int MaxSize;
         bool UseHisTeq;
-        public MultiCrop(String[] list, int min, int max, bool usehisteq, string targetfolder)
+        public ThreadToCrop(String[] list, int min, int max, bool usehisteq, string targetfolder)
         {
             this.CropTargets = list;
             this.MinSize = min;

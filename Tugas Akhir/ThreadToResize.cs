@@ -6,13 +6,13 @@ using Emgu.CV.Structure;
 
 namespace Tugas_Akhir
 {
-    class MultiResize
+    class ThreadToResize
     {
         string[] listFile;
         string destinationDirectory;
         int minSize;
         int maxSize;
-        public MultiResize(string[] fileName, int minSize, int maxSize, string destinationDirectory)
+        public ThreadToResize(string[] fileName, int minSize, int maxSize, string destinationDirectory)
         {
             this.listFile = fileName;
             this.minSize = minSize;
