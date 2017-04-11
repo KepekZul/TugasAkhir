@@ -8,9 +8,13 @@ namespace Tugas_Akhir
 {
     class DRLDPDataModel
     {
+        public DRLDPDataModel()
+        {
+
+        }
         public string label { get; set; }
         public int dimension { get; set; }
         string fileName { get; set; }
-        Byte[] matrix { get; set; }
+        Byte[,] matrix { get; set; }
     }
 }
