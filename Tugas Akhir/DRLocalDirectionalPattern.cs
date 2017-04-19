@@ -147,7 +147,7 @@ namespace Tugas_Akhir
         {
             int size = this.ldpResult.GetLength(0);
             this.drldpMatrix = new Byte[size/3, size/3];
-            System.Diagnostics.Debug.WriteLine(size.ToString());
+            //System.Diagnostics.Debug.WriteLine(size.ToString());
             for(int i=0;    i<size; i += 3)
             {
                 for(int j=0;   j<size; j += 3)

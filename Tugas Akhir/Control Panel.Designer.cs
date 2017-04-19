@@ -225,9 +225,9 @@
             // 
             // ExtractImage
             // 
-            this.ExtractImage.Location = new System.Drawing.Point(669, 51);
+            this.ExtractImage.Location = new System.Drawing.Point(669, 54);
             this.ExtractImage.Name = "ExtractImage";
-            this.ExtractImage.Size = new System.Drawing.Size(75, 23);
+            this.ExtractImage.Size = new System.Drawing.Size(75, 20);
             this.ExtractImage.TabIndex = 20;
             this.ExtractImage.Text = "Extract";
             this.ExtractImage.UseVisualStyleBackColor = true;

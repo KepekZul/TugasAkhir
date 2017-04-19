@@ -239,5 +239,27 @@ namespace Tugas_Akhir
             pictureBox1.Image = hasil;
             System.Diagnostics.Debug.Write(tinggi.ToString());
         }
+
+        private void Rename_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fd = new FolderBrowserDialog();
+            fd.ShowDialog();
+            FolderBrowserDialog df = new FolderBrowserDialog();
+            df.ShowDialog();
+            string[] nama = Directory.GetFiles(fd.SelectedPath);
+            foreach(string namaFile in nama)
+            {
+                string[] namas = Path.GetFileName(namaFile).Split(' ', '.');
+                string ukuran = namas[0], jeneng = namas[1], label = jeneng.Split('f')[0];
+                try
+                {
+                    File.Copy(namaFile, Path.Combine(df.SelectedPath, ukuran + ".grey_feret_2." + jeneng +"."+label+ ".gif"));
+                }
+                catch(Exception k)
+                {
+                    System.Diagnostics.Debug.WriteLine(k.ToString() + " "+ df.SelectedPath+"/"+ ukuran + ".grey_feret_2." + jeneng +"."+label +".gif");
+                }
+            }
+        }
     }
 }

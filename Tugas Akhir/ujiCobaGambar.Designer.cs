@@ -48,6 +48,7 @@
             this.screenShot = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.Rename = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -227,11 +228,22 @@
             this.pictureBox2.TabIndex = 16;
             this.pictureBox2.TabStop = false;
             // 
+            // Rename
+            // 
+            this.Rename.Location = new System.Drawing.Point(653, 261);
+            this.Rename.Name = "Rename";
+            this.Rename.Size = new System.Drawing.Size(75, 23);
+            this.Rename.TabIndex = 17;
+            this.Rename.Text = "Rename";
+            this.Rename.UseVisualStyleBackColor = true;
+            this.Rename.Click += new System.EventHandler(this.Rename_Click);
+            // 
             // ujiCobaGambar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 380);
+            this.Controls.Add(this.Rename);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.screenShot);
@@ -281,6 +293,7 @@
         private System.Windows.Forms.Button screenShot;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button Rename;
     }
 }
 

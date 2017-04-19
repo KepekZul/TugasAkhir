@@ -126,9 +126,9 @@
     <Compile Include="ImageCrop.cs" />
     <Compile Include="KNearest.cs" />
     <Compile Include="DRLocalDirectionalPattern.cs" />
-    <Compile Include="MultiCrop.cs" />
-    <Compile Include="MultiExtract.cs" />
-    <Compile Include="MultiResize.cs" />
+    <Compile Include="ThreadToCrop.cs" />
+    <Compile Include="ThreadToExtract.cs" />
+    <Compile Include="ThreadToResize.cs" />
     <Compile Include="PpmToBitmap.cs" />
     <Compile Include="Selfmade DataStructure\Couple.cs" />
     <Compile Include="Selfmade DataStructure\Pair.cs" />

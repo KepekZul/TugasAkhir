@@ -6,7 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Tugas_Akhir
 {
@@ -122,12 +124,72 @@ namespace Tugas_Akhir
 
         private void ExtractImage_Click(object sender, EventArgs e)
         {
+            int jumlah = 2;
             ConcurrentQueue<string> filePipe = new ConcurrentQueue<string>();
             ConcurrentQueue<DRLDPDataModel> fileResult = new ConcurrentQueue<DRLDPDataModel>();
             for(int i=0; i<allSourceFiles.GetLength(0); i++)
             {
                 filePipe.Enqueue(allSourceFiles[i]);
             }
+            Task[] runThread = new Task[jumlah];
+            ThreadToExtract[] drldp = new ThreadToExtract[jumlah];
+            var stopwatch1 = new System.Diagnostics.Stopwatch();
+            stopwatch1.Start();
+            for(int i=0; i<jumlah; i++)
+            {
+                drldp[i] = new ThreadToExtract(filePipe, fileResult);
+                runThread[i] = new Task(drldp[i].startRun);
+                runThread[i].Start();
+            }
+            Task.WaitAll(runThread);
+            stopwatch1.Stop();
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            stopwatch1.Elapsed.Hours, stopwatch1.Elapsed.Minutes, stopwatch1.Elapsed.Seconds,
+            stopwatch1.Elapsed.Milliseconds / 10);
+            System.Diagnostics.Debug.WriteLine(elapsedTime);
+            stopwatch1 = new System.Diagnostics.Stopwatch();
+            stopwatch1.Start();
+            string ConString = "Server=localhost;Database=face_feature;Uid=root;Pwd=;";
+            string ComString = "INSERT INTO data_feature(label, dimension, fileName, data, size) VALUES(@label, @dimension, @fileName, @data, @size)";
+            using (var MySqliCon = new MySqlConnection(ConString))
+            {
+                MySqliCon.Open();
+                MySqlTransaction transaction = MySqliCon.BeginTransaction();
+                var MySqliAdap = new MySqlDataAdapter("SELECT label, dimension, fileName, data, size FROM data_feature", MySqliCon);
+                var dataSet = new DataSet();
+                MySqliAdap.Fill(dataSet, "data_feature");
+                MySqliAdap = new MySqlDataAdapter();
+                MySqliAdap.InsertCommand = new MySqlCommand(ComString, MySqliCon);
+                MySqliAdap.InsertCommand.Parameters.Add("@label", MySqlDbType.VarChar, 20, "label");
+                MySqliAdap.InsertCommand.Parameters.Add("@dimension", MySqlDbType.Int32, 11, "dimension");
+                MySqliAdap.InsertCommand.Parameters.Add("@fileName", MySqlDbType.VarChar, 20, "fileName");
+                MySqliAdap.InsertCommand.Parameters.Add("@data", MySqlDbType.Text, 20000000, "data");
+                MySqliAdap.InsertCommand.Parameters.Add("@size", MySqlDbType.VarChar, 10, "size");
+                MySqliAdap.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
+
+                while(!fileResult.IsEmpty)
+                {
+                    DRLDPDataModel data = new DRLDPDataModel();
+                    fileResult.TryDequeue(out data);
+                    DataRow row = dataSet.Tables["data_feature"].NewRow();
+                    row["label"] = data.label;
+                    row["dimension"] = data.dimension;
+                    row["filename"] = data.fileName;
+                    row["data"] = data.data;
+                    row["size"] = data.size;
+                    dataSet.Tables["data_feature"].Rows.Add(row);
+                }
+                MySqliAdap.UpdateBatchSize = 1000;
+                MySqliAdap.Update(dataSet, "data_feature");
+
+                transaction.Commit();
+                MySqliCon.Clone();
+            }
+            stopwatch1.Stop();
+            elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            stopwatch1.Elapsed.Hours, stopwatch1.Elapsed.Minutes, stopwatch1.Elapsed.Seconds,
+            stopwatch1.Elapsed.Milliseconds / 10);
+            System.Diagnostics.Debug.WriteLine(elapsedTime);
         }
     }
     //selfmade class for dropddown list item

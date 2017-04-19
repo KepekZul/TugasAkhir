@@ -12,7 +12,9 @@ namespace Tugas_Akhir
         public int dimension { get; set; }
         public string fileName { get; set; }
         public Byte[,] matrix { get; set; }
+        public string dataset { get; set; }
         public string data { get; set; }
+        public string size { get; set; }
         /// <summary>
         /// Parse the current data matrix to string
         /// </summary>
@@ -25,7 +27,7 @@ namespace Tugas_Akhir
             {
                 for (int j = 0; j < dimension; j++)
                 {
-                    data += this.matrix[i, j].ToString() + " ";
+                    data =data +  this.matrix[i, j].ToString() + " ";
                 }
             }
             if (keep == true)
