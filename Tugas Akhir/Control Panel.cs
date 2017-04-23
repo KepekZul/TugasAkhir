@@ -124,7 +124,7 @@ namespace Tugas_Akhir
 
         private void ExtractImage_Click(object sender, EventArgs e)
         {
-            int jumlah = 2;
+            int jumlah = 4;
             ConcurrentQueue<string> filePipe = new ConcurrentQueue<string>();
             ConcurrentQueue<DRLDPDataModel> fileResult = new ConcurrentQueue<DRLDPDataModel>();
             for(int i=0; i<allSourceFiles.GetLength(0); i++)
@@ -179,11 +179,10 @@ namespace Tugas_Akhir
                     row["size"] = data.size;
                     dataSet.Tables["data_feature"].Rows.Add(row);
                 }
-                MySqliAdap.UpdateBatchSize = 1000;
                 MySqliAdap.Update(dataSet, "data_feature");
 
                 transaction.Commit();
-                MySqliCon.Clone();
+                MySqliCon.Close();
             }
             stopwatch1.Stop();
             elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
