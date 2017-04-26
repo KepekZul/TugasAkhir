@@ -17,6 +17,7 @@ namespace Tugas_Akhir
         }
         public void startRun()
         {
+            System.Diagnostics.Debug.WriteLine("this thread is start: " + this.ToString());
             while (!data.IsEmpty)
             {
                 string fileName; data.TryDequeue(out fileName);

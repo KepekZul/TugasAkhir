@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Text;
 using System.Linq;
 using System.IO;
 using System.Threading;
@@ -14,6 +14,8 @@ namespace Tugas_Akhir
 {
     public partial class Control_Panel : Form
     {
+        ConcurrentQueue<DRLDPDataModel> fileList;
+        System.Diagnostics.Stopwatch RunTime;
         string pathSource;
         string pathTarget;
         string[] allSourceFiles;
@@ -131,63 +133,139 @@ namespace Tugas_Akhir
             {
                 filePipe.Enqueue(allSourceFiles[i]);
             }
+            this.fileList = fileResult;
             Task[] runThread = new Task[jumlah];
             ThreadToExtract[] drldp = new ThreadToExtract[jumlah];
-            var stopwatch1 = new System.Diagnostics.Stopwatch();
-            stopwatch1.Start();
+            RunTime = new System.Diagnostics.Stopwatch();
+            RunTime.Start();
+            backgroundWorker1.RunWorkerAsync();
             for(int i=0; i<jumlah; i++)
             {
                 drldp[i] = new ThreadToExtract(filePipe, fileResult);
                 runThread[i] = new Task(drldp[i].startRun);
+            }
+            for(int i=0; i<jumlah; i++)
+            {
                 runThread[i].Start();
             }
-            Task.WaitAll(runThread);
-            stopwatch1.Stop();
-            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-            stopwatch1.Elapsed.Hours, stopwatch1.Elapsed.Minutes, stopwatch1.Elapsed.Seconds,
-            stopwatch1.Elapsed.Milliseconds / 10);
-            System.Diagnostics.Debug.WriteLine(elapsedTime);
-            stopwatch1 = new System.Diagnostics.Stopwatch();
-            stopwatch1.Start();
-            string ConString = "Server=localhost;Database=face_feature;Uid=root;Pwd=;";
-            string ComString = "INSERT INTO data_feature(label, dimension, fileName, data, size) VALUES(@label, @dimension, @fileName, @data, @size)";
-            using (var MySqliCon = new MySqlConnection(ConString))
+        }
+
+        //progress bar
+        private void progressBarWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
             {
-                MySqliCon.Open();
-                MySqlTransaction transaction = MySqliCon.BeginTransaction();
-                var MySqliAdap = new MySqlDataAdapter("SELECT label, dimension, fileName, data, size FROM data_feature", MySqliCon);
-                var dataSet = new DataSet();
-                MySqliAdap.Fill(dataSet, "data_feature");
-                MySqliAdap = new MySqlDataAdapter();
-                MySqliAdap.InsertCommand = new MySqlCommand(ComString, MySqliCon);
-                MySqliAdap.InsertCommand.Parameters.Add("@label", MySqlDbType.VarChar, 20, "label");
-                MySqliAdap.InsertCommand.Parameters.Add("@dimension", MySqlDbType.Int32, 11, "dimension");
-                MySqliAdap.InsertCommand.Parameters.Add("@fileName", MySqlDbType.VarChar, 20, "fileName");
-                MySqliAdap.InsertCommand.Parameters.Add("@data", MySqlDbType.Text, 20000000, "data");
-                MySqliAdap.InsertCommand.Parameters.Add("@size", MySqlDbType.VarChar, 10, "size");
-                MySqliAdap.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
-
-                while(!fileResult.IsEmpty)
-                {
-                    DRLDPDataModel data = new DRLDPDataModel();
-                    fileResult.TryDequeue(out data);
-                    DataRow row = dataSet.Tables["data_feature"].NewRow();
-                    row["label"] = data.label;
-                    row["dimension"] = data.dimension;
-                    row["filename"] = data.fileName;
-                    row["data"] = data.data;
-                    row["size"] = data.size;
-                    dataSet.Tables["data_feature"].Rows.Add(row);
-                }
-                MySqliAdap.Update(dataSet, "data_feature");
-
-                transaction.Commit();
-                MySqliCon.Close();
+                int progress = (int)((double)fileList.Count / (double)allSourceFiles.Length * 100);
+                backgroundWorker1.ReportProgress(progress);
+                //System.Diagnostics.Debug.WriteLine(progress);
+                Thread.Sleep(1000);
+                if (progress == 100)
+                    break;
             }
-            stopwatch1.Stop();
-            elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-            stopwatch1.Elapsed.Hours, stopwatch1.Elapsed.Minutes, stopwatch1.Elapsed.Seconds,
-            stopwatch1.Elapsed.Milliseconds / 10);
+        }
+        private void updateBarWork(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+        }
+        private void finishBarWork(object sender, RunWorkerCompletedEventArgs e)
+        {
+            RunTime.Stop();
+            MessageBox.Show("Ekstraksi Selesai");
+            var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            RunTime.Elapsed.Hours, RunTime.Elapsed.Minutes, RunTime.Elapsed.Seconds,
+            RunTime.Elapsed.Milliseconds / 10);
+            System.Diagnostics.Debug.WriteLine(elapsedTime);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            RunTime.Reset(); RunTime.Start();
+            string ConnectionString = "Server=localhost;Database=face_feature;Uid=root;Pwd=;";
+            StringBuilder MyCommandString = new StringBuilder("INSERT INTO data_feature(label, dimension, fileName, data, size, dataset) VALUES ");
+            using (MySqlConnection MyConnection = new MySqlConnection(ConnectionString))
+            {
+                int counter = 0;
+                while (!this.fileList.IsEmpty)
+                {
+                    DRLDPDataModel data; fileList.TryDequeue(out data);
+                    MyCommandString.Append(string.Join(",", string.Format("('{0}','{1}','{2}','{3}','{4}','{5}')",
+                                                                         MySqlHelper.EscapeString(data.label),
+                                                                         MySqlHelper.EscapeString(data.dimension.ToString()),
+                                                                         MySqlHelper.EscapeString(data.fileName),
+                                                                         MySqlHelper.EscapeString(data.data),
+                                                                         MySqlHelper.EscapeString(data.size),
+                                                                         MySqlHelper.EscapeString(data.dataset))
+                                                                         ));
+                    counter++;
+                    if (!this.fileList.IsEmpty && counter != 800)
+                        MyCommandString.Append(',');
+                    if (counter == 800)
+                    {
+                        MyCommandString.Append(';');
+                        using (MySqlCommand MyCommand = new MySqlCommand(MyCommandString.ToString(), MyConnection))
+                        {
+                            MyConnection.Open();
+                            MyCommand.CommandType = CommandType.Text;
+                            MyCommand.ExecuteNonQuery();
+                            MyConnection.Close();
+                        }
+                        System.Diagnostics.Debug.WriteLine("pushed to database");
+                        MyCommandString = new StringBuilder("INSERT INTO data_feature(label, dimension, fileName, data, size, dataset) VALUES ");
+                    }
+                }
+                MyCommandString.Append(';');
+                using (MySqlCommand MyCommand = new MySqlCommand(MyCommandString.ToString(), MyConnection))
+                {
+                    MyConnection.Open();
+                    MyCommand.CommandType = CommandType.Text;
+                    //System.Diagnostics.Debug.WriteLine(MyCommandString);
+                    MyCommand.ExecuteNonQuery();
+                    MyConnection.Close();
+                }
+                System.Diagnostics.Debug.WriteLine("pushed to database");
+            }
+            #region
+            //insert ke dalam database menggunakan dataset dan mysqldataadapter running pada dataset extended yale b gagal karena db server timeout
+            //string ConString = "Server=localhost;Database=face_feature;Uid=root;Pwd=;";
+            //string ComString = "INSERT INTO data_feature(label, dimension, fileName, data, size) VALUES(@label, @dimension, @fileName, @data, @size)";
+            //using (var MySqliCon = new MySqlConnection(ConString))
+            //{
+            //    MySqliCon.Open();
+            //    MySqlTransaction transaction = MySqliCon.BeginTransaction();
+            //    var MySqliAdap = new MySqlDataAdapter("SELECT label, dimension, fileName, data, size FROM data_feature", MySqliCon);
+            //    var dataSet = new DataSet();
+            //    MySqliAdap.Fill(dataSet, "data_feature");
+            //    MySqliAdap = new MySqlDataAdapter();
+            //    MySqliAdap.InsertCommand = new MySqlCommand(ComString, MySqliCon);
+            //    MySqliAdap.InsertCommand.Parameters.Add("@label", MySqlDbType.VarChar, 20, "label");
+            //    MySqliAdap.InsertCommand.Parameters.Add("@dimension", MySqlDbType.Int32, 11, "dimension");
+            //    MySqliAdap.InsertCommand.Parameters.Add("@fileName", MySqlDbType.VarChar, 20, "fileName");
+            //    MySqliAdap.InsertCommand.Parameters.Add("@data", MySqlDbType.Text, 20000000, "data");
+            //    MySqliAdap.InsertCommand.Parameters.Add("@size", MySqlDbType.VarChar, 10, "size");
+            //    MySqliAdap.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
+
+            //    while(!fileResult.IsEmpty)
+            //    {
+            //        DRLDPDataModel data = new DRLDPDataModel();
+            //        fileResult.TryDequeue(out data);
+            //        DataRow row = dataSet.Tables["data_feature"].NewRow();
+            //        row["label"] = data.label;
+            //        row["dimension"] = data.dimension;
+            //        row["filename"] = data.fileName;
+            //        row["data"] = data.data;
+            //        row["size"] = data.size;
+            //        dataSet.Tables["data_feature"].Rows.Add(row);
+            //    }
+            //    MySqliAdap.Update(dataSet, "data_feature");
+
+            //    transaction.Commit();
+            //    MySqliCon.Close();
+            //}
+            #endregion //kodingan lama
+            RunTime.Stop();
+            var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+            RunTime.Elapsed.Hours, RunTime.Elapsed.Minutes, RunTime.Elapsed.Seconds,
+            RunTime.Elapsed.Milliseconds / 10);
             System.Diagnostics.Debug.WriteLine(elapsedTime);
         }
     }

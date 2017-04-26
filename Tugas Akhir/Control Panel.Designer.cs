@@ -49,6 +49,9 @@
             this.FilenameFilterBox = new System.Windows.Forms.TextBox();
             this.resizeButton = new System.Windows.Forms.Button();
             this.ExtractImage = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -233,11 +236,38 @@
             this.ExtractImage.UseVisualStyleBackColor = true;
             this.ExtractImage.Click += new System.EventHandler(this.ExtractImage_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.ForeColor = System.Drawing.Color.Black;
+            this.progressBar1.Location = new System.Drawing.Point(292, 144);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(452, 23);
+            this.progressBar1.TabIndex = 21;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.progressBarWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.updateBarWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.finishBarWork);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(669, 80);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 19);
+            this.button2.TabIndex = 22;
+            this.button2.Text = "Save";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Control_Panel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 186);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.ExtractImage);
             this.Controls.Add(this.resizeButton);
             this.Controls.Add(this.FilenameFilterBox);
@@ -289,5 +319,8 @@
         private System.Windows.Forms.TextBox FilenameFilterBox;
         private System.Windows.Forms.Button resizeButton;
         private System.Windows.Forms.Button ExtractImage;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button button2;
     }
 }
