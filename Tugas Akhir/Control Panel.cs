@@ -170,14 +170,13 @@ namespace Tugas_Akhir
         private void finishBarWork(object sender, RunWorkerCompletedEventArgs e)
         {
             RunTime.Stop();
-            MessageBox.Show("Ekstraksi Selesai");
             var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             RunTime.Elapsed.Hours, RunTime.Elapsed.Minutes, RunTime.Elapsed.Seconds,
             RunTime.Elapsed.Milliseconds / 10);
-            System.Diagnostics.Debug.WriteLine(elapsedTime);
+            MessageBox.Show("Ekstraksi Selesai\n"+elapsedTime);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void saveDatatoDatabase(object sender, EventArgs e)
         {
             RunTime.Reset(); RunTime.Start();
             string ConnectionString = "Server=localhost;Database=face_feature;Uid=root;Pwd=;";
@@ -204,7 +203,7 @@ namespace Tugas_Akhir
                         MyCommandString.Append(';');
                         using (MySqlCommand MyCommand = new MySqlCommand(MyCommandString.ToString(), MyConnection))
                         {
-                            MyConnection.Open();
+                            MyConnection.Open(); 
                             MyCommand.CommandType = CommandType.Text;
                             MyCommand.ExecuteNonQuery();
                             MyConnection.Close();
@@ -266,7 +265,7 @@ namespace Tugas_Akhir
             var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             RunTime.Elapsed.Hours, RunTime.Elapsed.Minutes, RunTime.Elapsed.Seconds,
             RunTime.Elapsed.Milliseconds / 10);
-            System.Diagnostics.Debug.WriteLine(elapsedTime);
+            MessageBox.Show(elapsedTime);
         }
     }
     //selfmade class for dropddown list item
