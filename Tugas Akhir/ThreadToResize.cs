@@ -24,8 +24,9 @@ namespace Tugas_Akhir
             foreach(string file in listFile)
             {
                 Image<Gray, byte> picture = new Image<Gray, byte>(file);
-                picture.Resize(this.minSize, this.minSize, Emgu.CV.CvEnum.Inter.Nearest).ToBitmap().Save(this.destinationDirectory+"/Mini "+Path.GetFileName(file));
-                picture.Resize(this.maxSize, this.maxSize, Emgu.CV.CvEnum.Inter.Nearest).ToBitmap().Save(this.destinationDirectory + "/Maxi " + Path.GetFileName(file));
+                picture.Resize(this.minSize, this.maxSize, Emgu.CV.CvEnum.Inter.Nearest).ToBitmap().Save(this.destinationDirectory+"/Mini "+Path.GetFileName(file));
+                //picture.Resize(this.minSize, this.minSize, Emgu.CV.CvEnum.Inter.Nearest).ToBitmap().Save(this.destinationDirectory+"/Mini "+Path.GetFileName(file));
+                //picture.Resize(this.maxSize, this.maxSize, Emgu.CV.CvEnum.Inter.Nearest).ToBitmap().Save(this.destinationDirectory + "/Maxi " + Path.GetFileName(file));
             }
         }
     }

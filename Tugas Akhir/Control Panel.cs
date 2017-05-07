@@ -46,18 +46,21 @@ namespace Tugas_Akhir
                 textBox1.Text = this.pathSource;
                 allSourceFiles = Directory.GetFiles(this.pathSource, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
                     .Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")|| !s.EndsWith("*.ini")).ToArray();
-                string[] keepFile = FilenameFilterBox.Text.Split(' ');
-                for(int i=0; i<allSourceFiles.Length; i++)
+                if (FilenameFilterBox.Text != "")
                 {
-                    for (int j = 0; j < keepFile.Length; j++)
+                    string[] keepFile = FilenameFilterBox.Text.Split(' ');
+                    for (int i = 0; i < allSourceFiles.Length; i++)
                     {
-                        if (Path.GetFileName(allSourceFiles[i]).Contains(keepFile[j]))
+                        for (int j = 0; j < keepFile.Length; j++)
                         {
-                            break;
-                        }
-                        if (j == keepFile.Length-1)
-                        {
-                            allSourceFiles[i] = "";
+                            if (Path.GetFileName(allSourceFiles[i]).Contains(keepFile[j]))
+                            {
+                                break;
+                            }
+                            if (j == keepFile.Length - 1)
+                            {
+                                allSourceFiles[i] = "";
+                            }
                         }
                     }
                 }
@@ -203,11 +206,12 @@ namespace Tugas_Akhir
                         MyCommandString.Append(';');
                         using (MySqlCommand MyCommand = new MySqlCommand(MyCommandString.ToString(), MyConnection))
                         {
-                            MyConnection.Open(); 
+                            MyConnection.Open();
                             MyCommand.CommandType = CommandType.Text;
                             MyCommand.ExecuteNonQuery();
                             MyConnection.Close();
                         }
+                        counter = 0;
                         System.Diagnostics.Debug.WriteLine("pushed to database");
                         MyCommandString = new StringBuilder("INSERT INTO data_feature(label, dimension, fileName, data, size, dataset) VALUES ");
                     }
@@ -221,7 +225,7 @@ namespace Tugas_Akhir
                     MyCommand.ExecuteNonQuery();
                     MyConnection.Close();
                 }
-                System.Diagnostics.Debug.WriteLine("pushed to database");
+                System.Diagnostics.Debug.WriteLine("pushed to database last");
             }
             #region
             //insert ke dalam database menggunakan dataset dan mysqldataadapter running pada dataset extended yale b gagal karena db server timeout
@@ -266,6 +270,30 @@ namespace Tugas_Akhir
             RunTime.Elapsed.Hours, RunTime.Elapsed.Minutes, RunTime.Elapsed.Seconds,
             RunTime.Elapsed.Milliseconds / 10);
             MessageBox.Show(elapsedTime);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
+            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
+            ThreadToResize[] resizeThread = new ThreadToResize[2];
+            string[] partisiAwal = new string[allSourceFiles.Length / 2];
+            string[] partisiAkhir = new string[allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
+            for (int i = 0; i < this.allSourceFiles.Length / 2; i++)
+            {
+                partisiAwal[i] = allSourceFiles[i];
+            }
+            for (int i = 0; i < allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0); i++)
+            {
+                partisiAkhir[i] = allSourceFiles[i + allSourceFiles.Length / 2];
+            }
+            resizeThread[0] = new ThreadToResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
+            resizeThread[1] = new ThreadToResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
+            Thread[] runningThread = new Thread[2];
+            runningThread[0] = new Thread(new ThreadStart(resizeThread[0].Resize));
+            runningThread[1] = new Thread(new ThreadStart(resizeThread[1].Resize));
+            runningThread[0].Start();
+            runningThread[1].Start();
         }
     }
     //selfmade class for dropddown list item

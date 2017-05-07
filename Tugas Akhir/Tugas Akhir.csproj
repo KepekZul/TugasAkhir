@@ -126,6 +126,12 @@
     <Compile Include="ImageCrop.cs" />
     <Compile Include="KNearest.cs" />
     <Compile Include="DRLocalDirectionalPattern.cs" />
+    <Compile Include="retrive data.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="retrive data.Designer.cs">
+      <DependentUpon>retrive data.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThreadToCrop.cs" />
     <Compile Include="ThreadToExtract.cs" />
     <Compile Include="ThreadToResize.cs" />
@@ -159,6 +165,9 @@
     <EmbeddedResource Include="haar_training_set.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>haar_training_set.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="retrive data.resx">
+      <DependentUpon>retrive data.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ujiCobaGambar.resx">
       <DependentUpon>ujiCobaGambar.cs</DependentUpon>

@@ -49,6 +49,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Rename = new System.Windows.Forms.Button();
+            this.pgmToBitmap = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -238,11 +239,22 @@
             this.Rename.UseVisualStyleBackColor = true;
             this.Rename.Click += new System.EventHandler(this.Rename_Click);
             // 
+            // pgmToBitmap
+            // 
+            this.pgmToBitmap.Location = new System.Drawing.Point(653, 291);
+            this.pgmToBitmap.Name = "pgmToBitmap";
+            this.pgmToBitmap.Size = new System.Drawing.Size(75, 23);
+            this.pgmToBitmap.TabIndex = 18;
+            this.pgmToBitmap.Text = "convert pgm";
+            this.pgmToBitmap.UseVisualStyleBackColor = true;
+            this.pgmToBitmap.Click += new System.EventHandler(this.pgmToBitmap_Click);
+            // 
             // ujiCobaGambar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 380);
+            this.Controls.Add(this.pgmToBitmap);
             this.Controls.Add(this.Rename);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.button1);
@@ -294,6 +306,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button Rename;
+        private System.Windows.Forms.Button pgmToBitmap;
     }
 }
 

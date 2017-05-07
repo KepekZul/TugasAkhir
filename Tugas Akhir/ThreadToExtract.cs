@@ -33,15 +33,6 @@ namespace Tugas_Akhir
                 drldp.getDRLDPMatrix();
                 dataModel.dimension = drldp.drldpMatrix.GetLength(0);
                 dataModel.matrix = drldp.drldpMatrix;
-                //dataModel.matrix = new byte[dataModel.dimension, dataModel.dimension];
-                //for(int i=0; i< dataModel.dimension; i++)
-                //{
-                //    for(int j=0; j<dataModel.dimension; j++)
-                //    {
-                //        dataModel.matrix[i, j] = drldp.drldpMatrix[i, j];
-                //        //System.Diagnostics.Debug.Write(dataModel.matrix[i,j].ToString()+" "+drldp.drldpMatrix[i,j].ToString());
-                //    }
-                //}
                 dataModel.parseMatToString(true);
                 result.Enqueue(dataModel);
             }

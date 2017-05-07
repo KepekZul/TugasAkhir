@@ -250,15 +250,30 @@ namespace Tugas_Akhir
             foreach(string namaFile in nama)
             {
                 string[] namas = Path.GetFileName(namaFile).Split(' ', '.');
-                string ukuran = namas[0], jeneng = namas[1], label = jeneng.Split('f')[0];
+                string ukuran = namas[0], jeneng = namas[1], label = jeneng.Split('_')[1];
                 try
                 {
-                    File.Copy(namaFile, Path.Combine(df.SelectedPath, ukuran + ".grey_feret_2." + jeneng +"."+label+ ".gif"));
+                    File.Copy(namaFile, Path.Combine(df.SelectedPath, ukuran + ".orl_face." + jeneng +"."+label+ ".gif"));
                 }
                 catch(Exception k)
                 {
-                    System.Diagnostics.Debug.WriteLine(k.ToString() + " "+ df.SelectedPath+"/"+ ukuran + ".grey_feret_2." + jeneng +"."+label +".gif");
+                    System.Diagnostics.Debug.WriteLine(k.ToString() + " "+ df.SelectedPath+"/"+ ukuran + ".orl_face." + jeneng +"."+label +".gif");
                 }
+            }
+        }
+
+        private void pgmToBitmap_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog bdf = new FolderBrowserDialog();
+            bdf.ShowDialog();
+            string[] allSourceFiles = Directory.GetFiles(bdf.SelectedPath, "*.pgm", SearchOption.AllDirectories);
+            bdf.ShowDialog();
+            foreach(string pathfile in allSourceFiles)
+            {
+                PortableGrayMap pgmImage = new PortableGrayMap(pathfile);
+                Bitmap bitmapImage = pgmImage.MakeBitmap(pgmImage, 1);
+                bitmapImage.Save(bdf.SelectedPath+"/"+ Path.GetFileNameWithoutExtension(pathfile)+".gif");
+                System.Diagnostics.Debug.WriteLine("berhasil " + bdf.SelectedPath + Path.GetFileNameWithoutExtension(pathfile) + ".gif");
             }
         }
     }
