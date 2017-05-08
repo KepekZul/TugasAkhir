@@ -31,9 +31,9 @@ namespace Tugas_Akhir
             int counter = 0;
             foreach (int[] feature in dataTrain)
             {
-                ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(this.dataTest, feature);
-                chiDistances[counter].Distance = chiObj.CalculateDissimilarityValue();
-                counter++;
+                //ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(this.dataTest, feature);
+                //chiDistances[counter].Distance = chiObj.CalculateDissimilarityValue();
+                //counter++;
             }
             chiDistances.Sort((s1, s2) => s1.Distance.CompareTo(s2.Distance));
         }

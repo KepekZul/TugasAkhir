@@ -1,30 +1,84 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace Tugas_Akhir
 {
     class ChiSquareDissimilarity
     {
-        protected double dissimilarity;
-        protected List<int> arrayValue1;
-        protected List<int> arrayValue2;
-        public ChiSquareDissimilarity(int[] featureDRLDP1, int[] featureDRLDP2)
+        protected double Dissimilarity;
+        protected int FragmentFactor { get; }
+        protected byte[,] TestFeature;
+        protected byte[,] TrainFeature;
+        protected byte[,,] TestFragment;
+        protected byte[,,] TrainFragment;
+        /// <summary>
+        /// TestFeature and TrainFeature only can be set from this constructor
+        /// </summary>
+        /// <param name="TestFeature">2 dimensional array for target data</param>
+        /// <param name="TrainFeature">2 dimensional array for target data</param>
+        /// <param name="FragmentFactor">Number region to be fragmented</param>
+        public ChiSquareDissimilarity(byte[,] TestFeature, byte[,] TrainFeature, int FragmentFactor)
         {
-            if (featureDRLDP1.Count() != featureDRLDP2.Count())
+            if (TestFeature.Length != TrainFeature.Length || FragmentFactor%3!=0 || TestFeature.Length%FragmentFactor!=0)
             {
-                throw new System.ArgumentException("Input of array should have same length of element", "featureDRLDP1 + featureDRLDP2");
+                throw new System.ArgumentException("Input of array should have same length of element", "featureDRLDP1 + featureDRLDP2 or fragment factor not multiplication of 3");
             }
-            this.dissimilarity = 0;
-            this.arrayValue1 = featureDRLDP1.OfType<int>().ToList();
-            this.arrayValue2 = featureDRLDP2.OfType<int>().ToList();
+            this.TestFeature = TestFeature;
+            this.TrainFeature = TrainFeature;
+            this.FragmentFactor = FragmentFactor;
+            FragmentingMatrix();
         }
+        private void FragmentingMatrix()
+        {
+            int dimension = this.TestFeature.Length;
+            byte NumberOfFragment = Convert.ToByte((dimension / this.FragmentFactor) * (dimension / this.FragmentFactor));
+            this.TestFragment = new byte[NumberOfFragment, this.FragmentFactor, this.FragmentFactor];
+            this.TrainFragment = new byte[NumberOfFragment, this.FragmentFactor, this.FragmentFactor];
+            for(int xCriterion = 0, FragmentIndex=0; xCriterion<dimension; xCriterion += this.FragmentFactor, FragmentIndex++)//Shift horizontal block
+            {
+                for(int yCriterion = 0; yCriterion<dimension; yCriterion+= this.FragmentFactor, FragmentIndex++)//shift vertical block
+                {
+                    for(int xIndex=0; xIndex<this.FragmentFactor; xIndex++)
+                    {
+                        for(int yIndex=0; yIndex<this.FragmentFactor; yIndex++)
+                        {
+                            this.TestFragment[FragmentIndex, xIndex, yIndex] = this.TestFeature[xIndex + xCriterion, yIndex + yCriterion];
+                        }
+                    }
+                }
+            }
+            for (int xCriterion = 0, FragmentIndex = 0; xCriterion < dimension; xCriterion += this.FragmentFactor, FragmentIndex++)//Shift horizontal block
+            {
+                for (int yCriterion = 0; yCriterion < dimension; yCriterion += this.FragmentFactor, FragmentIndex++)//shift vertical block
+                {
+                    for (int xIndex = 0; xIndex < this.FragmentFactor; xIndex++)
+                    {
+                        for (int yIndex = 0; yIndex < this.FragmentFactor; yIndex++)
+                        {
+                            this.TrainFragment[FragmentIndex, xIndex, yIndex] = this.TrainFeature[xIndex + xCriterion, yIndex + yCriterion];
+                        }
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// Get the Dissimilarity value for both matrix
+        /// </summary>
+        /// <returns>return double</returns>
         public double CalculateDissimilarityValue()
         {
-            for(int i=0; i<this.arrayValue1.Count; i++)
+            this.Dissimilarity = 0;
+            for (int i=0; i<this.TestFragment.GetLength(0); i++)
             {
-                //pending baca paper lagi!
+                for(int x=0; x<this.TestFragment.GetLength(1); x++)
+                {
+                    for(int y=0; y<this.TestFragment.GetLength(2); y++)
+                    {
+                        this.Dissimilarity+=GetWeight(getModeofRegion(TrainFragment[i], TestFragment[i]))
+                    }
+                }
             }
-            return dissimilarity;
+            return this.Dissimilarity;
         }
         protected int GetWeight(int modes)
         {
@@ -46,14 +100,27 @@ namespace Tugas_Akhir
                 return 0;//input must be false since color coded dr-ldp should fall within 0 - 255
             }
         }
-        protected int CalculateMode(int[] data1, int[] data2)
+        protected int getModeofRegion(byte[,] feature1, byte[,] feature2)
         {
-            int modes=0;
+            byte modes=0;
             int maxScore=0;
             int counter=0;
-            List<int> SortedData = data1.OfType<int>().ToList();
-            SortedData.AddRange(data2.OfType<int>().ToList());
-            SortedData.Sort();
+            List<byte> SortedData = new List<byte>();
+            for(int i=0; i<feature1.Length; i++)
+            {
+                for(int j=0; j<feature1.Length; j++)
+                {
+                    SortedData.Add(feature1[i, j]);
+                }
+            }
+            for (int i = 0; i < feature2.Length; i++)
+            {
+                for (int j = 0; j < feature2.Length; j++)
+                {
+                    SortedData.Add(feature2[i, j]);
+                }
+            }
+            SortedData.Sort((s1, s2) => s1.CompareTo(s2));
             for(int i = SortedData.Count-1; i>0; i--)
             {
                 if (SortedData[i] == SortedData[i - 1])

@@ -126,6 +126,12 @@
     <Compile Include="ImageCrop.cs" />
     <Compile Include="KNearest.cs" />
     <Compile Include="DRLocalDirectionalPattern.cs" />
+    <Compile Include="Pengujian.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pengujian.Designer.cs">
+      <DependentUpon>Pengujian.cs</DependentUpon>
+    </Compile>
     <Compile Include="retrive data.cs">
       <SubType>Form</SubType>
     </Compile>
