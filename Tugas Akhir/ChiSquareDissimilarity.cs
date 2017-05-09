@@ -68,13 +68,14 @@ namespace Tugas_Akhir
         public double CalculateDissimilarityValue()
         {
             this.Dissimilarity = 0;
-            for (int i=0; i<this.TestFragment.GetLength(0); i++)
+            for (int i=0; i<this.TestFragment.GetLength(0); i++)//shifting per-block
             {
-                for(int x=0; x<this.TestFragment.GetLength(1); x++)
+                int Weight = GetWeight(getModeofRegion(SliceMatrix(TrainFragment, i), SliceMatrix(TestFragment,i)));
+                for (int x=0; x<this.TestFragment.GetLength(1); x++)
                 {
                     for(int y=0; y<this.TestFragment.GetLength(2); y++)
                     {
-                        this.Dissimilarity+=GetWeight(getModeofRegion(TrainFragment[i], TestFragment[i]))
+                        this.Dissimilarity += Weight * (Math.Pow(TestFragment[i, x, y] - TrainFragment[i, x, y], 2) / TestFragment[i, x, y] + TrainFragment[i, x, y]);
                     }
                 }
             }
@@ -141,6 +142,19 @@ namespace Tugas_Akhir
                 }
             }
             return modes;
+        }
+        protected byte[,] SliceMatrix(byte[,,] target, int index)
+        {
+            int lenght = target.GetLength(index);
+            byte[,] Result = new byte[lenght, lenght];
+            for(int x=0; x<lenght; x++)
+            {
+                for(int y=0; y< lenght; y++)
+                {
+                    Result[x, y] = target[index, x, y];
+                }
+            }
+            return Result;
         }
     }
 }
