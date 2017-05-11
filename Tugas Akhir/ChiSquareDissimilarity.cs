@@ -6,7 +6,7 @@ namespace Tugas_Akhir
     class ChiSquareDissimilarity
     {
         protected double Dissimilarity;
-        protected int FragmentFactor { get; }
+        protected int NumberofFragment { get; }
         protected byte[,] TestFeature;
         protected byte[,] TrainFeature;
         protected byte[,,] TestFragment;
@@ -16,50 +16,61 @@ namespace Tugas_Akhir
         /// </summary>
         /// <param name="TestFeature">2 dimensional array for target data</param>
         /// <param name="TrainFeature">2 dimensional array for target data</param>
-        /// <param name="FragmentFactor">Number region to be fragmented</param>
-        public ChiSquareDissimilarity(byte[,] TestFeature, byte[,] TrainFeature, int FragmentFactor)
+        /// <param name="NumberofFragment">Number region to be fragmented</param>
+        public ChiSquareDissimilarity(byte[,] TestFeature, byte[,] TrainFeature, int NumberofFragment)
         {
-            if (TestFeature.Length != TrainFeature.Length || FragmentFactor%3!=0 || TestFeature.Length%FragmentFactor!=0)
+            if (TestFeature.Length != TrainFeature.Length || TestFeature.Length % NumberofFragment != 0)
             {
                 throw new System.ArgumentException("Input of array should have same length of element", "featureDRLDP1 + featureDRLDP2 or fragment factor not multiplication of 3");
             }
             this.TestFeature = TestFeature;
             this.TrainFeature = TrainFeature;
-            this.FragmentFactor = FragmentFactor;
+            this.NumberofFragment = NumberofFragment;
             FragmentingMatrix();
         }
         private void FragmentingMatrix()
         {
-            int dimension = this.TestFeature.Length;
-            byte NumberOfFragment = Convert.ToByte((dimension / this.FragmentFactor) * (dimension / this.FragmentFactor));
-            this.TestFragment = new byte[NumberOfFragment, this.FragmentFactor, this.FragmentFactor];
-            this.TrainFragment = new byte[NumberOfFragment, this.FragmentFactor, this.FragmentFactor];
-            for(int xCriterion = 0, FragmentIndex=0; xCriterion<dimension; xCriterion += this.FragmentFactor, FragmentIndex++)//Shift horizontal block
+            int dimension = this.TestFeature.GetLength(0);
+            int FragmentSize = dimension / this.NumberofFragment;
+            this.TestFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize, FragmentSize];
+            this.TrainFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize, FragmentSize];
+            //System.Diagnostics.Debug.WriteLine(this.NumberofFragment.ToString()+" "+FragmentSize.ToString());
+            int i = 0;
+            for (int xCriterion = 0, FragmentIndex = 0; xCriterion < dimension; xCriterion += FragmentSize)//Shift horizontal block
             {
-                for(int yCriterion = 0; yCriterion<dimension; yCriterion+= this.FragmentFactor, FragmentIndex++)//shift vertical block
+                for (int yCriterion = 0; yCriterion < dimension; yCriterion += FragmentSize, FragmentIndex++)//shift vertical block
                 {
-                    for(int xIndex=0; xIndex<this.FragmentFactor; xIndex++)
+                    for (int xIndex = 0; xIndex < FragmentSize; xIndex++)
                     {
-                        for(int yIndex=0; yIndex<this.FragmentFactor; yIndex++)
+                        for (int yIndex = 0; yIndex < FragmentSize; yIndex++)
                         {
+                            //System.Diagnostics.Debug.WriteLine(FragmentIndex.ToString()+" "+xCriterion.ToString()+" "+yCriterion.ToString()+" "+xIndex.ToString()+" "+yIndex.ToString());
                             this.TestFragment[FragmentIndex, xIndex, yIndex] = this.TestFeature[xIndex + xCriterion, yIndex + yCriterion];
+                            //System.Diagnostics.Debug.WriteLine("test "+this.TestFragment[FragmentIndex, xIndex, yIndex]);
+                            //i++;
                         }
                     }
                 }
             }
-            for (int xCriterion = 0, FragmentIndex = 0; xCriterion < dimension; xCriterion += this.FragmentFactor, FragmentIndex++)//Shift horizontal block
+            //System.Diagnostics.Debug.WriteLine(i);
+            i = 0;
+            for (int xCriterion = 0, FragmentIndex = 0; xCriterion < dimension; xCriterion += FragmentSize)//Shift horizontal block
             {
-                for (int yCriterion = 0; yCriterion < dimension; yCriterion += this.FragmentFactor, FragmentIndex++)//shift vertical block
+                for (int yCriterion = 0; yCriterion < dimension; yCriterion += FragmentSize, FragmentIndex++)//shift vertical block
                 {
-                    for (int xIndex = 0; xIndex < this.FragmentFactor; xIndex++)
+                    for (int xIndex = 0; xIndex < FragmentSize; xIndex++)
                     {
-                        for (int yIndex = 0; yIndex < this.FragmentFactor; yIndex++)
+                        for (int yIndex = 0; yIndex < FragmentSize; yIndex++)
                         {
+                            //System.Diagnostics.Debug.WriteLine(FragmentIndex.ToString() + " " + xCriterion.ToString() + " " + yCriterion.ToString() + " " + xIndex.ToString() + " " + yIndex.ToString());
                             this.TrainFragment[FragmentIndex, xIndex, yIndex] = this.TrainFeature[xIndex + xCriterion, yIndex + yCriterion];
+                            //System.Diagnostics.Debug.WriteLine("train "+this.TrainFragment[FragmentIndex, xIndex, yIndex]);
+                            //i++;
                         }
                     }
                 }
             }
+            //System.Diagnostics.Debug.WriteLine(i);
         }
         /// <summary>
         /// Get the Dissimilarity value for both matrix
@@ -68,14 +79,16 @@ namespace Tugas_Akhir
         public double CalculateDissimilarityValue()
         {
             this.Dissimilarity = 0;
-            for (int i=0; i<this.TestFragment.GetLength(0); i++)//shifting per-block
+            for (int i = 0; i < this.TestFragment.GetLength(0); i++)//shifting per-block
             {
-                int Weight = GetWeight(getModeofRegion(SliceMatrix(TrainFragment, i), SliceMatrix(TestFragment,i)));
-                for (int x=0; x<this.TestFragment.GetLength(1); x++)
+                float Weight = GetWeight(getModeofRegion(SliceMatrix(TrainFragment, i), SliceMatrix(TestFragment, i)));
+                //System.Diagnostics.Debug.WriteLine(getModeofRegion(SliceMatrix(TrainFragment, i), SliceMatrix(TestFragment, i)));
+                for (int x = 0; x < this.TestFragment.GetLength(1); x++)
                 {
-                    for(int y=0; y<this.TestFragment.GetLength(2); y++)
+                    for (int y = 0; y < this.TestFragment.GetLength(2); y++)
                     {
-                        this.Dissimilarity += Weight * (Math.Pow(TestFragment[i, x, y] - TrainFragment[i, x, y], 2) / TestFragment[i, x, y] + TrainFragment[i, x, y]);
+                        //System.Diagnostics.Debug.WriteLine(this.Dissimilarity+" "+Weight.ToString()+" "+ (Math.Pow((TestFragment[i, x, y] - TrainFragment[i, x, y]), 2) / (TestFragment[i, x, y] + TrainFragment[i, x, y])).ToString());
+                        this.Dissimilarity += (Weight * (float)(Math.Pow((TestFragment[i, x, y] - TrainFragment[i, x, y]), 2) / (TestFragment[i, x, y] + TrainFragment[i, x, y])));
                     }
                 }
             }
@@ -83,16 +96,19 @@ namespace Tugas_Akhir
         }
         protected int GetWeight(int modes)
         {
-            if(modes>0 && modes < 64)
+            if (modes >= 0 && modes < 64)
             {
                 return 1;
-            }else if(modes>=64 && modes < 128)
+            }
+            else if (modes >= 64 && modes < 128)
             {
                 return 2;
-            }else if(modes>=128 && modes < 192)
+            }
+            else if (modes >= 128 && modes < 192)
             {
                 return 3;
-            }else if(modes>=192 && modes < 256)
+            }
+            else if (modes >= 192 && modes < 256)
             {
                 return 4;
             }
@@ -103,26 +119,38 @@ namespace Tugas_Akhir
         }
         protected int getModeofRegion(byte[,] feature1, byte[,] feature2)
         {
-            byte modes=0;
-            int maxScore=0;
-            int counter=0;
+            byte modes = 0;
+            int maxScore = 0;
+            int counter = 0;
             List<byte> SortedData = new List<byte>();
-            for(int i=0; i<feature1.Length; i++)
+            for (int i = 0; i < feature1.GetLength(0); i++)
             {
-                for(int j=0; j<feature1.Length; j++)
+                for (int j = 0; j < feature1.GetLength(1); j++)
                 {
                     SortedData.Add(feature1[i, j]);
+                    //System.Diagnostics.Debug.WriteLine(feature1[i, j]);
                 }
             }
-            for (int i = 0; i < feature2.Length; i++)
+            for (int i = 0; i < feature2.GetLength(0); i++)
             {
-                for (int j = 0; j < feature2.Length; j++)
+                for (int j = 0; j < feature2.GetLength(1); j++)
                 {
                     SortedData.Add(feature2[i, j]);
+                    //System.Diagnostics.Debug.WriteLine(feature2[i, j]);
                 }
             }
-            SortedData.Sort((s1, s2) => s1.CompareTo(s2));
-            for(int i = SortedData.Count-1; i>0; i--)
+            //System.Diagnostics.Debug.WriteLine("unsorted");
+            //foreach (byte x in SortedData)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(x);
+            //}
+            //SortedData.Sort((s1, s2) => s1.CompareTo(s2));
+            //System.Diagnostics.Debug.WriteLine("sorted");
+            //foreach(byte x in SortedData)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(x);
+            //}
+            for (int i = SortedData.Count - 1; i > 0; i--)
             {
                 if (SortedData[i] == SortedData[i - 1])
                 {
@@ -143,18 +171,28 @@ namespace Tugas_Akhir
             }
             return modes;
         }
-        protected byte[,] SliceMatrix(byte[,,] target, int index)
+        protected byte[,] SliceMatrix(byte[,,] target, int index)//mngambil potongan matrix
         {
-            int lenght = target.GetLength(index);
-            byte[,] Result = new byte[lenght, lenght];
-            for(int x=0; x<lenght; x++)
+            int length = target.GetLength(1);
+            byte[,] Result = new byte[length, length];
+            for (int x = 0; x < length; x++)
             {
-                for(int y=0; y< lenght; y++)
+                for (int y = 0; y < length; y++)
                 {
+                    //System.Diagnostics.Debug.WriteLine(index.ToString()+" "+x.ToString()+" "+y.ToString());
                     Result[x, y] = target[index, x, y];
+                    //System.Diagnostics.Debug.WriteLine("result "+Result[x, y]+" harusnya "+target[index,x,y]);
                 }
             }
             return Result;
+        }
+        private double RoundToSignificantDigits(double d, int digits)
+        {
+            if (d == 0)
+                return 0;
+
+            double scale = Math.Pow(10, Math.Floor(Math.Log10(Math.Abs(d))) + 1);
+            return scale * Math.Round(d / scale, digits);
         }
     }
 }

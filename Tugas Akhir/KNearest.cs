@@ -6,21 +6,22 @@ namespace Tugas_Akhir
 {
     class KNearest
     {
-        int[] dataTest;
-        List<int[]> dataTrain;
+        byte[,] dataTest;
+        List<byte[,]> dataTrain;
         List<Couple> chiDistances;
         int K_constanta;
-        KNearest(int[] dataTest, List<int[]> dataTrain, string[] labelTrain, int K_constanta)
+        public KNearest(byte[,] dataTest, List<byte[,]> dataTrain, List<string> labelTrain, int K_constanta)
         {
             this.dataTest = dataTest;
             this.K_constanta = K_constanta;
-            if (dataTrain.Count != labelTrain.Length)
+            if (dataTrain.Count != labelTrain.Count)
             {
                 throw new ArgumentException("Number of feature not equal to number of label");
             } else
             {
+                chiDistances = new List<Couple>();
                 this.dataTrain = dataTrain;
-                for (int i = 0; i < labelTrain.Length; i++)
+                for (int i = 0; i < labelTrain.Count; i++)
                 {
                     chiDistances.Add(new Couple(0, labelTrain[i]));
                 }
@@ -28,16 +29,15 @@ namespace Tugas_Akhir
         }
         private void calculateDistances()
         {
-            int counter = 0;
-            foreach (int[] feature in dataTrain)
+            for (int i = 0; i < dataTrain.Count; i++)
             {
-                //ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(this.dataTest, feature);
-                //chiDistances[counter].Distance = chiObj.CalculateDissimilarityValue();
-                //counter++;
+                ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(dataTest, dataTrain[i], 5);
+                chiDistances[i].Distance = chiObj.CalculateDissimilarityValue();
+                System.Diagnostics.Debug.WriteLine(chiDistances[i].Label + " " + chiDistances[i].Distance.ToString());
             }
             chiDistances.Sort((s1, s2) => s1.Distance.CompareTo(s2.Distance));
         }
-        private string getClass()
+        public string getClass()
         {
             calculateDistances();
             chiDistances.Sort((s1, s2)=> s1.Distance.CompareTo(s2.Distance));
@@ -46,6 +46,10 @@ namespace Tugas_Akhir
         private string getMostNeighbour()
         {
             List<Pair> topK = new List<Pair>();
+            for(int i=0; i<this.K_constanta; i++)
+            {
+                topK.Add(new Pair(this.chiDistances[i].Label));
+            }
             for(int i=0; i<this.K_constanta; i++)
             {
                 for(int j=0; j<topK.Count; j++)
@@ -58,9 +62,14 @@ namespace Tugas_Akhir
                     if (j == this.K_constanta - 1)
                     {
                         Pair pairObj = new Pair(chiDistances[i].Label);
+                        topK.Add(pairObj);
                     }
                 }
             }
+            //foreach(Pair x in topK)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(x.Key + " " + x.Value.ToString());
+            //}
             topK.Sort((s1, s2) => s1.Value.CompareTo(s2.Value));
             return topK[0].Key;
         }

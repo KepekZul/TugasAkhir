@@ -123,6 +123,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>haar_training_set.resx</DependentUpon>
     </Compile>
+    <Compile Include="Hasil_klasifikasi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Hasil_klasifikasi.Designer.cs">
+      <DependentUpon>Hasil_klasifikasi.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImageCrop.cs" />
     <Compile Include="KNearest.cs" />
     <Compile Include="DRLocalDirectionalPattern.cs" />
@@ -171,6 +177,12 @@
     <EmbeddedResource Include="haar_training_set.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>haar_training_set.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hasil_klasifikasi.resx">
+      <DependentUpon>Hasil_klasifikasi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pengujian.resx">
+      <DependentUpon>Pengujian.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="retrive data.resx">
       <DependentUpon>retrive data.cs</DependentUpon>

@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 namespace Tugas_Akhir
@@ -19,7 +19,7 @@ namespace Tugas_Akhir
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string ConnectionString = "Server=localhost;Database=face_feature;Uid=root;Pwd=;";
+            string ConnectionString = ConfigurationManager.AppSettings["DataBaseConnectionString"];
             MySqlConnection MyConnect = new MySqlConnection(ConnectionString);
             using(MySqlCommand MyCommand = new MySqlCommand(this.textBox1.Text, MyConnect))
             {
@@ -53,6 +53,11 @@ namespace Tugas_Akhir
             {
                 System.Diagnostics.Debug.WriteLine(dataGridView1.SelectedRows[0].Cells[0].Value);
             }
+        }
+
+        private void sizeForEachDatasetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "select dataset, dimension, size from data_feature group by dataset, size";
         }
     }
 }
