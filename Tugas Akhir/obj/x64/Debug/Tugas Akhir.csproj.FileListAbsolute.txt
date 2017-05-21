@@ -83,3 +83,7 @@ D:\zul\tugas akhir\TugasAkhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Tugas Akhir.e
 D:\zul\tugas akhir\TugasAkhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Tugas Akhir.pdb
 D:\zul\tugas akhir\TugasAkhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\MySql.Data.dll
 D:\zul\tugas akhir\TugasAkhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Emgu.CV.World.xml
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.Math.dll
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.dll
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.Math.xml
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.xml

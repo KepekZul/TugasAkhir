@@ -11,6 +11,7 @@ namespace Tugas_Akhir
         public string label { get; set; }
         public int dimension { get; set; }
         public string fileName { get; set; }
+
         public Byte[,] matrix { get; set; }
         public string dataset { get; set; }
         public string data { get; set; }

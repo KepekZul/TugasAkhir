@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using AForge.Math.Metrics;
 
 namespace Tugas_Akhir
 {
@@ -32,8 +33,9 @@ namespace Tugas_Akhir
         {
             int dimension = this.TestFeature.GetLength(0);
             int FragmentSize = dimension / this.NumberofFragment;
-            this.TestFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize];
-            this.TrainFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize];
+            //System.Diagnostics.Debug.WriteLine("dimensi" + dimension + " " + NumberofFragment + " " + FragmentSize);
+            this.TestFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize * FragmentSize];
+            this.TrainFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize * FragmentSize];
             int i = 0;
             for (int xCriterion = 0, FragmentIndex = 0; xCriterion < dimension; xCriterion += FragmentSize)//Shift horizontal block
             {
@@ -43,7 +45,15 @@ namespace Tugas_Akhir
                     {
                         for (int yIndex = 0; yIndex < FragmentSize; yIndex++)
                         {
-                            this.TestFragment[FragmentIndex, xIndex+yIndex] = this.TestFeature[xIndex + xCriterion, yIndex + yCriterion];
+                            try
+                            {
+                                this.TestFragment[FragmentIndex, i] = this.TestFeature[xIndex + xCriterion, yIndex + yCriterion];
+                                //System.Diagnostics.Debug.WriteLine("sukses " + xIndex + " " + yIndex + " " + xCriterion + " " + yCriterion);
+                            }
+                            catch
+                            {
+                                System.Diagnostics.Debug.WriteLine("gagal " + xIndex + " " + yIndex + " " + xCriterion + " " + yCriterion);
+                            }
                         }
                     }
                 }
@@ -57,7 +67,15 @@ namespace Tugas_Akhir
                     {
                         for (int yIndex = 0; yIndex < FragmentSize; yIndex++)
                         {
-                            this.TrainFragment[FragmentIndex, xIndex+ yIndex] = this.TrainFeature[xIndex + xCriterion, yIndex + yCriterion];
+                            try
+                            {
+                                this.TrainFragment[FragmentIndex, i] = this.TrainFeature[xIndex + xCriterion, yIndex + yCriterion];
+                                //System.Diagnostics.Debug.WriteLine("sukses " + xIndex + " " + yIndex + " " + xCriterion + " " + yCriterion);
+                            }
+                            catch
+                            {
+                                System.Diagnostics.Debug.WriteLine("gagal " + xIndex + " " + yIndex + " " + xCriterion + " " + yCriterion);
+                            }
                         }
                     }
                 }
@@ -75,11 +93,41 @@ namespace Tugas_Akhir
                 int[] histogramTest = new int[256];
                 int[] histogramTrain = new int[256];
                 getHistogram(histogramTest, histogramTrain, i);
+                //System.Diagnostics.Debug.WriteLine("hist train:");
+                //for (int j = 0; j < histogramTrain.Length; j++)
+                //{
+                //    if (histogramTrain[j] != 0)
+                //        System.Diagnostics.Debug.Write(j + ":" + histogramTrain[j] + " ");
+                //    if (j == histogramTest.Length - 1)
+                //        System.Diagnostics.Debug.WriteLine("");
+                //}
+                //System.Diagnostics.Debug.WriteLine("hist test:");
+                //for (int j = 0; j < histogramTest.Length; j++)
+                //{
+                //    if (histogramTest[j] != 0)
+                //        System.Diagnostics.Debug.Write(j + ":" + histogramTest[j] + " ");
+                //    if (j == histogramTrain.Length - 1)
+                //        System.Diagnostics.Debug.WriteLine("");
+                //}
+
+
                 int weight = GetWeight(getModeofRegion(this.TestFragment, this.TrainFragment, i));
-                for(int j=0; j<256; j++)
+                for (int j = 0; j < 256; j++)
                 {
-                    this.Dissimilarity += weight * (Math.Pow(histogramTest[j] - histogramTrain[j],2)/(histogramTest[j] + histogramTrain[j]));
+                    //System.Diagnostics.Debug.WriteLine(weight + " " + Math.Pow(histogramTest[j] - histogramTrain[j], 2)+" " + ((histogramTest[j] + histogramTrain[j] != 0) ? histogramTest[j] + histogramTrain[j] : 1));
+                    this.Dissimilarity += weight * (Math.Pow(histogramTest[j] - histogramTrain[j], 2) / ((histogramTest[j] + histogramTrain[j] != 0) ? histogramTest[j] + histogramTrain[j] : 1));
+                    //System.Diagnostics.Debug.WriteLine("dissimilar " + this.Dissimilarity.ToString());
                 }
+
+                //debugging
+                //EuclideanDistance eucliObj = new EuclideanDistance();
+                //double[] tempTrain = new double[histogramTrain.Length], tempTest = new double[histogramTest.Length];
+                //for(int x=0; x<histogramTest.Length; x++)
+                //{
+                //    tempTest[x] = histogramTest[x];
+                //    tempTrain[x] = histogramTrain[x];
+                //} 
+                //this.Dissimilarity = eucliObj.GetDistance( tempTest,tempTrain);
             }
             return this.Dissimilarity;
         }
@@ -87,16 +135,35 @@ namespace Tugas_Akhir
         private void getHistogram(int[] histogramTest, int[] histogramTrain, int fragmentIndex)
         {
             //initiate histogram
-            for(int i=0; i<256; i++)
+            for (int i = 0; i < 256; i++)
             {
                 histogramTest[i] = 0;
                 histogramTrain[i] = 0;
             }
-            for(int i=0; i<this.TrainFeature.GetLength(0); i++)
+            for (int i = 0; i < this.TestFragment.GetLength(1); i++)
             {
                 histogramTest[this.TestFragment[fragmentIndex, i]]++;
+                //System.Diagnostics.Debug.WriteLine(this.TestFragment[fragmentIndex,i]+"++");
                 histogramTrain[this.TrainFragment[fragmentIndex, i]]++;
+                //System.Diagnostics.Debug.WriteLine(this.TrainFragment[fragmentIndex, i] + "++");
             }
+            //System.Diagnostics.Debug.WriteLine("panjang "+TestFragment.GetLength(1));
+            //System.Diagnostics.Debug.WriteLine("hist train:");
+            //for (int i = 0; i < 256; i++)
+            //{
+            //    if (histogramTrain[i] != 0)
+            //        System.Diagnostics.Debug.Write(i + ":" + histogramTrain[i] + " ");
+            //    if (i == histogramTest.Length - 1)
+            //        System.Diagnostics.Debug.WriteLine("");
+            //}
+            //System.Diagnostics.Debug.WriteLine("hist test:");
+            //for (int i = 0; i < 256; i++)
+            //{
+            //    if (histogramTest[i] != 0)
+            //        System.Diagnostics.Debug.Write(i + ":" + histogramTest[i] + " ");
+            //    if (i == histogramTrain.Length - 1)
+            //        System.Diagnostics.Debug.WriteLine("");
+            //}
         }
 
         protected int GetWeight(int modes)
@@ -125,10 +192,10 @@ namespace Tugas_Akhir
         protected int getModeofRegion(byte[,] feature1, byte[,] feature2, int index)
         {
             List<byte> feat = new List<byte>();
-            for(int i=0; i<feature1.GetLength(1); i++)
+            for (int i = 0; i < feature1.GetLength(1); i++)
             {
-                feat.Add(feature1[index,i]);
-                feat.Add(feature2[index,i]);
+                feat.Add(feature1[index, i]);
+                feat.Add(feature2[index, i]);
             }
             feat.Sort((s1, s2) => s1.CompareTo(s2));
             byte modes = 0;

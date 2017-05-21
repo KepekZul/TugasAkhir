@@ -31,8 +31,22 @@ namespace Tugas_Akhir
                 dataModel.fileName = metaData[2];
                 dataModel.label = metaData[3];
                 drldp.getDRLDPMatrix();
-                dataModel.dimension = drldp.drldpMatrix.GetLength(0);
-                dataModel.matrix = drldp.drldpMatrix;
+                //original
+                //dataModel.dimension = drldp.drldpMatrix.GetLength(0);
+                //dataModel.matrix = drldp.drldpMatrix;
+
+                //experiment
+                dataModel.dimension = drldp.ldpResult.GetLength(0);
+                byte[,] tempMatrix = new byte[dataModel.dimension, dataModel.dimension];
+                for (int i = 0; i < dataModel.dimension; i++)
+                {
+                    for (int j = 0; j < dataModel.dimension; j++)
+                    {
+                        tempMatrix[i, j] = Convert.ToByte(drldp.ldpResult[i, j]);
+                    }
+                }
+                dataModel.matrix = tempMatrix;
+
                 dataModel.parseMatToString(true);
                 result.Enqueue(dataModel);
             }

@@ -43,6 +43,10 @@ namespace Tugas_Akhir
                 }
                 Bitmap[] cropResult = imageCroper.getImages();
                 int j = 1;
+                if (cropResult.Length == 0)
+                {
+                    System.Diagnostics.Debug.WriteLine(filepath);
+                }
                 foreach(Bitmap cropedImage in cropResult)
                 {
                     cropedImage.Save(Foldertarget+"/"+Path.GetFileNameWithoutExtension(filepath)+".hasil "+j.ToString()+".gif");

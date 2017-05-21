@@ -32,15 +32,15 @@ namespace Tugas_Akhir
             for (int i = 0; i < dataTrain.Count; i++)
             {
                 ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(dataTest, dataTrain[i], 5);
+                
                 chiDistances[i].Distance = chiObj.CalculateDissimilarityValue();
-                System.Diagnostics.Debug.WriteLine(chiDistances[i].Label + " " + chiDistances[i].Distance.ToString());
+                //System.Diagnostics.Debug.WriteLine(chiDistances[i].Label + " " + chiDistances[i].Distance.ToString());
             }
             chiDistances.Sort((s1, s2) => s1.Distance.CompareTo(s2.Distance));
         }
         public string getClass()
         {
             calculateDistances();
-            chiDistances.Sort((s1, s2)=> s1.Distance.CompareTo(s2.Distance));
             return getMostNeighbour();
         }
         private string getMostNeighbour()
