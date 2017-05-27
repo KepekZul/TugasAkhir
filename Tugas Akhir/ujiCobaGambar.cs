@@ -276,5 +276,79 @@ namespace Tugas_Akhir
                 System.Diagnostics.Debug.WriteLine("berhasil " + bdf.SelectedPath + Path.GetFileNameWithoutExtension(pathfile) + ".gif");
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            kirschEdgeDetection kirs = new kirschEdgeDetection(this.gambar);
+            kirs.getEdge(Int32.Parse( this.maskIndex.Text));
+            Bitmap iniEdge = new Bitmap(kirs.finalMatrix.GetLength(0), kirs.finalMatrix.GetLength(1));
+            for(int i=0; i<kirs.finalMatrix.GetLength(0); i++)
+            {
+                for(int j=0; j<kirs.finalMatrix.GetLength(1); j++)
+                {
+                    iniEdge.SetPixel(i, j, Color.FromArgb(kirs.finalMatrix[i, j], kirs.finalMatrix[i, j], kirs.finalMatrix[i, j]));
+                }
+            }
+            this.pictureBox2.Image = iniEdge;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string raw_data = "";
+            for(int i=0; i<this.gambar.Height; i++)
+            {
+                for(int j=0; j<this.gambar.Width; j++)
+                {
+                    raw_data += this.gambar.GetPixel(i, j).G+" ";
+                }
+                raw_data += "\n";
+            }
+            Hasil_klasifikasi raw = new Hasil_klasifikasi(raw_data);
+            raw.Text = "raw";
+
+            string ldp = "";
+            Bitmap sementara = new Bitmap(this.pictureBox1.Image);
+            for (int i = 0; i < this.pictureBox1.Image.Height; i++)
+            {
+                for (int j = 0; j < this.pictureBox1.Image.Width; j++)
+                {
+                    ldp += sementara.GetPixel(i, j).G+" ";
+                }
+                ldp += "\n";
+            }
+            Hasil_klasifikasi ldped = new Hasil_klasifikasi(ldp);
+            ldped.Text = "ldp";
+
+            raw.Show();
+            ldped.Show();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Bitmap input = new Bitmap(5, 5);
+            var data = richTextBox1.Text;
+            var parsed_data = data.Split('\n', ' ');
+            int x = 0;
+            for(int i=0; i<5; i++)
+            {
+                for(int j=0; j<5; j++)
+                {
+                    input.SetPixel(i, j, Color.FromArgb(int.Parse(parsed_data[x]), int.Parse(parsed_data[x]), int.Parse(parsed_data[x])));
+                    x++;
+                }
+            }
+            DRLocalDirectionalPattern ini = new DRLocalDirectionalPattern(input);
+            ini.getDRLDPMatrix();
+            string hasil = "";
+            for(int i=0; i<3; i++)
+            {
+                for(int j=0; j<3; j++)
+                {
+                    hasil += ini.ldpResult[i, j]+" ";
+                }
+                hasil += '\n';
+            }
+            richTextBox2.Text = hasil;
+        }
     }
 }

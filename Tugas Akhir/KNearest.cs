@@ -41,6 +41,10 @@ namespace Tugas_Akhir
         public string getClass()
         {
             calculateDistances();
+            //foreach (Couple x in chiDistances)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(x.Label + " " + x.Distance);
+            //}
             return getMostNeighbour();
         }
         private string getMostNeighbour()

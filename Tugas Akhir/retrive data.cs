@@ -59,5 +59,31 @@ namespace Tugas_Akhir
         {
             textBox1.Text = "select dataset, dimension, size from data_feature group by dataset, size";
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DRLDPDataModel SelectedData = new DRLDPDataModel { fileName = dataGridView1.SelectedRows[0].Cells[2].Value.ToString(), dimension = Int32.Parse(dataGridView1.SelectedRows[0].Cells[1].Value.ToString()), data = dataGridView1.SelectedRows[0].Cells[3].Value.ToString() };
+            SelectedData.parseStringToMat(true);
+            int[] histogram = new int[256];
+            for(int i=0; i< 256; i++)
+            {
+                histogram[i] = 0;
+            }
+            for(int i=0; i<SelectedData.matrix.GetLength(0); i++)
+            {
+                for(int j=0; j<SelectedData.matrix.GetLength(1); j++)
+                {
+                    histogram[SelectedData.matrix[i, j]]++;
+                }
+            }
+            string histo = "";
+            for(int i=0; i<256; i++)
+            {
+                histo +="color "+ i.ToString() + " " + histogram[i].ToString()+"\n";
+            }
+            Hasil_klasifikasi ini = new Hasil_klasifikasi(histo);
+            ini.Text = "Histogram";
+            ini.Show();
+        }
     }
 }

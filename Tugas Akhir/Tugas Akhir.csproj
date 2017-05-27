@@ -133,6 +133,7 @@
       <DependentUpon>Hasil_klasifikasi.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageCrop.cs" />
+    <Compile Include="kirschEdgeDetection.cs" />
     <Compile Include="KNearest.cs" />
     <Compile Include="DRLocalDirectionalPattern.cs" />
     <Compile Include="Pengujian.cs">
@@ -205,6 +206,7 @@
     <EmbeddedResource Include="tampilHasilCrop.resx">
       <DependentUpon>tampilHasilCrop.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

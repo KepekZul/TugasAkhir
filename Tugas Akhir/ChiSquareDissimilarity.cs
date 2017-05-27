@@ -33,22 +33,22 @@ namespace Tugas_Akhir
         {
             int dimension = this.TestFeature.GetLength(0);
             int FragmentSize = dimension / this.NumberofFragment;
-            //System.Diagnostics.Debug.WriteLine("dimensi" + dimension + " " + NumberofFragment + " " + FragmentSize);
+            //System.Diagnostics.Debug.WriteLine("size " + FragmentSize);
             this.TestFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize * FragmentSize];
             this.TrainFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize * FragmentSize];
-            int i = 0;
+            int i;
             for (int xCriterion = 0, FragmentIndex = 0; xCriterion < dimension; xCriterion += FragmentSize)//Shift horizontal block
             {
                 for (int yCriterion = 0; yCriterion < dimension; yCriterion += FragmentSize, FragmentIndex++)//shift vertical block
                 {
+                    i = 0;
                     for (int xIndex = 0; xIndex < FragmentSize; xIndex++)
                     {
                         for (int yIndex = 0; yIndex < FragmentSize; yIndex++)
                         {
                             try
                             {
-                                this.TestFragment[FragmentIndex, i] = this.TestFeature[xIndex + xCriterion, yIndex + yCriterion];
-                                //System.Diagnostics.Debug.WriteLine("sukses " + xIndex + " " + yIndex + " " + xCriterion + " " + yCriterion);
+                                this.TestFragment[FragmentIndex, i++] = this.TestFeature[xIndex + xCriterion, yIndex + yCriterion];
                             }
                             catch
                             {
@@ -58,19 +58,19 @@ namespace Tugas_Akhir
                     }
                 }
             }
-            i = 0;
+
             for (int xCriterion = 0, FragmentIndex = 0; xCriterion < dimension; xCriterion += FragmentSize)//Shift horizontal block
             {
                 for (int yCriterion = 0; yCriterion < dimension; yCriterion += FragmentSize, FragmentIndex++)//shift vertical block
                 {
+                    i = 0;
                     for (int xIndex = 0; xIndex < FragmentSize; xIndex++)
                     {
                         for (int yIndex = 0; yIndex < FragmentSize; yIndex++)
                         {
                             try
                             {
-                                this.TrainFragment[FragmentIndex, i] = this.TrainFeature[xIndex + xCriterion, yIndex + yCriterion];
-                                //System.Diagnostics.Debug.WriteLine("sukses " + xIndex + " " + yIndex + " " + xCriterion + " " + yCriterion);
+                                this.TrainFragment[FragmentIndex, i++] = this.TrainFeature[xIndex + xCriterion, yIndex + yCriterion];
                             }
                             catch
                             {
@@ -92,47 +92,36 @@ namespace Tugas_Akhir
             {
                 int[] histogramTest = new int[256];
                 int[] histogramTrain = new int[256];
-                getHistogram(histogramTest, histogramTrain, i);
-                //System.Diagnostics.Debug.WriteLine("hist train:");
-                //for (int j = 0; j < histogramTrain.Length; j++)
-                //{
-                //    if (histogramTrain[j] != 0)
-                //        System.Diagnostics.Debug.Write(j + ":" + histogramTrain[j] + " ");
-                //    if (j == histogramTest.Length - 1)
-                //        System.Diagnostics.Debug.WriteLine("");
-                //}
-                //System.Diagnostics.Debug.WriteLine("hist test:");
-                //for (int j = 0; j < histogramTest.Length; j++)
-                //{
-                //    if (histogramTest[j] != 0)
-                //        System.Diagnostics.Debug.Write(j + ":" + histogramTest[j] + " ");
-                //    if (j == histogramTrain.Length - 1)
-                //        System.Diagnostics.Debug.WriteLine("");
-                //}
+                getHistogram(ref histogramTest, ref histogramTrain, i);
 
-
-                int weight = GetWeight(getModeofRegion(this.TestFragment, this.TrainFragment, i));
+                //string histo1 = "";
+                //for (int j = 0; j < 256; j++)
+                //{
+                //    histo1 += "color " + j.ToString() + " " + histogramTest[j].ToString() + "\n";
+                //}
+                //string histo2 = "";
+                //for (int j = 0; j < 256; j++)
+                //{
+                //    histo2 += "color " + j.ToString() + " " + histogramTrain[j].ToString() + "\n";
+                //}
+                //Hasil_klasifikasi train = new Hasil_klasifikasi(histo2);
+                //Hasil_klasifikasi tes = new Hasil_klasifikasi(histo1);
+                //train.Text = "train";
+                //tes.Text = "tes";
+                //train.Show();
+                //tes.Show();
+                double weight = GetWeight(getModeofRegion(this.TestFragment, this.TrainFragment, i));
                 for (int j = 0; j < 256; j++)
                 {
-                    //System.Diagnostics.Debug.WriteLine(weight + " " + Math.Pow(histogramTest[j] - histogramTrain[j], 2)+" " + ((histogramTest[j] + histogramTrain[j] != 0) ? histogramTest[j] + histogramTrain[j] : 1));
-                    this.Dissimilarity += weight * (Math.Pow(histogramTest[j] - histogramTrain[j], 2) / ((histogramTest[j] + histogramTrain[j] != 0) ? histogramTest[j] + histogramTrain[j] : 1));
-                    //System.Diagnostics.Debug.WriteLine("dissimilar " + this.Dissimilarity.ToString());
+                    //System.Diagnostics.Debug.WriteLine("J "+j+" "+histogramTest[j]+" "+histogramTrain[j]+" "+weight);
+                    this.Dissimilarity += weight * (double)((double)Math.Pow(histogramTest[j] - (double)histogramTrain[j], 2) / (double)(((double)histogramTest[j] + (double)histogramTrain[j] != 0) ? (double)histogramTest[j] + (double)histogramTrain[j] : 1));
                 }
-
-                //debugging
-                //EuclideanDistance eucliObj = new EuclideanDistance();
-                //double[] tempTrain = new double[histogramTrain.Length], tempTest = new double[histogramTest.Length];
-                //for(int x=0; x<histogramTest.Length; x++)
-                //{
-                //    tempTest[x] = histogramTest[x];
-                //    tempTrain[x] = histogramTrain[x];
-                //} 
-                //this.Dissimilarity = eucliObj.GetDistance( tempTest,tempTrain);
             }
+            //System.Diagnostics.Debug.WriteLine("diss "+this.Dissimilarity);
             return this.Dissimilarity;
         }
 
-        private void getHistogram(int[] histogramTest, int[] histogramTrain, int fragmentIndex)
+        private void getHistogram(ref int[] histogramTest, ref int[] histogramTrain, int fragmentIndex)
         {
             //initiate histogram
             for (int i = 0; i < 256; i++)
@@ -140,33 +129,22 @@ namespace Tugas_Akhir
                 histogramTest[i] = 0;
                 histogramTrain[i] = 0;
             }
+            string pixelTrain = "";
+            string pixelTest = "";
             for (int i = 0; i < this.TestFragment.GetLength(1); i++)
             {
+                //pixelTrain += this.TrainFragment[fragmentIndex, i].ToString() + " ";
+                //pixelTest += this.TestFragment[fragmentIndex, i].ToString() + " ";
                 histogramTest[this.TestFragment[fragmentIndex, i]]++;
-                //System.Diagnostics.Debug.WriteLine(this.TestFragment[fragmentIndex,i]+"++");
                 histogramTrain[this.TrainFragment[fragmentIndex, i]]++;
-                //System.Diagnostics.Debug.WriteLine(this.TrainFragment[fragmentIndex, i] + "++");
             }
-            //System.Diagnostics.Debug.WriteLine("panjang "+TestFragment.GetLength(1));
-            //System.Diagnostics.Debug.WriteLine("hist train:");
-            //for (int i = 0; i < 256; i++)
-            //{
-            //    if (histogramTrain[i] != 0)
-            //        System.Diagnostics.Debug.Write(i + ":" + histogramTrain[i] + " ");
-            //    if (i == histogramTest.Length - 1)
-            //        System.Diagnostics.Debug.WriteLine("");
-            //}
-            //System.Diagnostics.Debug.WriteLine("hist test:");
-            //for (int i = 0; i < 256; i++)
-            //{
-            //    if (histogramTest[i] != 0)
-            //        System.Diagnostics.Debug.Write(i + ":" + histogramTest[i] + " ");
-            //    if (i == histogramTrain.Length - 1)
-            //        System.Diagnostics.Debug.WriteLine("");
-            //}
+            Hasil_klasifikasi ini = new Hasil_klasifikasi(pixelTrain);
+            Hasil_klasifikasi itu = new Hasil_klasifikasi(pixelTest);
+            //ini.Show();
+            //itu.Show();
         }
 
-        protected int GetWeight(int modes)
+        protected double GetWeight(int modes)
         {
             if (modes >= 0 && modes < 64)
             {

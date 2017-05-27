@@ -50,6 +50,10 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.Rename = new System.Windows.Forms.Button();
             this.pgmToBitmap = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.maskIndex = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -249,11 +253,52 @@
             this.pgmToBitmap.UseVisualStyleBackColor = true;
             this.pgmToBitmap.Click += new System.EventHandler(this.pgmToBitmap_Click);
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(653, 319);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "edge";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // maskIndex
+            // 
+            this.maskIndex.Location = new System.Drawing.Point(735, 319);
+            this.maskIndex.Name = "maskIndex";
+            this.maskIndex.Size = new System.Drawing.Size(68, 20);
+            this.maskIndex.TabIndex = 20;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(654, 348);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 21;
+            this.button5.Text = "get raw";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(735, 261);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 22;
+            this.button8.Text = "text2image";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // ujiCobaGambar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(815, 380);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.maskIndex);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.pgmToBitmap);
             this.Controls.Add(this.Rename);
             this.Controls.Add(this.pictureBox2);
@@ -307,6 +352,10 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button Rename;
         private System.Windows.Forms.Button pgmToBitmap;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox maskIndex;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button8;
     }
 }
 
