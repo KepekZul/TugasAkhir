@@ -31,27 +31,28 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.templateQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sizeForEachDatasetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button3 = new System.Windows.Forms.Button();
+            this.oerationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.learnPCAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.learnSelectedDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serializeToTestingObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transformPCAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 39);
+            this.textBox1.Location = new System.Drawing.Point(12, 27);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(489, 20);
             this.textBox1.TabIndex = 0;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(507, 39);
+            this.button1.Location = new System.Drawing.Point(507, 27);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 20);
             this.button1.TabIndex = 2;
@@ -66,36 +67,17 @@
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(570, 342);
+            this.dataGridView1.Size = new System.Drawing.Size(683, 342);
             this.dataGridView1.TabIndex = 3;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(588, 65);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(245, 233);
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(588, 38);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 21);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Restore";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.templateQueryToolStripMenuItem});
+            this.templateQueryToolStripMenuItem,
+            this.oerationToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(845, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(708, 24);
             this.menuStrip1.TabIndex = 7;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -114,24 +96,49 @@
             this.sizeForEachDatasetToolStripMenuItem.Text = "size for each dataset";
             this.sizeForEachDatasetToolStripMenuItem.Click += new System.EventHandler(this.sizeForEachDatasetToolStripMenuItem_Click);
             // 
-            // button3
+            // oerationToolStripMenuItem
             // 
-            this.button3.Location = new System.Drawing.Point(670, 39);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Histogram";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.oerationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.learnPCAToolStripMenuItem,
+            this.learnSelectedDataToolStripMenuItem,
+            this.serializeToTestingObjectToolStripMenuItem,
+            this.transformPCAToolStripMenuItem});
+            this.oerationToolStripMenuItem.Name = "oerationToolStripMenuItem";
+            this.oerationToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.oerationToolStripMenuItem.Text = "Operation";
+            // 
+            // learnPCAToolStripMenuItem
+            // 
+            this.learnPCAToolStripMenuItem.Name = "learnPCAToolStripMenuItem";
+            this.learnPCAToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.learnPCAToolStripMenuItem.Text = "Learn PCA";
+            this.learnPCAToolStripMenuItem.Click += new System.EventHandler(this.learnPca);
+            // 
+            // learnSelectedDataToolStripMenuItem
+            // 
+            this.learnSelectedDataToolStripMenuItem.Name = "learnSelectedDataToolStripMenuItem";
+            this.learnSelectedDataToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.learnSelectedDataToolStripMenuItem.Text = "Serialize to training object";
+            this.learnSelectedDataToolStripMenuItem.Click += new System.EventHandler(this.learnSelectedDataToolStripMenuItem_Click);
+            // 
+            // serializeToTestingObjectToolStripMenuItem
+            // 
+            this.serializeToTestingObjectToolStripMenuItem.Name = "serializeToTestingObjectToolStripMenuItem";
+            this.serializeToTestingObjectToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.serializeToTestingObjectToolStripMenuItem.Text = "Serialize to testing object";
+            this.serializeToTestingObjectToolStripMenuItem.Click += new System.EventHandler(this.serializeToTestingObjectToolStripMenuItem_Click);
+            // 
+            // transformPCAToolStripMenuItem
+            // 
+            this.transformPCAToolStripMenuItem.Name = "transformPCAToolStripMenuItem";
+            this.transformPCAToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.transformPCAToolStripMenuItem.Text = "Transform PCA";
             // 
             // retrive_data
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(845, 419);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(708, 419);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
@@ -140,7 +147,6 @@
             this.Name = "retrive_data";
             this.Text = "retrive_data";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -152,11 +158,13 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem templateQueryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sizeForEachDatasetToolStripMenuItem;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ToolStripMenuItem oerationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem learnPCAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem learnSelectedDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem serializeToTestingObjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem transformPCAToolStripMenuItem;
     }
 }

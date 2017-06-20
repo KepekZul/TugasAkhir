@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
-
 namespace Tugas_Akhir
 {
     class PortableGrayMap
@@ -10,7 +9,6 @@ namespace Tugas_Akhir
         public int heigth;
         public int maxVal;
         public byte[][] pixels;
-
         public PortableGrayMap(int width, int height, int maxVal, byte[][] pixels)
         {
             this.width = width;
@@ -30,7 +28,6 @@ namespace Tugas_Akhir
         {
             FileStream inputFileStream = new FileStream(file, FileMode.Open);
             BinaryReader binaryReader = new BinaryReader(inputFileStream);
-
             string kodeJenisFile = NextNonCommentLine(binaryReader);
             if (kodeJenisFile != "P5")
             {
@@ -40,10 +37,8 @@ namespace Tugas_Akhir
             string[] tokens = widthHeight.Split(' ');
             int width = int.Parse(tokens[0]);
             int height = int.Parse(tokens[1]);
-
             string sMaxVal = NextNonCommentLine(binaryReader);
             int maxVal = int.Parse(sMaxVal);
-
             byte[][] pixels = new byte[height][];
             for(int i=0; i<height; ++i)
             {
@@ -58,11 +53,9 @@ namespace Tugas_Akhir
             }
             binaryReader.Close();
             inputFileStream.Close();
-
             PortableGrayMap hasil = new PortableGrayMap(width, height, maxVal, pixels);
             return hasil;
         }
-
         static string NextAnyLine(BinaryReader br)
         {
             string s = "";
@@ -75,7 +68,6 @@ namespace Tugas_Akhir
             }
             return s.Trim();
         }
-
         static string NextNonCommentLine(BinaryReader br)
         {
             string s = NextAnyLine(br);
@@ -85,7 +77,6 @@ namespace Tugas_Akhir
             }
             return s;
         }
-
         public Bitmap MakeBitmap(PortableGrayMap gambarPgm, int mag)
         {
             int width = gambarPgm.width*mag;

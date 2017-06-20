@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using AForge.Math.Metrics;
 
 namespace Tugas_Akhir
 {
@@ -33,7 +32,6 @@ namespace Tugas_Akhir
         {
             int dimension = this.TestFeature.GetLength(0);
             int FragmentSize = dimension / this.NumberofFragment;
-            //System.Diagnostics.Debug.WriteLine("size " + FragmentSize);
             this.TestFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize * FragmentSize];
             this.TrainFragment = new byte[this.NumberofFragment * this.NumberofFragment, FragmentSize * FragmentSize];
             int i;
@@ -93,31 +91,12 @@ namespace Tugas_Akhir
                 int[] histogramTest = new int[256];
                 int[] histogramTrain = new int[256];
                 getHistogram(ref histogramTest, ref histogramTrain, i);
-
-                //string histo1 = "";
-                //for (int j = 0; j < 256; j++)
-                //{
-                //    histo1 += "color " + j.ToString() + " " + histogramTest[j].ToString() + "\n";
-                //}
-                //string histo2 = "";
-                //for (int j = 0; j < 256; j++)
-                //{
-                //    histo2 += "color " + j.ToString() + " " + histogramTrain[j].ToString() + "\n";
-                //}
-                //Hasil_klasifikasi train = new Hasil_klasifikasi(histo2);
-                //Hasil_klasifikasi tes = new Hasil_klasifikasi(histo1);
-                //train.Text = "train";
-                //tes.Text = "tes";
-                //train.Show();
-                //tes.Show();
                 double weight = GetWeight(getModeofRegion(this.TestFragment, this.TrainFragment, i));
                 for (int j = 0; j < 256; j++)
                 {
-                    //System.Diagnostics.Debug.WriteLine("J "+j+" "+histogramTest[j]+" "+histogramTrain[j]+" "+weight);
                     this.Dissimilarity += weight * (double)((double)Math.Pow(histogramTest[j] - (double)histogramTrain[j], 2) / (double)(((double)histogramTest[j] + (double)histogramTrain[j] != 0) ? (double)histogramTest[j] + (double)histogramTrain[j] : 1));
                 }
             }
-            //System.Diagnostics.Debug.WriteLine("diss "+this.Dissimilarity);
             return this.Dissimilarity;
         }
 
@@ -129,19 +108,11 @@ namespace Tugas_Akhir
                 histogramTest[i] = 0;
                 histogramTrain[i] = 0;
             }
-            string pixelTrain = "";
-            string pixelTest = "";
             for (int i = 0; i < this.TestFragment.GetLength(1); i++)
             {
-                //pixelTrain += this.TrainFragment[fragmentIndex, i].ToString() + " ";
-                //pixelTest += this.TestFragment[fragmentIndex, i].ToString() + " ";
                 histogramTest[this.TestFragment[fragmentIndex, i]]++;
                 histogramTrain[this.TrainFragment[fragmentIndex, i]]++;
             }
-            Hasil_klasifikasi ini = new Hasil_klasifikasi(pixelTrain);
-            Hasil_klasifikasi itu = new Hasil_klasifikasi(pixelTest);
-            //ini.Show();
-            //itu.Show();
         }
 
         protected double GetWeight(int modes)
@@ -170,7 +141,7 @@ namespace Tugas_Akhir
         protected int getModeofRegion(byte[,] feature1, byte[,] feature2, int index)
         {
             List<byte> feat = new List<byte>();
-            for (int i = 0; i < feature1.GetLength(1); i++)
+            for (int i = 0; i<feature1.GetLength(1); i++)
             {
                 feat.Add(feature1[index, i]);
                 feat.Add(feature2[index, i]);
@@ -179,7 +150,7 @@ namespace Tugas_Akhir
             byte modes = 0;
             int maxScore = 0;
             int counter = 0;
-            for (int i = feat.Count - 1; i > 0; i--)
+            for (int i=feat.Count-1; i>0; i--)
             {
                 if (feat[i] == feat[i - 1])
                 {
@@ -198,54 +169,15 @@ namespace Tugas_Akhir
                     }
                 }
             }
-            #region obsolete code
-            //byte modes = 0;
-            //int maxScore = 0;
-            //int counter = 0;
-            //List<byte> SortedData = new List<byte>();
-            //for (int i = 0; i < feature1.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < feature1.GetLength(1); j++)
-            //    {
-            //        SortedData.Add(feature1[i, j]);
-            //    }
-            //}
-            //for (int i = 0; i < feature2.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < feature2.GetLength(1); j++)
-            //    {
-            //        SortedData.Add(feature2[i, j]);
-            //    }
-            //}
-            //for (int i = SortedData.Count - 1; i > 0; i--)
-            //{
-            //    if (SortedData[i] == SortedData[i - 1])
-            //    {
-            //        counter++;
-            //    }
-            //    else
-            //    {
-            //        if (maxScore < counter)
-            //        {
-            //            maxScore = counter;
-            //            modes = SortedData[i];
-            //        }
-            //        else
-            //        {
-            //            counter = 0;
-            //        }
-            //    }
-            //}
-            #endregion
             return modes;
         }
         protected byte[,] SliceMatrix(byte[,,] target, int index)//mngambil potongan matrix
         {
             int length = target.GetLength(1);
             byte[,] Result = new byte[length, length];
-            for (int x = 0; x < length; x++)
+            for (int x=0; x<length; x++)
             {
-                for (int y = 0; y < length; y++)
+                for (int y=0; y<length; y++)
                 {
                     Result[x, y] = target[index, x, y];
                 }

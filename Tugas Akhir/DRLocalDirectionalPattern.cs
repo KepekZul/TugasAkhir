@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
+using Accord.Statistics.Analysis;
+using Accord.Statistics.Kernels;
 
 namespace Tugas_Akhir
 {
@@ -65,16 +63,13 @@ namespace Tugas_Akhir
                     subMask[j] = this.kirschMask[i, j];
                 }
                 ldpMatrixSequence[i] = correlateMask(subMask, matrixBlock);
-                //System.Diagnostics.Debug.WriteLine("mask ke-"+i+" "+ldpMatrixSequence[i]);
             }
             int[] temporal = new int[9];
             ldpMatrixSequence.CopyTo(temporal,0);
             Array.Sort(temporal);
             int treshold = temporal[6];
-            //System.Diagnostics.Debug.WriteLine("treshold "+treshold);
             for(int x=0; x<ldpMatrixSequence.Length; x++)
             {
-                //System.Diagnostics.Debug.Write(" "+ldpMatrixSequence[x]);
                 if (ldpMatrixSequence[x] < treshold)
                 {
                     ldpMatrixSequence[x] = 0;
@@ -84,28 +79,10 @@ namespace Tugas_Akhir
                     ldpMatrixSequence[x] = 1;
                 }
             }
-            //int[] arrayInt = getMax(ldpMatrixSequence,3);//get the k (in this case is 3) most significant bit
-            //List<int> topThree = new List<int>();
-            //for(int i =0; i<arrayInt.Length; i++)
-            //{
-            //    topThree.Add(arrayInt[i]);
-            //}
-            //for (int i = 0; i < 9; i++)
-            //{
-            //    if (topThree.Contains(ldpMatrixSequence[i]))
-            //    {
-            //        topThree.Remove(ldpMatrixSequence[i]);
-            //        ldpMatrixSequence[i] = 1;
-            //    }else
-            //    {
-            //        ldpMatrixSequence[i] = 0;
-            //    }
-            //}
             for(int i=7; i>=0; i--)
             {
                 ldpBinaryCode += ldpMatrixSequence[i].ToString();//concatenating binary to string
             }
-            //System.Diagnostics.Debug.WriteLine(ldpBinaryCode);
             return Convert.ToInt32(ldpBinaryCode, 2);//convert from binary string to decimal integers has been tested
         }
         private int[] getMax(int[] asli, int ammount)//to get most significatn bit
@@ -139,7 +116,6 @@ namespace Tugas_Akhir
                             matIndex++;
                         }
                     }
-                    //System.Diagnostics.Debug.WriteLine("piksel "+(p++));
                     this.ldpResult[x-1,y-1]=getLdpCode(matrixChunks);//or here
                 }
             }
@@ -147,23 +123,36 @@ namespace Tugas_Akhir
         private void dimensionReduction()//reduce dimension by xor operation
         {
             int size = this.ldpResult.GetLength(0);
-            this.drldpMatrix = new Byte[size/3, size/3];
-            for(int i=0;    i<size; i += 3)//shifting block
+            this.drldpMatrix = new Byte[size/2, size/2];
+            for(int i=0;    i<size; i += 2)//shifting block
             {
-                for(int j=0;   j<size; j += 3)//shifting block
+                for(int j=0;   j<size; j += 2)//shifting block
                 {
                     Byte drldpcode=0;
-                    for(int x=0; x<3; x++)//iterating inside the block
+                    //drldpcode ^= (byte)this.ldpResult[i + 2, j + 1];
+                    //drldpcode = binaryChecker(drldpcode);
+                    //drldpcode ^= (byte)this.ldpResult[i + 2, j];
+                    //drldpcode = binaryChecker(drldpcode);
+                    //drldpcode ^= (byte)this.ldpResult[i + 1, j];
+                    //drldpcode = binaryChecker(drldpcode);
+                    //drldpcode ^= (byte)this.ldpResult[i, j];
+                    //drldpcode = binaryChecker(drldpcode);
+                    //drldpcode ^= (byte)this.ldpResult[i, j + 1];
+                    //drldpcode = binaryChecker(drldpcode);
+                    //drldpcode ^= (byte)this.ldpResult[i, j + 2];
+                    //drldpcode = binaryChecker(drldpcode);
+                    //drldpcode ^= (byte)this.ldpResult[i + 1, j + 2];
+                    //drldpcode = binaryChecker(drldpcode);
+                    //drldpcode ^= (byte)this.ldpResult[i + 2, j + 2];
+                    for(int k=0; k<2; k++)
                     {
-                        for(int y=0; y<3; y++)//iterating inside the block
+                        for(int l=0; l<2; l++)
                         {
-                            if (x == 1 && y == 1)
-                                continue;
-                            drldpcode ^= (Byte)this.ldpResult[i+x, j+y];
+                            drldpcode ^= (byte)this.ldpResult[i+k,j+l];
                         }
                     }
-                    drldpcode = binaryChecker(drldpcode);
-                    this.drldpMatrix[i / 3, j / 3] = drldpcode;
+                    //drldpcode = binaryChecker(drldpcode);
+                    this.drldpMatrix[i / 2, j / 2] = drldpcode;
                 }
             }
         }

@@ -210,9 +210,9 @@
             this.screenShot.Name = "screenShot";
             this.screenShot.Size = new System.Drawing.Size(75, 23);
             this.screenShot.TabIndex = 14;
-            this.screenShot.Text = "Skrinsut";
+            this.screenShot.Text = "Save";
             this.screenShot.UseVisualStyleBackColor = true;
-            this.screenShot.Click += new System.EventHandler(this.screenShot_Click);
+            this.screenShot.Click += new System.EventHandler(this.saveImage);
             // 
             // button1
             // 

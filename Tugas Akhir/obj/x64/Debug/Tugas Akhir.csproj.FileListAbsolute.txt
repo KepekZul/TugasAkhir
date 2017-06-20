@@ -62,7 +62,6 @@ E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas 
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.tampilHasilCrop.resources
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.csproj.GenerateResource.Cache
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.retrive_data.resources
-C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Pengujian.resources
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Hasil_klasifikasi.resources
 D:\zul\tugas akhir\TugasAkhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Tugas Akhir.exe.config
 D:\zul\tugas akhir\TugasAkhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas Akhir.exe
@@ -87,3 +86,14 @@ C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\D
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.dll
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.Math.xml
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.xml
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Extraction_Panel.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Testing_Panel.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.dll.config
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.dll
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.Core.dll
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.dll
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Statistics.dll
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.xml
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.xml
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.Core.xml
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Statistics.xml

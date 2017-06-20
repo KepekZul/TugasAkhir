@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using Accord.Statistics.Analysis;
 using System.Configuration;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
@@ -12,6 +11,9 @@ namespace Tugas_Akhir
 {
     public partial class retrive_data : Form
     {
+        DRLDPDataModel[] trainData;
+        DRLDPDataModel[] testData;
+        PrincipalComponentAnalysis PCA;
         public retrive_data()
         {
             InitializeComponent();
@@ -32,58 +34,71 @@ namespace Tugas_Akhir
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                DRLDPDataModel SelectedData = new DRLDPDataModel { fileName = dataGridView1.SelectedRows[0].Cells[2].Value.ToString(), dimension = Int32.Parse(dataGridView1.SelectedRows[0].Cells[1].Value.ToString()), data = dataGridView1.SelectedRows[0].Cells[3].Value.ToString() };
-                SelectedData.parseStringToMat(true);
-                Bitmap DataImage = new Bitmap(SelectedData.dimension, SelectedData.dimension);
-                for (int i = 0; i < SelectedData.dimension; i++)
-                {
-                    for (int j = 0; j < SelectedData.dimension; j++)
-                    {
-                        DataImage.SetPixel(i, j, Color.FromArgb(SelectedData.matrix[i, j], SelectedData.matrix[i, j], SelectedData.matrix[i, j]));
-                    }
-                }
-                pictureBox1.Image = DataImage;
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-            catch
-            {
-                System.Diagnostics.Debug.WriteLine(dataGridView1.SelectedRows[0].Cells[0].Value);
-            }
-        }
-
         private void sizeForEachDatasetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textBox1.Text = "select dataset, dimension, size from data_feature group by dataset, size";
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void learnPca(object sender, EventArgs e)
         {
-            DRLDPDataModel SelectedData = new DRLDPDataModel { fileName = dataGridView1.SelectedRows[0].Cells[2].Value.ToString(), dimension = Int32.Parse(dataGridView1.SelectedRows[0].Cells[1].Value.ToString()), data = dataGridView1.SelectedRows[0].Cells[3].Value.ToString() };
-            SelectedData.parseStringToMat(true);
-            int[] histogram = new int[256];
-            for(int i=0; i< 256; i++)
+            double[][] dataLearning = new double[trainData.Length][];
+            for(int i=0; i<trainData.Length; i++)
+            {
+                dataLearning[i] = getHistogram(trainData[i].data.Split(' '));
+            }
+            PCA = new PrincipalComponentAnalysis(PrincipalComponentMethod.Center);
+            PCA.Learn(dataLearning);
+            MessageBox.Show("learning finish");
+        }
+        public double[] getHistogram(string[] feature)
+        {
+            double[] histogram = new double[256];
+            for(int i=0; i<256; i++)
             {
                 histogram[i] = 0;
             }
-            for(int i=0; i<SelectedData.matrix.GetLength(0); i++)
+            for(int i=0; i<feature.GetLength(0)-1; i++)
             {
-                for(int j=0; j<SelectedData.matrix.GetLength(1); j++)
+                histogram[int.Parse(feature[i])]++;
+            }
+            return histogram;
+        }
+
+        private void learnSelectedDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            trainData = new DRLDPDataModel[dataGridView1.Rows.Count-1];
+            System.Diagnostics.Debug.WriteLine(dataGridView1.Rows.Count);
+            for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+            {
+                trainData[i] = new DRLDPDataModel
                 {
-                    histogram[SelectedData.matrix[i, j]]++;
-                }
+                    data = dataGridView1["data", i].Value.ToString(),
+                    fileName = dataGridView1["fileName", i].Value.ToString(),
+                    dimension = int.Parse(dataGridView1["dimension", i].Value.ToString()),
+                    label = dataGridView1["label", i].Value.ToString(),
+                    dataset = dataGridView1["dataset", i].Value.ToString(),
+                    size = dataGridView1["size", i].Value.ToString()
+                };
             }
-            string histo = "";
-            for(int i=0; i<256; i++)
+            MessageBox.Show("finish");
+        }
+
+        private void serializeToTestingObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            testData = new DRLDPDataModel[dataGridView1.RowCount];
+            for (int i = 0; i < dataGridView1.RowCount-1; i++)
             {
-                histo +="color "+ i.ToString() + " " + histogram[i].ToString()+"\n";
+                testData[i] = new DRLDPDataModel
+                {
+                    data = dataGridView1["data", i].Value.ToString(),
+                    fileName = dataGridView1["fileName", i].Value.ToString(),
+                    dimension = int.Parse(dataGridView1["dimension", i].Value.ToString()),
+                    label = dataGridView1["label", i].Value.ToString(),
+                    dataset = dataGridView1["dataset", i].Value.ToString(),
+                    size = dataGridView1["size", i].Value.ToString()
+                };
             }
-            Hasil_klasifikasi ini = new Hasil_klasifikasi(histo);
-            ini.Text = "Histogram";
-            ini.Show();
+            MessageBox.Show("finish");
         }
     }
 }

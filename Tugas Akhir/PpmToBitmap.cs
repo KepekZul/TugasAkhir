@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Drawing;
-
 class PPMReader
 {
     public static Bitmap ReadBitmapFromPPM(string file)

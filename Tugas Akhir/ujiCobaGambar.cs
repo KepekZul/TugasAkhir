@@ -188,25 +188,12 @@ namespace Tugas_Akhir
             itu.Show();
         }
 
-        private void screenShot_Click(object sender, EventArgs e)
+        private void saveImage(object sender, EventArgs e)
         {
-            Bitmap captureBitmap = new Bitmap(1024, 768, PixelFormat.Format32bppArgb);
-
-            //Bitmap captureBitmap = new Bitmap(int width, int height, PixelFormat);
-            //Creating a Rectangle object which will  
-            //capture our Current Screen
-            Rectangle captureRectangle = Screen.AllScreens[0].Bounds;
-
-            //Creating a New Graphics Object
-            Graphics captureGraphics = Graphics.FromImage(captureBitmap);
-
-            //Copying Image from The Screen
-            captureGraphics.CopyFromScreen(captureRectangle.Left, captureRectangle.Top, 0, 0, captureRectangle.Size);
-
-            //Saving the Image File (I am here Saving it in My E drive).
-            pictureBox1.Image = captureBitmap;
-
-            //Displaying the Successfull Result
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.ShowDialog();
+            string path = sd.FileName;
+            pictureBox1.Image.Save(path+".gif");
         }
 
         private void DRLDPClick(object sender, EventArgs e)
@@ -294,18 +281,6 @@ namespace Tugas_Akhir
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string raw_data = "";
-            for(int i=0; i<this.gambar.Height; i++)
-            {
-                for(int j=0; j<this.gambar.Width; j++)
-                {
-                    raw_data += this.gambar.GetPixel(i, j).G+" ";
-                }
-                raw_data += "\n";
-            }
-            Hasil_klasifikasi raw = new Hasil_klasifikasi(raw_data);
-            raw.Text = "raw";
-
             string ldp = "";
             Bitmap sementara = new Bitmap(this.pictureBox1.Image);
             for (int i = 0; i < this.pictureBox1.Image.Height; i++)
@@ -318,6 +293,19 @@ namespace Tugas_Akhir
             }
             Hasil_klasifikasi ldped = new Hasil_klasifikasi(ldp);
             ldped.Text = "ldp";
+
+            string raw_data = "";
+            Bitmap sementara2 = new Bitmap(this.pictureBox2.Image);
+            for (int i = 0; i < sementara2.Height; i++)
+            {
+                for (int j = 0; j < sementara2.Width; j++)
+                {
+                    raw_data += sementara2.GetPixel(i, j).G + " ";
+                }
+                raw_data += "\n";
+            }
+            Hasil_klasifikasi raw = new Hasil_klasifikasi(raw_data);
+            raw.Text = "drldp";
 
             raw.Show();
             ldped.Show();

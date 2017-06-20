@@ -10,8 +10,10 @@ namespace Tugas_Akhir
         List<byte[,]> dataTrain;
         List<Couple> chiDistances;
         int K_constanta;
-        public KNearest(byte[,] dataTest, List<byte[,]> dataTrain, List<string> labelTrain, int K_constanta)
+        int fragment_constanta;
+        public KNearest(byte[,] dataTest, List<byte[,]> dataTrain, List<string> labelTrain, int K_constanta, int numberFragment)
         {
+            this.fragment_constanta = numberFragment;
             this.dataTest = dataTest;
             this.K_constanta = K_constanta;
             if (dataTrain.Count != labelTrain.Count)
@@ -31,20 +33,15 @@ namespace Tugas_Akhir
         {
             for (int i = 0; i < dataTrain.Count; i++)
             {
-                ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(dataTest, dataTrain[i], 5);
+                ChiSquareDissimilarity chiObj = new ChiSquareDissimilarity(dataTest, dataTrain[i], this.fragment_constanta);
                 
                 chiDistances[i].Distance = chiObj.CalculateDissimilarityValue();
-                //System.Diagnostics.Debug.WriteLine(chiDistances[i].Label + " " + chiDistances[i].Distance.ToString());
             }
             chiDistances.Sort((s1, s2) => s1.Distance.CompareTo(s2.Distance));
         }
         public string getClass()
         {
             calculateDistances();
-            //foreach (Couple x in chiDistances)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(x.Label + " " + x.Distance);
-            //}
             return getMostNeighbour();
         }
         private string getMostNeighbour()
@@ -70,10 +67,6 @@ namespace Tugas_Akhir
                     }
                 }
             }
-            //foreach(Pair x in topK)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(x.Key + " " + x.Value.ToString());
-            //}
             topK.Sort((s1, s2) => s1.Value.CompareTo(s2.Value));
             return topK[0].Key;
         }
