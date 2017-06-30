@@ -123,12 +123,13 @@ namespace Tugas_Akhir
         private void dimensionReduction()//reduce dimension by xor operation
         {
             int size = this.ldpResult.GetLength(0);
-            this.drldpMatrix = new Byte[size/2, size/2];
-            for(int i=0;    i<size; i += 2)//shifting block
+            this.drldpMatrix = new Byte[size/3, size/3];
+            for(int i=0;    i<size; i += 3)//shifting block
             {
-                for(int j=0;   j<size; j += 2)//shifting block
+                for(int j=0;   j<size; j += 3)//shifting block
                 {
-                    Byte drldpcode=0;
+                    #region obsolete method
+                    //Byte drldpcode=0;
                     //drldpcode ^= (byte)this.ldpResult[i + 2, j + 1];
                     //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i + 2, j];
@@ -144,15 +145,24 @@ namespace Tugas_Akhir
                     //drldpcode ^= (byte)this.ldpResult[i + 1, j + 2];
                     //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i + 2, j + 2];
-                    for(int k=0; k<2; k++)
+                    //for(int k=0; k<2; k++)
+                    //{
+                    //    for(int l=0; l<2; l++)
+                    //    {
+                    //        drldpcode ^= (byte)this.ldpResult[i+k,j+l];
+                    //    }
+                    //}
+                    //drldpcode = binaryChecker(drldpcode);
+                    #endregion
+                    int drldpcode = 0;
+                    for(int x=0; x<3; x++)
                     {
-                        for(int l=0; l<2; l++)
+                        for(int y=0; y<3; y++)
                         {
-                            drldpcode ^= (byte)this.ldpResult[i+k,j+l];
+                            drldpcode += this.ldpResult[i + x, j + y];
                         }
                     }
-                    //drldpcode = binaryChecker(drldpcode);
-                    this.drldpMatrix[i / 2, j / 2] = drldpcode;
+                    this.drldpMatrix[i / 3, j / 3] = Convert.ToByte(drldpcode/9);
                 }
             }
         }

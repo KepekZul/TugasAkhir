@@ -97,3 +97,19 @@ C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\D
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.xml
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.Core.xml
 C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Statistics.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.dll.config
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.Core.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Statistics.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.dll
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Math.Core.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\Accord.Statistics.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.Math.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\bin\x64\Debug\AForge.xml
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Extraction_Panel.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Hasil_klasifikasi.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Testing_Panel.resources
+E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.retrive_data.resources
