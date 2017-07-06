@@ -237,10 +237,10 @@ namespace Tugas_Akhir
             foreach(string namaFile in nama)
             {
                 string[] namas = Path.GetFileName(namaFile).Split(' ', '.');
-                string ukuran = namas[0], jeneng = namas[1], label = jeneng.Split('_')[1];
+                string ukuran = namas[0], jeneng = namas[1], label = jeneng.Split('_')[0];
                 try
                 {
-                    File.Copy(namaFile, Path.Combine(df.SelectedPath, ukuran + ".orl_face." + jeneng +"."+label+ ".gif"));
+                    File.Copy(namaFile, Path.Combine(df.SelectedPath, ukuran + ".yale_b." + jeneng +"."+label+ ".gif"));
                 }
                 catch(Exception k)
                 {
