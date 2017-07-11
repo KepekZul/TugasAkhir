@@ -128,22 +128,15 @@ namespace Tugas_Akhir
             {
                 for(int j=0;   j<size; j += 3)//shifting block
                 {
-                    #region obsolete method
+                    #region obsolete method xor
                     //Byte drldpcode=0;
                     //drldpcode ^= (byte)this.ldpResult[i + 2, j + 1];
-                    //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i + 2, j];
-                    //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i + 1, j];
-                    //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i, j];
-                    //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i, j + 1];
-                    //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i, j + 2];
-                    //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i + 1, j + 2];
-                    //drldpcode = binaryChecker(drldpcode);
                     //drldpcode ^= (byte)this.ldpResult[i + 2, j + 2];
                     //for(int k=0; k<2; k++)
                     //{
@@ -154,15 +147,55 @@ namespace Tugas_Akhir
                     //}
                     //drldpcode = binaryChecker(drldpcode);
                     #endregion
-                    int drldpcode = 0;
-                    for(int x=0; x<3; x++)
+                    #region obsolete average
+                    //int drldpcode = 0;
+                    //for(int x=0; x<3; x++)
+                    //{
+                    //    for(int y=0; y<3; y++)
+                    //    {
+                    //        drldpcode += this.ldpResult[i + x, j + y];
+                    //    }
+                    //}
+                    //this.drldpMatrix[i / 3, j / 3] = Convert.ToByte(drldpcode/9);
+                    #endregion
+
+                    #region maximum this is good
+                    int drldp = 0;
+                    for (int x = 0; x < 3; x++)
                     {
-                        for(int y=0; y<3; y++)
+                        for (int y = 0; y < 3; y++)
                         {
-                            drldpcode += this.ldpResult[i + x, j + y];
+                            if (drldp < this.ldpResult[i + x, j + y])
+                                drldp = ldpResult[i + x, j + y];
                         }
                     }
-                    this.drldpMatrix[i / 3, j / 3] = Convert.ToByte(drldpcode/9);
+                    this.drldpMatrix[i / 3, j / 3] = Convert.ToByte(drldp);
+                    #endregion
+
+                    #region minimum this is bad
+                    //int drldp = 0;
+                    //for (int x = 0; x < 3; x++)
+                    //{
+                    //    for (int y = 0; y < 3; y++)
+                    //    {
+                    //        if (drldp > this.ldpResult[i + x, j + y])
+                    //            drldp = ldpResult[i + x, j + y];
+                    //    }
+                    //}
+                    //this.drldpMatrix[i / 3, j / 3] = Convert.ToByte(drldp);
+                    #endregion
+
+                    #region obsolete method or
+                    //Byte drldpcode = 0;
+                    //for (int k = 0; k < 2; k++)
+                    //{
+                    //    for (int l = 0; l < 2; l++)
+                    //    {
+                    //        drldpcode &= (byte)this.ldpResult[i + k, j + l];
+                    //    }
+                    //}
+                    //drldpcode = binaryChecker(drldpcode);
+                    #endregion
                 }
             }
         }
