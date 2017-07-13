@@ -113,3 +113,4 @@ E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas 
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Hasil_klasifikasi.resources
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Testing_Panel.resources
 E:\My Documents\Kuliah\Kuliah smt 8\Tugas Akhir Yeyeye\Program\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.retrive_data.resources
+C:\Users\Kevin Zulkarnain\Documents\Tugas Akhir\TugasAkhir\Tugas Akhir\obj\x64\Debug\Tugas_Akhir.Panel_Demo.resources

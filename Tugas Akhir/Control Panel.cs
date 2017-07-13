@@ -45,5 +45,11 @@ namespace Tugas_Akhir
             Testing_Panel tF = new Testing_Panel();
             tF.Show();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Panel_Demo dp = new Panel_Demo();
+            dp.Show();
+        }
     }
 }
