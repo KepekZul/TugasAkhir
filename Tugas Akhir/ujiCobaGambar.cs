@@ -199,28 +199,28 @@ namespace Tugas_Akhir
         private void DRLDPClick(object sender, EventArgs e)
         {
             DRLocalDirectionalPattern ldp = new DRLocalDirectionalPattern(this.gambar);
-            ldp.getDRLDPMatrix();
-            int lebar = ldp.drldpMatrix.GetLength(0);
-            int tinggi = ldp.drldpMatrix.GetLength(0);
+            ldp.GetDRLDPMatrix();
+            int lebar = ldp.DrLdpMatrix.GetLength(0);
+            int tinggi = ldp.DrLdpMatrix.GetLength(0);
             Bitmap hasil = new Bitmap(lebar, tinggi);
             for(int i=0; i<lebar; i++)
             {
                 for(int j=0; j<tinggi; j++)
                 {
-                    hasil.SetPixel(i, j, Color.FromArgb(ldp.drldpMatrix[i, j], ldp.drldpMatrix[i, j], ldp.drldpMatrix[i, j]));
+                    hasil.SetPixel(i, j, Color.FromArgb(ldp.DrLdpMatrix[i, j], ldp.DrLdpMatrix[i, j], ldp.DrLdpMatrix[i, j]));
                 }
             }
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.Image = hasil;
             System.Diagnostics.Debug.WriteLine(tinggi.ToString() + " ");
-            lebar = ldp.ldpResult.GetLength(0);
-            tinggi = ldp.ldpResult.GetLength(0);
+            lebar = ldp.LdpResult.GetLength(0);
+            tinggi = ldp.LdpResult.GetLength(0);
             hasil = new Bitmap(lebar, tinggi);
             for (int i = 0; i < lebar; i++)
             {
                 for (int j = 0; j < tinggi; j++)
                 {
-                    hasil.SetPixel(i, j, Color.FromArgb(ldp.ldpResult[i, j], ldp.ldpResult[i, j], ldp.ldpResult[i, j]));
+                    hasil.SetPixel(i, j, Color.FromArgb(ldp.LdpResult[i, j], ldp.LdpResult[i, j], ldp.LdpResult[i, j]));
                 }
             }
             pictureBox1.Image = hasil;
@@ -326,13 +326,13 @@ namespace Tugas_Akhir
                 }
             }
             DRLocalDirectionalPattern ini = new DRLocalDirectionalPattern(input);
-            ini.getDRLDPMatrix();
+            ini.GetDRLDPMatrix();
             string hasil = "";
             for(int i=0; i<3; i++)
             {
                 for(int j=0; j<3; j++)
                 {
-                    hasil += ini.ldpResult[i, j]+" ";
+                    hasil += ini.LdpResult[i, j]+" ";
                 }
                 hasil += '\n';
             }
