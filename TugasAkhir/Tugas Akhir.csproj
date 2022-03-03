@@ -186,9 +186,8 @@
     <Compile Include="retrive data.Designer.cs">
       <DependentUpon>retrive data.cs</DependentUpon>
     </Compile>
-    <Compile Include="WorkerThread\CropperThreadWorker.cs" />
+    <Compile Include="WorkerThread\CroperWorkerThread.cs" />
     <Compile Include="WorkerThread\ExtractorWorkerThread.cs" />
-    <Compile Include="WorkerThread\ResizerThreadWorker.cs" />
     <Compile Include="PpmToBitmap.cs" />
     <Compile Include="Selfmade DataStructure\Couple.cs" />
     <Compile Include="Selfmade DataStructure\Pair.cs" />
@@ -207,6 +206,7 @@
     <Compile Include="tampilHasilCrop.Designer.cs">
       <DependentUpon>tampilHasilCrop.cs</DependentUpon>
     </Compile>
+    <Compile Include="WorkerThread\ResizerWorkerThread.cs" />
     <EmbeddedResource Include="Control Panel.resx">
       <DependentUpon>Control Panel.cs</DependentUpon>
     </EmbeddedResource>

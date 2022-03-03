@@ -42,9 +42,9 @@ namespace Tugas_Akhir
             DialogResult result = folderDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                this.pathSource = folderDialog.SelectedPath;
-                textBox1.Text = this.pathSource;
-                allSourceFiles = Directory.GetFiles(this.pathSource, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
+                pathSource = folderDialog.SelectedPath;
+                textBox1.Text = pathSource;
+                allSourceFiles = Directory.GetFiles(pathSource, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
                     .Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")|| !s.EndsWith("*.ini")).ToArray();
                 if (FilenameFilterBox.Text != "")
                 {
@@ -75,16 +75,16 @@ namespace Tugas_Akhir
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             folderDialog.ShowDialog();
-            this.pathTarget = folderDialog.SelectedPath;
-            textBox2.Text = this.pathTarget;
+            pathTarget = folderDialog.SelectedPath;
+            textBox2.Text = pathTarget;
         }
 
         private void cropSelectedFiles(object sender, EventArgs e)
         {
-            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
-            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            System.Diagnostics.Debug.WriteLine(this.checkBox1.Checked.ToString());//debugging
-            ThreadToCrop[] cropThread = new ThreadToCrop[2];
+            minSize = Convert.ToInt32(MinSizeBox.Text);
+            maxSize = Convert.ToInt32(MaxSizeBox.Text);
+            System.Diagnostics.Debug.WriteLine(checkBox1.Checked.ToString());//debugging
+            CropperThreadWorker[] cropThread = new CropperThreadWorker[2];
             string[] partisiAwal = new string[allSourceFiles.Length/2];
             for(int i=0; i<allSourceFiles.Length/2; i++)
             {
@@ -95,8 +95,8 @@ namespace Tugas_Akhir
             {
                 partisiAkhir[i] = allSourceFiles[i+ allSourceFiles.Length / 2];
             }
-            cropThread[0] = new ThreadToCrop(partisiAwal, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
-            cropThread[1] = new ThreadToCrop(partisiAkhir, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
+            cropThread[0] = new CropperThreadWorker(partisiAwal, minSize, maxSize, checkBox1.Checked, pathTarget);
+            cropThread[1] = new CropperThreadWorker(partisiAkhir, minSize, maxSize, checkBox1.Checked, pathTarget);
             Thread[] cropingThread = new Thread[2];
             cropingThread[0] = new Thread(new ThreadStart(cropThread[0].CropStart));
             cropingThread[1] = new Thread(new ThreadStart(cropThread[1].CropStart));
@@ -105,12 +105,12 @@ namespace Tugas_Akhir
         }
         private void resize(object sender, EventArgs e)
         {
-            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
-            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            ThreadToResize[] resizeThread = new ThreadToResize[2];
+            minSize = Convert.ToInt32(MinSizeBox.Text);
+            maxSize = Convert.ToInt32(MaxSizeBox.Text);
+            ResizerThreadWorker[] resizeThread = new ResizerThreadWorker[2];
             string[] partisiAwal = new string[allSourceFiles.Length/2];
             string[] partisiAkhir = new string[allSourceFiles.Length/2 + ((allSourceFiles.Length%2==1)?1:0)];
-            for(int i=0; i<this.allSourceFiles.Length/2; i++)
+            for(int i=0; i<allSourceFiles.Length/2; i++)
             {
                 partisiAwal[i] = allSourceFiles[i];
             }
@@ -118,8 +118,8 @@ namespace Tugas_Akhir
             {
                 partisiAkhir[i] = allSourceFiles[i + allSourceFiles.Length / 2];
             }
-            resizeThread[0] = new ThreadToResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
-            resizeThread[1] = new ThreadToResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
+            resizeThread[0] = new ResizerThreadWorker(partisiAwal, minSize, maxSize, pathTarget);
+            resizeThread[1] = new ResizerThreadWorker(partisiAkhir, minSize, maxSize, pathTarget);
             Thread[] runningThread = new Thread[2];
             runningThread[0] = new Thread(new ThreadStart(resizeThread[0].Resize));
             runningThread[1] = new Thread(new ThreadStart(resizeThread[1].Resize));
@@ -129,7 +129,7 @@ namespace Tugas_Akhir
 
         private void ExtractImage_Click(object sender, EventArgs e)
         {
-            this.reduceDimension.Enabled = false;
+            reduceDimension.Enabled = false;
             int jumlah = 24;
             ConcurrentQueue<string> filePipe = new ConcurrentQueue<string>();
             ConcurrentQueue<DRLDPDataModel> fileResult = new ConcurrentQueue<DRLDPDataModel>();
@@ -137,22 +137,22 @@ namespace Tugas_Akhir
             {
                 filePipe.Enqueue(allSourceFiles[i]);
             }
-            this.fileList = fileResult;
+            fileList = fileResult;
             Task[] runThread = new Task[jumlah];
-            ThreadToExtract[] drldp = new ThreadToExtract[jumlah];
+            ExtractorWorkerThread[] drldp = new ExtractorWorkerThread[jumlah];
             RunTime = new System.Diagnostics.Stopwatch();
             RunTime.Start();
             backgroundWorker1.RunWorkerAsync();
             for(int i=0; i<jumlah; i++)
             {
-                drldp[i] = new ThreadToExtract(filePipe, fileResult, this.reduceDimension.Checked);
+                drldp[i] = new ExtractorWorkerThread(filePipe, fileResult, reduceDimension.Checked);
                 runThread[i] = new Task(drldp[i].Start);
             }
             for(int i=0; i<jumlah; i++)
             {
                 runThread[i].Start();
             }
-            this.reduceDimension.Enabled = false;
+            reduceDimension.Enabled = false;
         }
 
         //progress bar
@@ -174,7 +174,7 @@ namespace Tugas_Akhir
         private void finishBarWork(object sender, RunWorkerCompletedEventArgs e)
         {
             RunTime.Stop();
-            this.reduceDimension.Enabled = true;
+            reduceDimension.Enabled = true;
             var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             RunTime.Elapsed.Hours, RunTime.Elapsed.Minutes, RunTime.Elapsed.Seconds,
             RunTime.Elapsed.Milliseconds / 10);
@@ -191,7 +191,7 @@ namespace Tugas_Akhir
                 using (MySqlConnection MyConnection = new MySqlConnection(ConnectionString))
                 {
                     int counter = 0;
-                    while (!this.fileList.IsEmpty)
+                    while (!fileList.IsEmpty)
                     {
                         DRLDPDataModel data; fileList.TryDequeue(out data);
                         MyCommandString.Append(string.Join(",", string.Format("('{0}','{1}','{2}','{3}','{4}','{5}')",
@@ -203,7 +203,7 @@ namespace Tugas_Akhir
                                                                              MySqlHelper.EscapeString(data.dataset))
                                                                              ));
                         counter++;
-                        if (!this.fileList.IsEmpty && counter != 800)
+                        if (!fileList.IsEmpty && counter != 800)
                             MyCommandString.Append(',');
                         if (counter == 800)
                         {
@@ -282,12 +282,12 @@ namespace Tugas_Akhir
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
-            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            ThreadToResize[] resizeThread = new ThreadToResize[2];
+            minSize = Convert.ToInt32(MinSizeBox.Text);
+            maxSize = Convert.ToInt32(MaxSizeBox.Text);
+            ResizerThreadWorker[] resizeThread = new ResizerThreadWorker[2];
             string[] partisiAwal = new string[allSourceFiles.Length / 2];
             string[] partisiAkhir = new string[allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
-            for (int i = 0; i < this.allSourceFiles.Length / 2; i++)
+            for (int i = 0; i < allSourceFiles.Length / 2; i++)
             {
                 partisiAwal[i] = allSourceFiles[i];
             }
@@ -295,8 +295,8 @@ namespace Tugas_Akhir
             {
                 partisiAkhir[i] = allSourceFiles[i + allSourceFiles.Length / 2];
             }
-            resizeThread[0] = new ThreadToResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
-            resizeThread[1] = new ThreadToResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
+            resizeThread[0] = new ResizerThreadWorker(partisiAwal, minSize, maxSize, pathTarget);
+            resizeThread[1] = new ResizerThreadWorker(partisiAkhir, minSize, maxSize, pathTarget);
             Thread[] runningThread = new Thread[2];
             runningThread[0] = new Thread(new ThreadStart(resizeThread[0].Resize));
             runningThread[1] = new Thread(new ThreadStart(resizeThread[1].Resize));
