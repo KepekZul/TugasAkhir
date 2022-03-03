@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tugas_Akhir
@@ -17,30 +10,30 @@ namespace Tugas_Akhir
             InitializeComponent();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void extract_form_Click(object sender, EventArgs e)
+        private void Extract_form_Click(object sender, EventArgs e)
         {
             Extraction_Panel ExP = new Extraction_Panel();
             ExP.Show();
         }
 
-        private void testing_form_Click(object sender, EventArgs e)
+        private void Testing_form_Click(object sender, EventArgs e)
         {
             ujiCobaGambar UjG = new ujiCobaGambar();
             UjG.Show();
         }
 
-        private void get_data_Click(object sender, EventArgs e)
+        private void Get_data_Click(object sender, EventArgs e)
         {
             retrive_data Rd = new retrive_data();
             Rd.Show();
         }
 
-        private void testing_panel_Click(object sender, EventArgs e)
+        private void Testing_panel_Click(object sender, EventArgs e)
         {
             Testing_Panel tF = new Testing_Panel();
             tF.Show();

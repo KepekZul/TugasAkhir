@@ -47,7 +47,7 @@
             this.extract_form.TabIndex = 0;
             this.extract_form.Text = "Data Extraction";
             this.extract_form.UseVisualStyleBackColor = true;
-            this.extract_form.Click += new System.EventHandler(this.extract_form_Click);
+            this.extract_form.Click += new System.EventHandler(this.Extract_form_Click);
             // 
             // testing_form
             // 
@@ -57,7 +57,7 @@
             this.testing_form.TabIndex = 1;
             this.testing_form.Text = "Testing Panel";
             this.testing_form.UseVisualStyleBackColor = true;
-            this.testing_form.Click += new System.EventHandler(this.testing_form_Click);
+            this.testing_form.Click += new System.EventHandler(this.Testing_form_Click);
             // 
             // get_data
             // 
@@ -67,7 +67,7 @@
             this.get_data.TabIndex = 2;
             this.get_data.Text = "Retrieve Data";
             this.get_data.UseVisualStyleBackColor = true;
-            this.get_data.Click += new System.EventHandler(this.get_data_Click);
+            this.get_data.Click += new System.EventHandler(this.Get_data_Click);
             // 
             // testing_panel
             // 
@@ -77,7 +77,7 @@
             this.testing_panel.TabIndex = 3;
             this.testing_panel.Text = "Feature Classifier";
             this.testing_panel.UseVisualStyleBackColor = true;
-            this.testing_panel.Click += new System.EventHandler(this.testing_panel_Click);
+            this.testing_panel.Click += new System.EventHandler(this.Testing_panel_Click);
             // 
             // menuStrip1
             // 
@@ -102,7 +102,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // button1
             // 
