@@ -130,7 +130,7 @@ namespace Tugas_Akhir
         private void ExtractImage_Click(object sender, EventArgs e)
         {
             this.reduceDimension.Enabled = false;
-            int jumlah = 4;
+            int jumlah = 24;
             ConcurrentQueue<string> filePipe = new ConcurrentQueue<string>();
             ConcurrentQueue<DRLDPDataModel> fileResult = new ConcurrentQueue<DRLDPDataModel>();
             for(int i=0; i<allSourceFiles.GetLength(0); i++)
