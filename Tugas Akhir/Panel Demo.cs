@@ -33,7 +33,7 @@ namespace Tugas_Akhir
         private void button3_Click(object sender, EventArgs e)
         {
             drldp = new DRLocalDirectionalPattern((Bitmap) pictureBox1.Image);
-            byte[,] dr = drldp.getDRLDPMatrix();
+            byte[,] dr = drldp.GetDRLDPMatrix();
             Bitmap drImage = new Bitmap(dr.GetLength(0), dr.GetLength(1));
             for(int i=0; i<dr.GetLength(0); i++)
             {
@@ -45,12 +45,12 @@ namespace Tugas_Akhir
             pictureBox3.Image = drImage;
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
 
-            Bitmap ldpImage = new Bitmap(drldp.ldpResult.GetLength(0), drldp.ldpResult.GetLength(1));
-            for (int i = 0; i < drldp.ldpResult.GetLength(0); i++)
+            Bitmap ldpImage = new Bitmap(drldp.LdpResult.GetLength(0), drldp.LdpResult.GetLength(1));
+            for (int i = 0; i < drldp.LdpResult.GetLength(0); i++)
             {
-                for (int j = 0; j < drldp.ldpResult.GetLength(1); j++)
+                for (int j = 0; j < drldp.LdpResult.GetLength(1); j++)
                 {
-                    ldpImage.SetPixel(i, j, Color.FromArgb(drldp.ldpResult[i, j], drldp.ldpResult[i, j], drldp.ldpResult[i, j]));
+                    ldpImage.SetPixel(i, j, Color.FromArgb(drldp.LdpResult[i, j], drldp.LdpResult[i, j], drldp.LdpResult[i, j]));
                 }
             }
             pictureBox2.Image = ldpImage;
@@ -84,7 +84,7 @@ namespace Tugas_Akhir
                 TrainModelData.Add(dataModel.matrix);
                 TrainModelLabel.Add(dataModel.label);
             }
-            DRLDPDataModel ujix = new DRLDPDataModel { matrix = drldp.drldpMatrix, dimension = drldp.drldpMatrix.GetLength(0) };
+            DRLDPDataModel ujix = new DRLDPDataModel { matrix = drldp.DrLdpMatrix, dimension = drldp.DrLdpMatrix.GetLength(0) };
             KNearest knn = new KNearest(ujix.matrix, TrainModelData, TrainModelLabel, int.Parse(this.textBox2.Text), int.Parse(this.textBox3.Text));
             label5.Text = "Label:"+knn.getClass();
         }
