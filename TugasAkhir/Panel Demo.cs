@@ -86,7 +86,7 @@ namespace Tugas_Akhir
             }
             DRLDPDataModel ujix = new DRLDPDataModel { matrix = drldp.DrLdpMatrix, dimension = drldp.DrLdpMatrix.GetLength(0) };
             KNearest knn = new KNearest(ujix.matrix, TrainModelData, TrainModelLabel, int.Parse(this.textBox2.Text), int.Parse(this.textBox3.Text));
-            label5.Text = "Label:"+knn.getClass();
+            label5.Text = "Label:"+knn.GetClass();
         }
     }
 }

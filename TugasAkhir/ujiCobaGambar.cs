@@ -102,7 +102,7 @@ namespace Tugas_Akhir
             MessageBox.Show("Selesai");
             //ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
             ImageCrop Croper = new ImageCrop(this.gambar , this.min, this.max, true);
-            Bitmap[] hasilCrop = Croper.getImages();
+            Bitmap[] hasilCrop = Croper.GetImages();
             foreach(Bitmap cropImage in hasilCrop)
             {
                 tampilHasilCrop form = new tampilHasilCrop(cropImage);
@@ -266,14 +266,14 @@ namespace Tugas_Akhir
 
         private void button3_Click(object sender, EventArgs e)
         {
-            kirschEdgeDetection kirs = new kirschEdgeDetection(this.gambar);
-            kirs.getEdge(Int32.Parse( this.maskIndex.Text));
-            Bitmap iniEdge = new Bitmap(kirs.finalMatrix.GetLength(0), kirs.finalMatrix.GetLength(1));
-            for(int i=0; i<kirs.finalMatrix.GetLength(0); i++)
+            KirschEdgeDetection kirs = new KirschEdgeDetection(this.gambar);
+            kirs.GetEdge(Int32.Parse( this.maskIndex.Text));
+            Bitmap iniEdge = new Bitmap(kirs.FinalMatrix.GetLength(0), kirs.FinalMatrix.GetLength(1));
+            for(int i=0; i<kirs.FinalMatrix.GetLength(0); i++)
             {
-                for(int j=0; j<kirs.finalMatrix.GetLength(1); j++)
+                for(int j=0; j<kirs.FinalMatrix.GetLength(1); j++)
                 {
-                    iniEdge.SetPixel(i, j, Color.FromArgb(kirs.finalMatrix[i, j], kirs.finalMatrix[i, j], kirs.finalMatrix[i, j]));
+                    iniEdge.SetPixel(i, j, Color.FromArgb(kirs.FinalMatrix[i, j], kirs.FinalMatrix[i, j], kirs.FinalMatrix[i, j]));
                 }
             }
             this.pictureBox2.Image = iniEdge;

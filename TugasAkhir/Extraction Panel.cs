@@ -146,7 +146,7 @@ namespace Tugas_Akhir
             for(int i=0; i<jumlah; i++)
             {
                 drldp[i] = new ThreadToExtract(filePipe, fileResult, this.reduceDimension.Checked);
-                runThread[i] = new Task(drldp[i].startRun);
+                runThread[i] = new Task(drldp[i].Start);
             }
             for(int i=0; i<jumlah; i++)
             {

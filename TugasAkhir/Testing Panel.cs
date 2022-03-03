@@ -120,7 +120,7 @@ namespace Tugas_Akhir
                 foreach (DRLDPDataModel subject in TestModel)
                 {
                     KNearest knnObj = new KNearest(subject.matrix, this.TrainModelData, this.TrainModelLabel, Int32.Parse(this.KConstantaBox.Text), Int32.Parse(this.numberFragment.Text));
-                    ClassificationResult.Add(knnObj.getClass());
+                    ClassificationResult.Add(knnObj.GetClass());
                     initial++;
                 }
                 RunTime.Stop();

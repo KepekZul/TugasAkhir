@@ -165,7 +165,7 @@
       <DependentUpon>Hasil_klasifikasi.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageCrop.cs" />
-    <Compile Include="kirschEdgeDetection.cs" />
+    <Compile Include="KirschEdgeDetection.cs" />
     <Compile Include="KNearest.cs" />
     <Compile Include="DRLocalDirectionalPattern.cs" />
     <Compile Include="Panel Demo.cs">
@@ -186,9 +186,9 @@
     <Compile Include="retrive data.Designer.cs">
       <DependentUpon>retrive data.cs</DependentUpon>
     </Compile>
-    <Compile Include="ThreadToCrop.cs" />
-    <Compile Include="ThreadToExtract.cs" />
-    <Compile Include="ThreadToResize.cs" />
+    <Compile Include="WorkerThread\CropperThreadWorker.cs" />
+    <Compile Include="WorkerThread\ExtractorWorkerThread.cs" />
+    <Compile Include="WorkerThread\ResizerThreadWorker.cs" />
     <Compile Include="PpmToBitmap.cs" />
     <Compile Include="Selfmade DataStructure\Couple.cs" />
     <Compile Include="Selfmade DataStructure\Pair.cs" />
