@@ -189,8 +189,8 @@
     <Compile Include="WorkerThread\CroperWorkerThread.cs" />
     <Compile Include="WorkerThread\ExtractorWorkerThread.cs" />
     <Compile Include="PpmToBitmap.cs" />
-    <Compile Include="Selfmade DataStructure\Couple.cs" />
-    <Compile Include="Selfmade DataStructure\Pair.cs" />
+    <Compile Include="Model\Couple.cs" />
+    <Compile Include="Model\Pair.cs" />
     <Compile Include="ujiCobaGambar.cs">
       <SubType>Form</SubType>
     </Compile>

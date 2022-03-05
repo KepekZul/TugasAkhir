@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Tugas_Akhir.Selfmade_DataStructure;
+using Tugas_Akhir.Model;
 
 namespace Tugas_Akhir
 {

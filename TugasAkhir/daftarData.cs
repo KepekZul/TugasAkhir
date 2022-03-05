@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tugas_Akhir
 {
-    public partial class daftarData : Form
+    public partial class ListOfData : Form
     {
         public string[] datas;
-        public daftarData()
+        public ListOfData()
         {
             InitializeComponent();
         }
@@ -22,7 +15,7 @@ namespace Tugas_Akhir
         {
             foreach(string text in datas)
             {
-                this.richTextBox1.AppendText(text+"\n");
+                richTextBox1.AppendText(text+"\n");
             }
         }
     }

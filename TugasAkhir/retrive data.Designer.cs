@@ -1,6 +1,6 @@
 ﻿namespace Tugas_Akhir
 {
-    partial class retrive_data
+    partial class RetrieveDataForm
     {
         /// <summary>
         /// Required designer variable.
@@ -94,7 +94,7 @@
             this.sizeForEachDatasetToolStripMenuItem.Name = "sizeForEachDatasetToolStripMenuItem";
             this.sizeForEachDatasetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sizeForEachDatasetToolStripMenuItem.Text = "size for each dataset";
-            this.sizeForEachDatasetToolStripMenuItem.Click += new System.EventHandler(this.sizeForEachDatasetToolStripMenuItem_Click);
+            this.sizeForEachDatasetToolStripMenuItem.Click += new System.EventHandler(this.SizeForEachDatasetToolStripMenuItem_Click);
             // 
             // oerationToolStripMenuItem
             // 
@@ -112,21 +112,21 @@
             this.learnPCAToolStripMenuItem.Name = "learnPCAToolStripMenuItem";
             this.learnPCAToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.learnPCAToolStripMenuItem.Text = "Learn PCA";
-            this.learnPCAToolStripMenuItem.Click += new System.EventHandler(this.learnPca);
+            this.learnPCAToolStripMenuItem.Click += new System.EventHandler(this.LearnPca);
             // 
             // learnSelectedDataToolStripMenuItem
             // 
             this.learnSelectedDataToolStripMenuItem.Name = "learnSelectedDataToolStripMenuItem";
             this.learnSelectedDataToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.learnSelectedDataToolStripMenuItem.Text = "Serialize to training object";
-            this.learnSelectedDataToolStripMenuItem.Click += new System.EventHandler(this.learnSelectedDataToolStripMenuItem_Click);
+            this.learnSelectedDataToolStripMenuItem.Click += new System.EventHandler(this.LearnSelectedDataToolStripMenuItem_Click);
             // 
             // serializeToTestingObjectToolStripMenuItem
             // 
             this.serializeToTestingObjectToolStripMenuItem.Name = "serializeToTestingObjectToolStripMenuItem";
             this.serializeToTestingObjectToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.serializeToTestingObjectToolStripMenuItem.Text = "Serialize to testing object";
-            this.serializeToTestingObjectToolStripMenuItem.Click += new System.EventHandler(this.serializeToTestingObjectToolStripMenuItem_Click);
+            this.serializeToTestingObjectToolStripMenuItem.Click += new System.EventHandler(this.SerializeToTestingObjectToolStripMenuItem_Click);
             // 
             // transformPCAToolStripMenuItem
             // 

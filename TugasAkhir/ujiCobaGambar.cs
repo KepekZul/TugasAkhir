@@ -1,55 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Drawing.Imaging;
-using System.Windows.Forms;
-using System.IO;
-using Emgu.CV;
+﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using Gabor;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
-using MySql.Data;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Tugas_Akhir
 {
     public partial class ujiCobaGambar : Form
     {
-        CascadeClassifier[] haar = new CascadeClassifier[1];
-        Bitmap gambar;
-        string imagePath;
-        int min;
-        int max;
-        List<string> listhapus = new List<string>();
+        private CascadeClassifier[] _haar = new CascadeClassifier[1];
+        private Bitmap _image;
+        private int _min;
+        private int max;
+        private List<string> listhapus = new List<string>();
+
         public ujiCobaGambar()
         {
             InitializeComponent();
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            //MessageBox.Show(ConfigurationManager.AppSettings["haar_cascade_path"]);
-            haar[0] = new CascadeClassifier(ConfigurationManager.AppSettings["1"]);
-            //haar[1] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_alt_tree.xml");
-            //haar[2] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_alt2.xml");
-            //haar[3] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_frontalface_default.xml");
-            //haar[4] = new CascadeClassifier("E:\\program files\\emgucv-windesktop 3.1.0.2504\\etc\\haarcascades\\haarcascade_profileface.xml");
+            _haar[0] = new CascadeClassifier(ConfigurationManager.AppSettings["1"]);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
-        private void deteksiWajah(object sender, EventArgs e)
+        private void DeteksiWajah(object sender, EventArgs e)
         {
-            this.min = Convert.ToInt32(MinBox.Text);
-            this.max = Convert.ToInt32(MaxBox.Text);
-            Image<Gray, byte> grayImage = new Image<Gray, byte>(gambar);
-            Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
-            for (int i = 0; i < haar.Length; i++)
+            _min = Convert.ToInt32(MinBox.Text);
+            max = Convert.ToInt32(MaxBox.Text);
+            var grayImage = new Image<Gray, byte>(_image);
+            var colorImgage = new Image<Bgr, byte>(_image);
+            for (var i = 0; i < _haar.Length; i++)
             {
-                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(1200, 1200));//bebas
-                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(170, 170), new Size(480, 480));//extended yale b
-                Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(this.min,this.min), new Size(this.max, this.max));//yaleface
-                //Rectangle[] kotaks = haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(60, 60), new Size(100, 100));//orlface
+                var kotaks = _haar[i].DetectMultiScale(grayImage, 1.01, 4, new Size(_min, _min), new Size(max, max));//yaleface
                 int warna = 255;
                 int nomor = 1;
-                foreach (Rectangle kotak in kotaks)
+                foreach (var kotak in kotaks)
                 {
                     colorImgage.Draw(kotak, new Bgr(0, warna, warna), 3);
                     System.Diagnostics.Debug.WriteLine("Rectangle #"+nomor++.ToString()+" lebar: "+kotak.Width.ToString()+". tinggi: "+kotak.Height.ToString()+".");
@@ -64,46 +53,33 @@ namespace Tugas_Akhir
             MessageBox.Show("Selesai");
             System.Diagnostics.Debug.Write("\n__________________________________________________________\n");
         }
-        public void pilihGambar(object sender, EventArgs e)
+        public void PilihGambar(object sender, EventArgs e)
         {
             OpenFileDialog pilihDialog = new OpenFileDialog();
             DialogResult hasil = pilihDialog.ShowDialog();
             if (hasil != DialogResult.OK)
                 return;
-            this.imagePath = pilihDialog.FileName;
-            gambar = new Bitmap(pilihDialog.FileName);
-            pictureBox1.Image = gambar;
-            this.imagePath = pilihDialog.FileName;
+            _image = new Bitmap(pilihDialog.FileName);
+            pictureBox1.Image = _image;
         }
-        public void pilihGambarPGM(object sender, EventArgs e)
+        public void PilihGambarPGM(object sender, EventArgs e)
         {
             OpenFileDialog pilihDialog = new OpenFileDialog();
             DialogResult hasil = pilihDialog.ShowDialog();
             if (hasil != DialogResult.OK)
                 return; PortableGrayMap gambar = new PortableGrayMap(pilihDialog.FileName);
-            this.imagePath = pilihDialog.FileName;
-            this.gambar  = gambar.MakeBitmap(gambar,1);
-            pictureBox1.Image = this.gambar;
-            System.Diagnostics.Debug.WriteLine("Lebar: "+this.gambar.Width.ToString()+"Pixel\nTinggi: "+this.gambar.Height.ToString()+"Pixel");
+            _image  = gambar.MakeBitmap(gambar,1);
+            pictureBox1.Image = _image;
+            System.Diagnostics.Debug.WriteLine("Lebar: "+_image.Width.ToString()+"Pixel\nTinggi: "+_image.Height.ToString()+"Pixel");
         }
-        public void cropImage(object sender, EventArgs e)
+        public void CropImage(object sender, EventArgs e)
         {
-            this.min = Convert.ToInt32(MinBox.Text);
-            this.max = Convert.ToInt32(MaxBox.Text);
-            Image<Gray, byte> grayImage = new Image<Gray, byte>(gambar);
-            Image<Bgr, byte> colorImgage = new Image<Bgr, byte>(gambar);
-            Image<Bgr, byte> colorImgage2 = new Image<Bgr, byte>(gambar);
-            Rectangle[] kotaks = haar[0].DetectMultiScale(grayImage, 1.01, 4, new Size(this.min, this.min), new Size(this.max, this.max));
-            //foreach (Rectangle kotak in kotaks)
-            //{
-            //    colorImgage.Draw(kotak, new Bgr(0, 255, 255), 3);
-            //}
-            //pictureBox1.Image = colorImgage.ToBitmap();
+            _min = Convert.ToInt32(MinBox.Text);
+            max = Convert.ToInt32(MaxBox.Text);
             MessageBox.Show("Selesai");
-            //ImageCrop Croper = new ImageCrop(colorImgage2.ToBitmap(), kotaks);
-            ImageCrop Croper = new ImageCrop(this.gambar , this.min, this.max, true);
-            Bitmap[] hasilCrop = Croper.GetImages();
-            foreach(Bitmap cropImage in hasilCrop)
+            var Croper = new ImageCrop(_image, _min, max, true);
+            var hasilCrop = Croper.GetImages();
+            foreach (var cropImage in hasilCrop)
             {
                 tampilHasilCrop form = new tampilHasilCrop(cropImage);
                 form.Show();
@@ -111,94 +87,92 @@ namespace Tugas_Akhir
             System.Diagnostics.Debug.Write("\n__________________________________________________________\n");
         }
 
-        private void pilihGambarPPM(object sender, EventArgs e)
+        private void PilihGambarPPM(object sender, EventArgs e)
         {
-            OpenFileDialog pilihDialog = new OpenFileDialog();
-            DialogResult hasil = pilihDialog.ShowDialog();
+            var pilihDialog = new OpenFileDialog();
+            var hasil = pilihDialog.ShowDialog();
             if (hasil != DialogResult.OK)
                 return;
-            this.imagePath = pilihDialog.FileName;
-            this.gambar = PPMReader.ReadBitmapFromPPM(pilihDialog.FileName);
-            pictureBox1.Image = this.gambar;
-            System.Diagnostics.Debug.WriteLine("Lebar: " + this.gambar.Width.ToString() + "Pixel\nTinggi: " + this.gambar.Height.ToString() + "Pixel");
+            _image = PPMReader.ReadBitmapFromPPM(pilihDialog.FileName);
+            pictureBox1.Image = _image;
+            System.Diagnostics.Debug.WriteLine("Lebar: " + _image.Width.ToString() + "Pixel\nTinggi: " + _image.Height.ToString() + "Pixel");
         }
 
-        private void pilihFolderDuplikat(object sender, EventArgs e)
+        private void PilihFolderDuplikat(object sender, EventArgs e)
         {
-            string[] allSourceFiles;
-            string selekpeth = pilihFolderHapus();
+            var selekpeth = PilihFolderHapus();
             if (selekpeth == "" || selekpeth == null)
                 return;
-            allSourceFiles = Directory.GetFiles(selekpeth);
-            for (int i=0; i<allSourceFiles.Length-1; i++)
+            var allSourceFiles = Directory.GetFiles(selekpeth);
+            for (var i=0; i<allSourceFiles.Length-1; i++)
             {
                 if (allSourceFiles[i].EndsWith("2.gif"))
                 {
                     if (Path.GetFileName(allSourceFiles[i - 1]).StartsWith(Path.GetFileName(allSourceFiles[i]).Substring(0, 20)))
                     {
-                        deleteGambar satu = new deleteGambar(allSourceFiles[i - 1], allSourceFiles[i]);
+                        var satu = new deleteGambar(allSourceFiles[i - 1], allSourceFiles[i]);
                         satu.ShowDialog();
-                        this.listhapus.Add(satu.yangDihapus);
+                        listhapus.Add(satu.SelectedToDelete);
                     }
                 }
             }
-            foreach(string berkas in listhapus)
+            foreach (var berkas in listhapus)
             {
                 richTextBox1.AppendText(berkas+"\n");
             }
         }
-        private string pilihFolderHapus()
+        private string PilihFolderHapus()
         {
-            FolderBrowserDialog folderdialog = new FolderBrowserDialog();
+            var folderdialog = new FolderBrowserDialog();
             folderdialog.ShowDialog();
             return folderdialog.SelectedPath;
         }
 
-        private void hapusFile(object sender, EventArgs e)
+        private void HapusFile(object sender, EventArgs e)
         {
-            string[] hapus = richTextBox2.Text.Split('\n');
-            foreach (string berkas in hapus)
+            var hapus = richTextBox2.Text.Split('\n');
+            foreach (var berkas in hapus)
             {
                 System.Diagnostics.Debug.WriteLine(berkas);
                 File.Delete(berkas);
             }
         }
 
-        private void applyHisteq(object sender, EventArgs e)
+        private void ApplyHisteq(object sender, EventArgs e)
         {
-            Image<Gray, byte> gambar = new Image<Gray, byte>(this.gambar);
+            var gambar = new Image<Gray, byte>(_image);
             gambar._EqualizeHist();
-            this.gambar = gambar.ToBitmap();
-            this.pictureBox1.Image = gambar.ToBitmap();
+            _image = gambar.ToBitmap();
+            pictureBox1.Image = gambar.ToBitmap();
         }
 
-        private void gaborFilter(object sender, EventArgs e)
+        private void GaborFilter(object sender, EventArgs e)
         {
             GaborKernel krnl, krnle2;
             GaborFilter filter;
             krnl = new GaborKernel(0, 4);
             krnle2 = new GaborKernel(4, 2);
             filter = new GaborFilter();
-            Image<Gray, float> gaborGambar = new Image<Gray, float>(this.gambar);
-            Image<Gray, float> tr = filter.Convolution(gaborGambar, krnl, GABOR_TYPE.GABOR_MAG);
-            Image<Gray, float> tr2 = filter.Convolution(gaborGambar, krnle2, GABOR_TYPE.GABOR_MAG);
-            tampilHasilCrop ini = new tampilHasilCrop(tr.ToBitmap());
-            tampilHasilCrop itu = new tampilHasilCrop(tr2.ToBitmap());
+            var gaborGambar = new Image<Gray, float>(_image);
+            var tr = filter.Convolution(gaborGambar, krnl, GABOR_TYPE.GABOR_MAG);
+            var tr2 = filter.Convolution(gaborGambar, krnle2, GABOR_TYPE.GABOR_MAG);
+            var ini = new tampilHasilCrop(tr.ToBitmap());
+            var itu = new tampilHasilCrop(tr2.ToBitmap());
             ini.Show();
             itu.Show();
         }
 
-        private void saveImage(object sender, EventArgs e)
+        private void SaveImage(object sender, EventArgs e)
         {
-            SaveFileDialog sd = new SaveFileDialog();
+            var sd = new SaveFileDialog();
             sd.ShowDialog();
-            string path = sd.FileName;
+            var path = sd.FileName;
             pictureBox1.Image.Save(path+".gif");
         }
 
         private void DRLDPClick(object sender, EventArgs e)
         {
-            DRLocalDirectionalPattern ldp = new DRLocalDirectionalPattern(this.gambar);
+            DRLocalDirectionalPattern ldp = new DRLocalDirectionalPattern(_image);
             ldp.GetDRLDPMatrix();
             int lebar = ldp.DrLdpMatrix.GetLength(0);
             int tinggi = ldp.DrLdpMatrix.GetLength(0);
@@ -216,9 +190,9 @@ namespace Tugas_Akhir
             lebar = ldp.LdpResult.GetLength(0);
             tinggi = ldp.LdpResult.GetLength(0);
             hasil = new Bitmap(lebar, tinggi);
-            for (int i = 0; i < lebar; i++)
+            for (var i = 0; i < lebar; i++)
             {
-                for (int j = 0; j < tinggi; j++)
+                for (var j = 0; j < tinggi; j++)
                 {
                     hasil.SetPixel(i, j, Color.FromArgb(ldp.LdpResult[i, j], ldp.LdpResult[i, j], ldp.LdpResult[i, j]));
                 }
@@ -229,14 +203,14 @@ namespace Tugas_Akhir
 
         private void Rename_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fd = new FolderBrowserDialog();
+            var fd = new FolderBrowserDialog();
             fd.ShowDialog();
-            FolderBrowserDialog df = new FolderBrowserDialog();
+            var df = new FolderBrowserDialog();
             df.ShowDialog();
-            string[] nama = Directory.GetFiles(fd.SelectedPath);
-            foreach(string namaFile in nama)
+            var nama = Directory.GetFiles(fd.SelectedPath);
+            foreach (string namaFile in nama)
             {
-                string[] namas = Path.GetFileName(namaFile).Split(' ', '.');
+                var namas = Path.GetFileName(namaFile).Split(' ', '.');
                 string ukuran = namas[0], jeneng = namas[1], label = jeneng.Split('_')[0];
                 try
                 {
@@ -251,61 +225,65 @@ namespace Tugas_Akhir
 
         private void pgmToBitmap_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog bdf = new FolderBrowserDialog();
+            var bdf = new FolderBrowserDialog();
             bdf.ShowDialog();
-            string[] allSourceFiles = Directory.GetFiles(bdf.SelectedPath, "*.pgm", SearchOption.AllDirectories);
             bdf.ShowDialog();
-            foreach(string pathfile in allSourceFiles)
+            var allSourceFiles = Directory.GetFiles(bdf.SelectedPath, "*.pgm", SearchOption.AllDirectories);
+            foreach (var pathfile in allSourceFiles)
             {
-                PortableGrayMap pgmImage = new PortableGrayMap(pathfile);
-                Bitmap bitmapImage = pgmImage.MakeBitmap(pgmImage, 1);
-                bitmapImage.Save(bdf.SelectedPath+"/"+ Path.GetFileNameWithoutExtension(pathfile)+".gif");
+                var pgmImage = new PortableGrayMap(pathfile);
+                var bitmapImage = pgmImage.MakeBitmap(pgmImage, 1);
+                bitmapImage.Save(bdf.SelectedPath + "/" + Path.GetFileNameWithoutExtension(pathfile) + ".gif");
                 System.Diagnostics.Debug.WriteLine("berhasil " + bdf.SelectedPath + Path.GetFileNameWithoutExtension(pathfile) + ".gif");
             }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            KirschEdgeDetection kirs = new KirschEdgeDetection(this.gambar);
-            kirs.GetEdge(Int32.Parse( this.maskIndex.Text));
-            Bitmap iniEdge = new Bitmap(kirs.FinalMatrix.GetLength(0), kirs.FinalMatrix.GetLength(1));
-            for(int i=0; i<kirs.FinalMatrix.GetLength(0); i++)
+            var kirs = new KirschEdgeDetection(_image);
+            kirs.GetEdge(int.Parse( maskIndex.Text));
+            var iniEdge = new Bitmap(kirs.FinalMatrix.GetLength(0), kirs.FinalMatrix.GetLength(1));
+            for (var i = 0; i < kirs.FinalMatrix.GetLength(0); i++)
             {
-                for(int j=0; j<kirs.FinalMatrix.GetLength(1); j++)
+                for (var j = kirs.FinalMatrix.GetLength(1) - 1; j >= 0; j--)
                 {
                     iniEdge.SetPixel(i, j, Color.FromArgb(kirs.FinalMatrix[i, j], kirs.FinalMatrix[i, j], kirs.FinalMatrix[i, j]));
                 }
             }
-            this.pictureBox2.Image = iniEdge;
+            pictureBox2.Image = iniEdge;
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string ldp = "";
-            Bitmap sementara = new Bitmap(this.pictureBox1.Image);
-            for (int i = 0; i < this.pictureBox1.Image.Height; i++)
+            var ldp = "";
+            var sementara = new Bitmap(pictureBox1.Image);
+            for (var i = 0; i < pictureBox1.Image.Height; i++)
             {
-                for (int j = 0; j < this.pictureBox1.Image.Width; j++)
+                for (int j = pictureBox1.Image.Width - 1; j >= 0; j--)
                 {
                     ldp += sementara.GetPixel(i, j).G+" ";
                 }
                 ldp += "\n";
             }
-            Hasil_klasifikasi ldped = new Hasil_klasifikasi(ldp);
-            ldped.Text = "ldp";
-
-            string raw_data = "";
-            Bitmap sementara2 = new Bitmap(this.pictureBox2.Image);
-            for (int i = 0; i < sementara2.Height; i++)
+            var ldped = new Hasil_klasifikasi(ldp)
             {
-                for (int j = 0; j < sementara2.Width; j++)
+                Text = "ldp"
+            };
+
+            var raw_data = "";
+            var sementara2 = new Bitmap(pictureBox2.Image);
+            for (var i = 0; i < sementara2.Height; i++)
+            {
+                for (var j = 0; j < sementara2.Width; j++)
                 {
                     raw_data += sementara2.GetPixel(i, j).G + " ";
                 }
                 raw_data += "\n";
             }
-            Hasil_klasifikasi raw = new Hasil_klasifikasi(raw_data);
-            raw.Text = "drldp";
+            var raw = new Hasil_klasifikasi(raw_data)
+            {
+                Text = "drldp"
+            };
 
             raw.Show();
             ldped.Show();
@@ -313,10 +291,10 @@ namespace Tugas_Akhir
 
         private void button8_Click(object sender, EventArgs e)
         {
-            Bitmap input = new Bitmap(5, 5);
+            var input = new Bitmap(5, 5);
             var data = richTextBox1.Text;
             var parsed_data = data.Split('\n', ' ');
-            int x = 0;
+            var x = 0;
             for(int i=0; i<5; i++)
             {
                 for(int j=0; j<5; j++)
@@ -325,12 +303,12 @@ namespace Tugas_Akhir
                     x++;
                 }
             }
-            DRLocalDirectionalPattern ini = new DRLocalDirectionalPattern(input);
+            var ini = new DRLocalDirectionalPattern(input);
             ini.GetDRLDPMatrix();
-            string hasil = "";
-            for(int i=0; i<3; i++)
+            var hasil = "";
+            for (var i = 0; i < 3; i++)
             {
-                for(int j=0; j<3; j++)
+                for (var j = 0; j < 3; j++)
                 {
                     hasil += ini.LdpResult[i, j]+" ";
                 }

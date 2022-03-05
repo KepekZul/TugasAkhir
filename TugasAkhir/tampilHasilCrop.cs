@@ -1,39 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tugas_Akhir
 {
     public partial class tampilHasilCrop : Form
     {
-        Bitmap gambar;
+        private Bitmap _image;
+
         public tampilHasilCrop(Bitmap gambar)
         {
-            this.gambar = gambar;
+            _image = gambar;
             InitializeComponent();
-            initGambar();
+            InitGambar();
         }
-        private void initGambar()
+        private void InitGambar()
         {
-            this.pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            this.pictureBox1.Image = gambar;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.Image = _image;
             System.Diagnostics.Debug.WriteLine("masuk ini");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sd = new SaveFileDialog();
-            DialogResult result = sd.ShowDialog();
+            var sd = new SaveFileDialog();
+            var result = sd.ShowDialog();
             if (result == DialogResult.OK)
             {
-                gambar.Save(sd.FileName+".gif");
-                this.Close();
+                _image.Save(sd.FileName+".gif");
+                Close();
             }
         }
     }

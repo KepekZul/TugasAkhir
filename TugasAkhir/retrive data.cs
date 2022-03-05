@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using Accord.Statistics.Analysis;
-using System.Configuration;
-using System.Windows.Forms;
+﻿using Accord.Statistics.Analysis;
 using MySql.Data.MySqlClient;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Windows.Forms;
 namespace Tugas_Akhir
 {
-    public partial class retrive_data : Form
+    public partial class RetrieveDataForm : Form
     {
-        DRLDPDataModel[] trainData;
-        DRLDPDataModel[] testData;
-        PrincipalComponentAnalysis PCA;
-        public retrive_data()
+        private DRLDPDataModel[] _trainData;
+        private DRLDPDataModel[] _testData;
+        private PrincipalComponentAnalysis _PCA;
+
+        public RetrieveDataForm()
         {
             InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string ConnectionString = ConfigurationManager.AppSettings["DataBaseConnectionString"];
-            MySqlConnection MyConnect = new MySqlConnection(ConnectionString);
-            using(MySqlCommand MyCommand = new MySqlCommand(this.textBox1.Text, MyConnect))
+            var ConnectionString = ConfigurationManager.AppSettings["DataBaseConnectionString"];
+            var MyConnect = new MySqlConnection(ConnectionString);
+            using (var MyCommand = new MySqlCommand(textBox1.Text, MyConnect))
             {
-                MySqlDataAdapter MyAdapter = new MySqlDataAdapter(MyCommand);
-                DataTable DTArray = new DataTable();
+                var MyAdapter = new MySqlDataAdapter(MyCommand);
+                var DTArray = new DataTable();
                 MyConnect.Open();
                 MyAdapter.Fill(DTArray);
                 dataGridView1.DataSource = DTArray;
@@ -34,43 +32,43 @@ namespace Tugas_Akhir
             }
         }
 
-        private void sizeForEachDatasetToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SizeForEachDatasetToolStripMenuItem_Click(object sender, EventArgs e)
         {
             textBox1.Text = "select dataset, dimension, size from data_feature group by dataset, size";
         }
 
-        private void learnPca(object sender, EventArgs e)
+        private void LearnPca(object sender, EventArgs e)
         {
-            double[][] dataLearning = new double[trainData.Length][];
-            for(int i=0; i<trainData.Length; i++)
+            var dataLearning = new double[_trainData.Length][];
+            for(var i=0; i<_trainData.Length; i++)
             {
-                dataLearning[i] = getHistogram(trainData[i].data.Split(' '));
+                dataLearning[i] = GetHistogram(_trainData[i].data.Split(' '));
             }
-            PCA = new PrincipalComponentAnalysis(PrincipalComponentMethod.Center);
-            PCA.Learn(dataLearning);
+            _PCA = new PrincipalComponentAnalysis(PrincipalComponentMethod.Center);
+            _PCA.Learn(dataLearning);
             MessageBox.Show("learning finish");
         }
-        public double[] getHistogram(string[] feature)
+        public double[] GetHistogram(string[] feature)
         {
-            double[] histogram = new double[256];
-            for(int i=0; i<256; i++)
+            var histogram = new double[256];
+            for(var i=0; i<256; i++)
             {
                 histogram[i] = 0;
             }
-            for(int i=0; i<feature.GetLength(0)-1; i++)
+            for(var i=0; i<feature.GetLength(0)-1; i++)
             {
                 histogram[int.Parse(feature[i])]++;
             }
             return histogram;
         }
 
-        private void learnSelectedDataToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LearnSelectedDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            trainData = new DRLDPDataModel[dataGridView1.Rows.Count-1];
+            _trainData = new DRLDPDataModel[dataGridView1.Rows.Count-1];
             System.Diagnostics.Debug.WriteLine(dataGridView1.Rows.Count);
-            for (int i = 0; i < dataGridView1.Rows.Count-1; i++)
+            for (var i = 0; i < dataGridView1.Rows.Count-1; i++)
             {
-                trainData[i] = new DRLDPDataModel
+                _trainData[i] = new DRLDPDataModel
                 {
                     data = dataGridView1["data", i].Value.ToString(),
                     fileName = dataGridView1["fileName", i].Value.ToString(),
@@ -83,12 +81,12 @@ namespace Tugas_Akhir
             MessageBox.Show("finish");
         }
 
-        private void serializeToTestingObjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SerializeToTestingObjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            testData = new DRLDPDataModel[dataGridView1.RowCount];
-            for (int i = 0; i < dataGridView1.RowCount-1; i++)
+            _testData = new DRLDPDataModel[dataGridView1.RowCount];
+            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
             {
-                testData[i] = new DRLDPDataModel
+                _testData[i] = new DRLDPDataModel
                 {
                     data = dataGridView1["data", i].Value.ToString(),
                     fileName = dataGridView1["fileName", i].Value.ToString(),

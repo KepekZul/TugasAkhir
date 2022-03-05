@@ -77,7 +77,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Cari";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.deteksiWajah);
+            this.button2.Click += new System.EventHandler(this.DeteksiWajah);
             // 
             // button4
             // 
@@ -87,7 +87,7 @@
             this.button4.TabIndex = 4;
             this.button4.Text = "Crop";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.cropImage);
+            this.button4.Click += new System.EventHandler(this.CropImage);
             // 
             // button6
             // 
@@ -97,7 +97,7 @@
             this.button6.TabIndex = 6;
             this.button6.Text = "pilih duplikat";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.pilihFolderDuplikat);
+            this.button6.Click += new System.EventHandler(this.PilihFolderDuplikat);
             // 
             // richTextBox1
             // 
@@ -123,7 +123,7 @@
             this.button7.TabIndex = 9;
             this.button7.Text = "delete";
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.hapusFile);
+            this.button7.Click += new System.EventHandler(this.HapusFile);
             // 
             // MinBox
             // 
@@ -165,21 +165,21 @@
             this.bitmapToolStripMenuItem.Name = "bitmapToolStripMenuItem";
             this.bitmapToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.bitmapToolStripMenuItem.Text = "Bitmap";
-            this.bitmapToolStripMenuItem.Click += new System.EventHandler(this.pilihGambar);
+            this.bitmapToolStripMenuItem.Click += new System.EventHandler(this.PilihGambar);
             // 
             // pPMToolStripMenuItem
             // 
             this.pPMToolStripMenuItem.Name = "pPMToolStripMenuItem";
             this.pPMToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.pPMToolStripMenuItem.Text = "PPM";
-            this.pPMToolStripMenuItem.Click += new System.EventHandler(this.pilihGambarPPM);
+            this.pPMToolStripMenuItem.Click += new System.EventHandler(this.PilihGambarPPM);
             // 
             // pGMToolStripMenuItem
             // 
             this.pGMToolStripMenuItem.Name = "pGMToolStripMenuItem";
             this.pGMToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.pGMToolStripMenuItem.Text = "PGM";
-            this.pGMToolStripMenuItem.Click += new System.EventHandler(this.pilihGambarPGM);
+            this.pGMToolStripMenuItem.Click += new System.EventHandler(this.PilihGambarPGM);
             // 
             // lainlainToolStripMenuItem
             // 
@@ -195,14 +195,14 @@
             this.pakaiHisteqToolStripMenuItem.Name = "pakaiHisteqToolStripMenuItem";
             this.pakaiHisteqToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.pakaiHisteqToolStripMenuItem.Text = "Histogram Equalization";
-            this.pakaiHisteqToolStripMenuItem.Click += new System.EventHandler(this.applyHisteq);
+            this.pakaiHisteqToolStripMenuItem.Click += new System.EventHandler(this.ApplyHisteq);
             // 
             // gaborFilterToolStripMenuItem
             // 
             this.gaborFilterToolStripMenuItem.Name = "gaborFilterToolStripMenuItem";
             this.gaborFilterToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.gaborFilterToolStripMenuItem.Text = "Gabor Filter";
-            this.gaborFilterToolStripMenuItem.Click += new System.EventHandler(this.gaborFilter);
+            this.gaborFilterToolStripMenuItem.Click += new System.EventHandler(this.GaborFilter);
             // 
             // screenShot
             // 
@@ -212,7 +212,7 @@
             this.screenShot.TabIndex = 14;
             this.screenShot.Text = "Save";
             this.screenShot.UseVisualStyleBackColor = true;
-            this.screenShot.Click += new System.EventHandler(this.saveImage);
+            this.screenShot.Click += new System.EventHandler(this.SaveImage);
             // 
             // button1
             // 

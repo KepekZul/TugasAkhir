@@ -29,7 +29,7 @@ namespace Tugas_Akhir
 
         private void Get_data_Click(object sender, EventArgs e)
         {
-            retrive_data Rd = new retrive_data();
+            RetrieveDataForm Rd = new RetrieveDataForm();
             Rd.Show();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace Tugas_Akhir
 {
-    partial class daftarData
+    partial class ListOfData
     {
         /// <summary>
         /// Required designer variable.

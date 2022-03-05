@@ -1,22 +1,20 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Configuration;
+using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace Tugas_Akhir
 {
     public partial class Panel_Demo : Form
     {
-        DataTable dt;
-        List<byte[,]> TrainModelData;
-        List<string> TrainModelLabel;
-        DRLocalDirectionalPattern drldp;
+        private DataTable _dt;
+        private List<byte[,]> _trainModelData;
+        private List<string> _trainModelLabel;
+        private DRLocalDirectionalPattern _drldp;
+
         public Panel_Demo()
         {
             InitializeComponent();
@@ -24,7 +22,7 @@ namespace Tugas_Akhir
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog opf = new OpenFileDialog();
+            var opf = new OpenFileDialog();
             opf.ShowDialog();
             pictureBox1.Image = new Bitmap(opf.FileName);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -32,12 +30,12 @@ namespace Tugas_Akhir
 
         private void button3_Click(object sender, EventArgs e)
         {
-            drldp = new DRLocalDirectionalPattern((Bitmap) pictureBox1.Image);
-            byte[,] dr = drldp.GetDRLDPMatrix();
-            Bitmap drImage = new Bitmap(dr.GetLength(0), dr.GetLength(1));
-            for(int i=0; i<dr.GetLength(0); i++)
+            _drldp = new DRLocalDirectionalPattern((Bitmap) pictureBox1.Image);
+            byte[,] dr = _drldp.GetDRLDPMatrix();
+            var drImage = new Bitmap(dr.GetLength(0), dr.GetLength(1));
+            for (var i = 0; i < dr.GetLength(0); i++)
             {
-                for(int j=0; j<dr.GetLength(1); j++)
+                for(var j=0; j<dr.GetLength(1); j++)
                 {
                     drImage.SetPixel(i, j, Color.FromArgb(dr[i, j], dr[i, j], dr[i, j]));
                 }
@@ -45,12 +43,12 @@ namespace Tugas_Akhir
             pictureBox3.Image = drImage;
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
 
-            Bitmap ldpImage = new Bitmap(drldp.LdpResult.GetLength(0), drldp.LdpResult.GetLength(1));
-            for (int i = 0; i < drldp.LdpResult.GetLength(0); i++)
+            var ldpImage = new Bitmap(_drldp.LdpResult.GetLength(0), _drldp.LdpResult.GetLength(1));
+            for (var i = 0; i < _drldp.LdpResult.GetLength(0); i++)
             {
-                for (int j = 0; j < drldp.LdpResult.GetLength(1); j++)
+                for (var j = 0; j < _drldp.LdpResult.GetLength(1); j++)
                 {
-                    ldpImage.SetPixel(i, j, Color.FromArgb(drldp.LdpResult[i, j], drldp.LdpResult[i, j], drldp.LdpResult[i, j]));
+                    ldpImage.SetPixel(i, j, Color.FromArgb(_drldp.LdpResult[i, j], _drldp.LdpResult[i, j], _drldp.LdpResult[i, j]));
                 }
             }
             pictureBox2.Image = ldpImage;
@@ -59,33 +57,33 @@ namespace Tugas_Akhir
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string ConnectionString = ConfigurationManager.AppSettings["DataBaseConnectionString"];
+            var ConnectionString = ConfigurationManager.AppSettings["DataBaseConnectionString"];
             MySqlConnection MyConnect = new MySqlConnection(ConnectionString);
             MySqlCommand sqliCom = new MySqlCommand(textBox1.Text, MyConnect);
-            dt = new DataTable();
-            MySqlDataAdapter adap = new MySqlDataAdapter(sqliCom);
-            adap.Fill(dt);
-            dataGridView1.DataSource = dt;
+            _dt = new DataTable();
+            var adap = new MySqlDataAdapter(sqliCom);
+            adap.Fill(_dt);
+            dataGridView1.DataSource = _dt;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            TrainModelData = new List<byte[,]>();
-            TrainModelLabel = new List<string>();
-            foreach (DataRow row in dt.Rows)
+            _trainModelData = new List<byte[,]>();
+            _trainModelLabel = new List<string>();
+            foreach (DataRow row in _dt.Rows)
             {
-                DRLDPDataModel dataModel = new DRLDPDataModel
+                var dataModel = new DRLDPDataModel
                 {
                     data = row["data"].ToString(),
                     dimension = Int32.Parse(row["dimension"].ToString()),
                     label = row["label"].ToString()
                 };
                 dataModel.parseStringToMat(true);
-                TrainModelData.Add(dataModel.matrix);
-                TrainModelLabel.Add(dataModel.label);
+                _trainModelData.Add(dataModel.matrix);
+                _trainModelLabel.Add(dataModel.label);
             }
-            DRLDPDataModel ujix = new DRLDPDataModel { matrix = drldp.DrLdpMatrix, dimension = drldp.DrLdpMatrix.GetLength(0) };
-            KNearest knn = new KNearest(ujix.matrix, TrainModelData, TrainModelLabel, int.Parse(this.textBox2.Text), int.Parse(this.textBox3.Text));
+            var ujix = new DRLDPDataModel { matrix = _drldp.DrLdpMatrix, dimension = _drldp.DrLdpMatrix.GetLength(0) };
+            var knn = new KNearest(ujix.matrix, _trainModelData, _trainModelLabel, int.Parse(textBox2.Text), int.Parse(this.textBox3.Text));
             label5.Text = "Label:"+knn.GetClass();
         }
     }

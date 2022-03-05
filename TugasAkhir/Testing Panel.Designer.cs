@@ -72,7 +72,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "Select";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.dataUjiClick);
+            this.button1.Click += new System.EventHandler(this.DataUjiClick);
             // 
             // dataGridView1
             // 
@@ -115,7 +115,7 @@
             this.button2.TabIndex = 8;
             this.button2.Text = "Select";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.dataTrain);
+            this.button2.Click += new System.EventHandler(this.DataTrain);
             // 
             // button3
             // 
@@ -137,9 +137,9 @@
             // backgroundWorker1
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.progressBarWork);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.updateBarWork);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.finishBarWork);
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ProgressBarWork);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.UpdateBarWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.FinishBarWork);
             // 
             // KConstantaBox
             // 
@@ -206,13 +206,13 @@
         private void TextBox2_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (e.KeyCode == System.Windows.Forms.Keys.Enter)
-                dataTrain(sender, e);
+                DataTrain(sender, e);
         }
 
         private void TextBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             if (e.KeyCode == System.Windows.Forms.Keys.Enter)
-                dataUjiClick(sender, e);
+                DataUjiClick(sender, e);
         }
 
         #endregion

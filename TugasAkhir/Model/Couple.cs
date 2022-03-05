@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tugas_Akhir.Selfmade_DataStructure
+namespace Tugas_Akhir.Model
 {
     class Couple
     {
