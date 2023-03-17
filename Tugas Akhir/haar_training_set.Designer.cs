@@ -19,7 +19,7 @@ namespace Tugas_Akhir {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class haar_training_set {
@@ -75,7 +75,7 @@ namespace Tugas_Akhir {
         ///  copy or use the software.
         ///
         ///
-        ///                        Intel License Agr [rest of string was truncated]&quot;;.
+        ///                        Int [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string haarcascade_eye {
             get {
@@ -95,10 +95,7 @@ namespace Tugas_Akhir {
         ///
         ///  By downloading, copying, installing or using the software you agree to this license.
         ///  If you do not agree to this license, do not download, install,
-        ///  copy or use the software.
-        ///
-        ///
-        ///        [rest of string was truncated]&quot;;.
+        ///  copy or use the software [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string haarcascade_eye_tree_eyeglasses {
             get {
@@ -121,8 +118,7 @@ namespace Tugas_Akhir {
         ///  copy or use the software.
         ///
         ///
-        ///                        Intel License Agreement
-        ///   [rest of string was truncated]&quot;;.
+        ///                        Intel Licens [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string haarcascade_frontalface_alt {
             get {
@@ -142,8 +138,7 @@ namespace Tugas_Akhir {
         ///  IMPORTANT: READ BEFORE DOWNLOADING, COPYING, INSTALLING OR USING.
         ///
         ///  By downloading, copying, installing or using the software you agree to this license.
-        ///  If you do not agree to this license, do not download, install,
-        ///  copy or  [rest of string was truncated]&quot;;.
+        ///  If you do not agree to this license, do not download, install, [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string haarcascade_frontalface_alt_tree {
             get {
@@ -166,8 +161,7 @@ namespace Tugas_Akhir {
         ///  copy or use the software.
         ///
         ///
-        ///                        Intel License Agreement
-        ///    [rest of string was truncated]&quot;;.
+        ///                        Intel License [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string haarcascade_frontalface_alt2 {
             get {
@@ -190,7 +184,7 @@ namespace Tugas_Akhir {
         ///  copy or use the software.
         ///
         ///
-        ///                        Intel License Agreeme [rest of string was truncated]&quot;;.
+        ///                        Intel L [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string haarcascade_frontalface_default {
             get {
