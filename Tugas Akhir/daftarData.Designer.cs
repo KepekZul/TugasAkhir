@@ -1,6 +1,6 @@
 ﻿namespace Tugas_Akhir
 {
-    partial class daftarData
+    partial class FileList
     {
         /// <summary>
         /// Required designer variable.
@@ -47,7 +47,7 @@
             this.Controls.Add(this.richTextBox1);
             this.Name = "daftarData";
             this.Text = "daftarData";
-            this.Load += new System.EventHandler(this.daftarData_Load);
+            this.Load += new System.EventHandler(this.loadList);
             this.ResumeLayout(false);
 
         }

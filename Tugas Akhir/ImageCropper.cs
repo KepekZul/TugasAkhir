@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -6,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Tugas_Akhir
 {
-    class ThreadToCrop
+    class ImageCropper
     {
-        string[] CropTargets;
+        ConcurrentQueue<string> CropTargets;
         string Foldertarget;
         int MinSize;
         int MaxSize;
         bool UseHisTeq;
-        public ThreadToCrop(String[] list, int min, int max, bool usehisteq, string targetfolder)
+        public ImageCropper(ConcurrentQueue<string> list, int min, int max, bool usehisteq, string targetfolder)
         {
             this.CropTargets = list;
             this.MinSize = min;
@@ -21,10 +22,11 @@ namespace Tugas_Akhir
             this.UseHisTeq = usehisteq;
             this.Foldertarget = targetfolder;
         }
-        public void CropStart()
+        public void Crop()
         {
-            foreach(string filepath in CropTargets)
+            while(!CropTargets.IsEmpty)
             {
+                CropTargets.TryDequeue(out var filepath);
                 if (filepath == "")
                     continue;
                 ImageCrop imageCroper;
@@ -41,7 +43,7 @@ namespace Tugas_Akhir
                 {
                     imageCroper = new ImageCrop(new Bitmap(filepath), this.MinSize, this.MaxSize, this.UseHisTeq);
                 }
-                Bitmap[] cropResult = imageCroper.getImages();
+                Bitmap[] cropResult = imageCroper.GetImages();
                 int j = 1;
                 if (cropResult.Length == 0)
                 {

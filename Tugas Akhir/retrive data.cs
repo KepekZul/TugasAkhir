@@ -73,11 +73,11 @@ namespace Tugas_Akhir
                 trainData[i] = new DRLDPDataModel
                 {
                     data = dataGridView1["data", i].Value.ToString(),
-                    fileName = dataGridView1["fileName", i].Value.ToString(),
-                    dimension = int.Parse(dataGridView1["dimension", i].Value.ToString()),
-                    label = dataGridView1["label", i].Value.ToString(),
-                    dataset = dataGridView1["dataset", i].Value.ToString(),
-                    size = dataGridView1["size", i].Value.ToString()
+                    FileName = dataGridView1["fileName", i].Value.ToString(),
+                    Dimension = int.Parse(dataGridView1["dimension", i].Value.ToString()),
+                    Label = dataGridView1["label", i].Value.ToString(),
+                    Dataset = dataGridView1["dataset", i].Value.ToString(),
+                    Size = dataGridView1["size", i].Value.ToString()
                 };
             }
             MessageBox.Show("finish");
@@ -91,11 +91,11 @@ namespace Tugas_Akhir
                 testData[i] = new DRLDPDataModel
                 {
                     data = dataGridView1["data", i].Value.ToString(),
-                    fileName = dataGridView1["fileName", i].Value.ToString(),
-                    dimension = int.Parse(dataGridView1["dimension", i].Value.ToString()),
-                    label = dataGridView1["label", i].Value.ToString(),
-                    dataset = dataGridView1["dataset", i].Value.ToString(),
-                    size = dataGridView1["size", i].Value.ToString()
+                    FileName = dataGridView1["fileName", i].Value.ToString(),
+                    Dimension = int.Parse(dataGridView1["dimension", i].Value.ToString()),
+                    Label = dataGridView1["label", i].Value.ToString(),
+                    Dataset = dataGridView1["dataset", i].Value.ToString(),
+                    Size = dataGridView1["size", i].Value.ToString()
                 };
             }
             MessageBox.Show("finish");

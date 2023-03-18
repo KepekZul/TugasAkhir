@@ -1,18 +1,19 @@
-﻿using System.IO;
+﻿using System.Collections.Concurrent;
+using System.IO;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
 namespace Tugas_Akhir
 {
-    class ThreadToResize
+    class ImageResizer
     {
-        string[] listFile;
+        ConcurrentQueue<string> listFile;
         string destinationDirectory;
         int minSize;
         int maxSize;
-        public ThreadToResize(string[] fileName, int minSize, int maxSize, string destinationDirectory)
+        public ImageResizer(ConcurrentQueue<string> fileName, int minSize, int maxSize, string destinationDirectory)
         {
-            this.listFile = fileName;
+            listFile = fileName;
             this.minSize = minSize;
             this.maxSize = maxSize;
             this.destinationDirectory = destinationDirectory;

@@ -1,6 +1,6 @@
 ﻿namespace Tugas_Akhir
 {
-    partial class deleteGambar
+    partial class DeleteImage
     {
         /// <summary>
         /// Required designer variable.

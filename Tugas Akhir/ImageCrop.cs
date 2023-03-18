@@ -8,49 +8,49 @@ namespace Tugas_Akhir
 {
     class ImageCrop
     {
-        Bitmap Gambar;
-        int Min;
-        int Max;
-        bool UseHistogramEqualiztion;
-        Rectangle[] CropRectangle;
+        Bitmap image;
+        int minimumSize;
+        int maximumSize;
+        bool isUsingHistogramEqualization;
+        Rectangle[] cropRectangle;
         CascadeClassifier haarCascade = new CascadeClassifier(System.Configuration.ConfigurationManager.AppSettings["1"]);
-        public ImageCrop(Bitmap gambarAsal, Rectangle[] areaCrop)
+        public ImageCrop(Bitmap initialImage, Rectangle[] cropArea)
         {
-            this.Gambar = gambarAsal;
-            this.CropRectangle = areaCrop;
+            image = initialImage;
+            cropRectangle = cropArea;
         }
-        public ImageCrop(Bitmap gambarAsal, int min, int max, bool useHisteq)
+        public ImageCrop(Bitmap initialImage, int min, int max, bool useHisteq)
         {
-            this.Gambar = gambarAsal;
-            this.Min = min;
-            this.Max = max;
-            this.UseHistogramEqualiztion = useHisteq;
+            image = initialImage;
+            minimumSize = min;
+            maximumSize = max;
+            isUsingHistogramEqualization = useHisteq;
             getFace();
         }
-        public Bitmap[] getImages()
+        public Bitmap[] GetImages()
         {
-            Bitmap[] hasil = new Bitmap[this.CropRectangle.Length];
-            for (int i=0; i<this.CropRectangle.Length; i++)
+            Bitmap[] result = new Bitmap[this.cropRectangle.Length];
+            for (int i=0; i<this.cropRectangle.Length; i++)
             {
-                hasil[i] = new Bitmap(this.CropRectangle[i].Width, this.CropRectangle[i].Height);
-                for (int x=0; x<this.CropRectangle[i].Width; x++)
+                result[i] = new Bitmap(this.cropRectangle[i].Width, this.cropRectangle[i].Height);
+                for (int x=0; x<this.cropRectangle[i].Width; x++)
                 {
-                    for(int y=0; y<this.CropRectangle[i].Height; y++)
+                    for(int y=0; y<this.cropRectangle[i].Height; y++)
                     {
-                        hasil[i].SetPixel(x, y, this.Gambar.GetPixel(this.CropRectangle[i].X + x, this.CropRectangle[i].Y + y));
+                        result[i].SetPixel(x, y, this.image.GetPixel(this.cropRectangle[i].X + x, this.cropRectangle[i].Y + y));
                     }
                 }
             }
-            return hasil;
+            return result;
         }
         private void getFace()
         {
-            Image<Gray, byte> grayImage = new Image<Gray, byte>(this.Gambar);
-            if (this.UseHistogramEqualiztion == true)
+            Image<Gray, byte> grayImage = new Image<Gray, byte>(this.image);
+            if (this.isUsingHistogramEqualization == true)
             {
                 grayImage._EqualizeHist();
             }
-            this.CropRectangle = haarCascade.DetectMultiScale(grayImage, 1.01, 4, new Size(this.Min, this.Min), new Size(this.Max, this.Max));
+            cropRectangle = haarCascade.DetectMultiScale(grayImage, 1.01, 4, new Size(this.minimumSize, this.minimumSize), new Size(this.maximumSize, this.maximumSize));
         }
     }
 }

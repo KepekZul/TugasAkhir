@@ -11,7 +11,7 @@ namespace Tugas_Akhir
         public int[,] LdpResult;//ldp coded image matrix
         public byte[,] DrLdpMatrix;//reduced dimension of ldpResult
 
-        private void InitMask()//genereating the kirsch mask
+        private void InitMask()//generating the kirsch mask
         {
             _kirschMask = new int[8, 9] { {-3,-3, 5,-3, 0, 5,-3,-3, 5},//m0
                                               {-3, 5, 5,-3, 0, 5,-3,-3,-3},//m1
@@ -121,8 +121,7 @@ namespace Tugas_Akhir
                     {
                         for (int y = 0; y < 3; y++)
                         {
-                            if (drldp < LdpResult[i + x, j + y])
-                                drldp = LdpResult[i + x, j + y];
+                            drldp = Math.Max(drldp, LdpResult[i + x, j + y]);
                         }
                     }
                     DrLdpMatrix[i / 3, j / 3] = Convert.ToByte(drldp);

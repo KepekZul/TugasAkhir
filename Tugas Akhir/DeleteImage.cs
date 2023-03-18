@@ -5,13 +5,13 @@ using System.Windows.Forms;
 
 namespace Tugas_Akhir
 {
-    public partial class deleteGambar : Form
+    public partial class DeleteImage : Form
     {
         string pathGambar1;
         string pathGambar2;
         public string yangDihapus;
         public string answer = "";
-        public deleteGambar(string path1, string path2)
+        public DeleteImage(string path1, string path2)
         {
             InitializeComponent();
             this.pathGambar1 = path1;

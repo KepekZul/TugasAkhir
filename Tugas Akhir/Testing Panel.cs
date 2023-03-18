@@ -84,12 +84,12 @@ namespace Tugas_Akhir
                 DRLDPDataModel dataModel = new DRLDPDataModel
                 {
                     data = row["data"].ToString(),
-                    dimension = Int32.Parse(row["dimension"].ToString()),
-                    label = row["label"].ToString()
+                    Dimension = Int32.Parse(row["dimension"].ToString()),
+                    Label = row["label"].ToString()
                 };
                 dataModel.parseStringToMat(true);
-                TrainModelData.Add(dataModel.matrix);
-                TrainModelLabel.Add(dataModel.label);
+                TrainModelData.Add(dataModel.Matrix);
+                TrainModelLabel.Add(dataModel.Label);
             }
 
             TestModel = new List<DRLDPDataModel>();//serialize data to object
@@ -98,11 +98,11 @@ namespace Tugas_Akhir
                 DRLDPDataModel dataModel = new DRLDPDataModel
                 {
                     data = row["data"].ToString(),
-                    dataset = row["dataset"].ToString(),
-                    dimension = Int32.Parse(row["dimension"].ToString()),
-                    size = row["size"].ToString(),
-                    fileName = row["fileName"].ToString(),
-                    label = row["label"].ToString()
+                    Dataset = row["dataset"].ToString(),
+                    Dimension = Int32.Parse(row["dimension"].ToString()),
+                    Size = row["size"].ToString(),
+                    FileName = row["fileName"].ToString(),
+                    Label = row["label"].ToString()
                 };
                 dataModel.parseStringToMat(true);
                 TestModel.Add(dataModel);
@@ -119,7 +119,7 @@ namespace Tugas_Akhir
             {
                 foreach (DRLDPDataModel subject in TestModel)
                 {
-                    KNearest knnObj = new KNearest(subject.matrix, this.TrainModelData, this.TrainModelLabel, Int32.Parse(this.KConstantaBox.Text), Int32.Parse(this.numberFragment.Text));
+                    KNearest knnObj = new KNearest(subject.Matrix, this.TrainModelData, this.TrainModelLabel, Int32.Parse(this.KConstantaBox.Text), Int32.Parse(this.numberFragment.Text));
                     ClassificationResult.Add(knnObj.getClass());
                     initial++;
                 }
@@ -127,8 +127,8 @@ namespace Tugas_Akhir
                 Result="";
                 for(int i=0; i< TestModel.Count; i++)
                 {
-                    Result += TestModel[i].fileName + "\t" + TestModel[i].label + "\t terklasifikasi sebagai:\t" + ClassificationResult[i];
-                    if (TestModel[i].label == ClassificationResult[i])
+                    Result += TestModel[i].FileName + "\t" + TestModel[i].Label + "\t terklasifikasi sebagai:\t" + ClassificationResult[i];
+                    if (TestModel[i].Label == ClassificationResult[i])
                     {
                         Result += "\t 1 \n";
                     }

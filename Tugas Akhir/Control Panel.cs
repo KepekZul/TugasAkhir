@@ -23,7 +23,7 @@ namespace Tugas_Akhir
 
         private void Testing_form_Click(object sender, EventArgs e)
         {
-            ujiCobaGambar UjG = new ujiCobaGambar();
+            ImageTesting UjG = new ImageTesting();
             UjG.Show();
         }
 

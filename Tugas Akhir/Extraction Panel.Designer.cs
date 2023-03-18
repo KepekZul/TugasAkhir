@@ -71,7 +71,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(490, 20);
             this.textBox2.TabIndex = 2;
-            this.textBox2.DoubleClick += new System.EventHandler(this.destinationFolder);
+            this.textBox2.DoubleClick += new System.EventHandler(this.DestinationFolder);
             // 
             // label1
             // 
@@ -132,7 +132,7 @@
             this.targetDirectoryToolStripMenuItem.Name = "targetDirectoryToolStripMenuItem";
             this.targetDirectoryToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.targetDirectoryToolStripMenuItem.Text = "Target Directory";
-            this.targetDirectoryToolStripMenuItem.Click += new System.EventHandler(this.destinationFolder);
+            this.targetDirectoryToolStripMenuItem.Click += new System.EventHandler(this.DestinationFolder);
             // 
             // MinSizeBox
             // 
@@ -226,7 +226,7 @@
             this.resizeButton.TabIndex = 19;
             this.resizeButton.Text = "Resize";
             this.resizeButton.UseVisualStyleBackColor = true;
-            this.resizeButton.Click += new System.EventHandler(this.resize);
+            this.resizeButton.Click += new System.EventHandler(this.resizeSelectedFiles);
             // 
             // ExtractImage
             // 
@@ -271,7 +271,7 @@
             this.button3.TabIndex = 23;
             this.button3.Text = "Resize X";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.resizeSelectedFiles);
             // 
             // reduceDimension
             // 

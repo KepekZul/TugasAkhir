@@ -76,16 +76,14 @@ namespace Tugas_Akhir
             {
                 DRLDPDataModel dataModel = new DRLDPDataModel
                 {
-                    data = row["data"].ToString(),
-                    dimension = Int32.Parse(row["dimension"].ToString()),
-                    label = row["label"].ToString()
+                    Dimension = Int32.Parse(row["dimension"].ToString()),
+                    Label = row["label"].ToString()
                 };
-                dataModel.parseStringToMat(true);
-                TrainModelData.Add(dataModel.matrix);
-                TrainModelLabel.Add(dataModel.label);
+                TrainModelData.Add(dataModel.Matrix);
+                TrainModelLabel.Add(dataModel.Label);
             }
-            DRLDPDataModel ujix = new DRLDPDataModel { matrix = drldp.DrLdpMatrix, dimension = drldp.DrLdpMatrix.GetLength(0) };
-            KNearest knn = new KNearest(ujix.matrix, TrainModelData, TrainModelLabel, int.Parse(this.textBox2.Text), int.Parse(this.textBox3.Text));
+            DRLDPDataModel ujix = new DRLDPDataModel { Matrix = drldp.DrLdpMatrix, Dimension = drldp.DrLdpMatrix.GetLength(0) };
+            KNearest knn = new KNearest(ujix.Matrix, TrainModelData, TrainModelLabel, int.Parse(this.textBox2.Text), int.Parse(this.textBox3.Text));
             label5.Text = "Label:"+knn.getClass();
         }
     }

@@ -19,8 +19,6 @@ namespace Tugas_Akhir
         string pathSource;
         string pathTarget;
         string[] allSourceFiles;
-        int minSize;
-        int maxSize;
         public Extraction_Panel()
         {
             InitializeComponent();
@@ -44,8 +42,10 @@ namespace Tugas_Akhir
             {
                 this.pathSource = folderDialog.SelectedPath;
                 textBox1.Text = this.pathSource;
-                allSourceFiles = Directory.GetFiles(this.pathSource, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
-                    .Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")|| !s.EndsWith("*.ini")).ToArray();
+                allSourceFiles = Directory
+                    .GetFiles(this.pathSource, (comboBox1.SelectedItem as ComboboxItem).Value.ToString(), SearchOption.AllDirectories)
+                    .Where(s => !s.EndsWith(".info") || !s.EndsWith(".txt")|| !s.EndsWith("*.ini"))
+                    .ToArray();
                 if (FilenameFilterBox.Text != "")
                 {
                     string[] keepFile = FilenameFilterBox.Text.Split(' ');
@@ -64,14 +64,13 @@ namespace Tugas_Akhir
                         }
                     }
                 }
-                //keperluan debugging daftar file yang terambil
-                daftarData dd = new daftarData();
+                FileList dd = new FileList();
                 dd.datas = allSourceFiles;
                 dd.Show();
             }
         }
 
-        public void destinationFolder(object sender, EventArgs e)
+        public void DestinationFolder(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             folderDialog.ShowDialog();
@@ -79,79 +78,53 @@ namespace Tugas_Akhir
             textBox2.Text = this.pathTarget;
         }
 
+        private int getThreadCountFromSettings()
+        {
+            return int.Parse(System.Configuration.ConfigurationManager.AppSettings["maxThread"]);
+        }
+
         private void cropSelectedFiles(object sender, EventArgs e)
         {
-            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
-            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            System.Diagnostics.Debug.WriteLine(this.checkBox1.Checked.ToString());//debugging
-            ThreadToCrop[] cropThread = new ThreadToCrop[2];
-            string[] partisiAwal = new string[allSourceFiles.Length/2];
-            for(int i=0; i<allSourceFiles.Length/2; i++)
+            var threadCount = getThreadCountFromSettings();
+            var minSize = Convert.ToInt32(this.MinSizeBox.Text);
+            var maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
+            var processQueue = new ConcurrentQueue<string>(allSourceFiles);
+            
+            Parallel.For(0, threadCount, index =>
             {
-                partisiAwal[i] = allSourceFiles[i];
-            }
-            string[] partisiAkhir = new string[allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
-            for(int i =0; i< allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0); i++)
-            {
-                partisiAkhir[i] = allSourceFiles[i+ allSourceFiles.Length / 2];
-            }
-            cropThread[0] = new ThreadToCrop(partisiAwal, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
-            cropThread[1] = new ThreadToCrop(partisiAkhir, this.minSize, this.maxSize, this.checkBox1.Checked, this.pathTarget);
-            Thread[] cropingThread = new Thread[2];
-            cropingThread[0] = new Thread(new ThreadStart(cropThread[0].CropStart));
-            cropingThread[1] = new Thread(new ThreadStart(cropThread[1].CropStart));
-            cropingThread[0].Start();
-            cropingThread[1].Start();
+                var worker = new Thread(new ThreadStart(new ImageCropper(processQueue, minSize, maxSize, this.checkBox1.Checked, this.pathTarget).Crop));
+                worker.Start();
+            });
         }
-        private void resize(object sender, EventArgs e)
+        private void resizeSelectedFiles(object sender, EventArgs e)
         {
-            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
-            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            ThreadToResize[] resizeThread = new ThreadToResize[2];
-            string[] partisiAwal = new string[allSourceFiles.Length/2];
-            string[] partisiAkhir = new string[allSourceFiles.Length/2 + ((allSourceFiles.Length%2==1)?1:0)];
-            for(int i=0; i<this.allSourceFiles.Length/2; i++)
+            var threadCount = getThreadCountFromSettings();
+            var minSize = Convert.ToInt32(this.MinSizeBox.Text);
+            var maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
+            var processQueue = new ConcurrentQueue<string>(allSourceFiles);
+
+            Parallel.For(0, threadCount, index =>
             {
-                partisiAwal[i] = allSourceFiles[i];
-            }
-            for (int i = 0; i < allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0); i++)
-            {
-                partisiAkhir[i] = allSourceFiles[i + allSourceFiles.Length / 2];
-            }
-            resizeThread[0] = new ThreadToResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
-            resizeThread[1] = new ThreadToResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
-            Thread[] runningThread = new Thread[2];
-            runningThread[0] = new Thread(new ThreadStart(resizeThread[0].Resize));
-            runningThread[1] = new Thread(new ThreadStart(resizeThread[1].Resize));
-            runningThread[0].Start();
-            runningThread[1].Start();
+                var worker = new Thread(new ThreadStart( new ImageResizer(processQueue, minSize, maxSize, this.pathTarget).Resize));
+                worker.Start();
+            });
         }
 
         private void ExtractImage_Click(object sender, EventArgs e)
         {
             this.reduceDimension.Enabled = false;
-            int jumlah = 24;
-            ConcurrentQueue<string> filePipe = new ConcurrentQueue<string>();
+            int threadCount = getThreadCountFromSettings();
+            ConcurrentQueue<string> filePipe = new ConcurrentQueue<string>(allSourceFiles);
             ConcurrentQueue<DRLDPDataModel> fileResult = new ConcurrentQueue<DRLDPDataModel>();
-            for(int i=0; i<allSourceFiles.GetLength(0); i++)
-            {
-                filePipe.Enqueue(allSourceFiles[i]);
-            }
             this.fileList = fileResult;
-            Task[] runThread = new Task[jumlah];
-            ThreadToExtract[] drldp = new ThreadToExtract[jumlah];
             RunTime = new System.Diagnostics.Stopwatch();
             RunTime.Start();
             backgroundWorker1.RunWorkerAsync();
-            for(int i=0; i<jumlah; i++)
+            Parallel.For(0, threadCount, index =>
             {
-                drldp[i] = new ThreadToExtract(filePipe, fileResult, this.reduceDimension.Checked);
-                runThread[i] = new Task(drldp[i].startRun);
-            }
-            for(int i=0; i<jumlah; i++)
-            {
-                runThread[i].Start();
-            }
+                var worker = new Task(new LocalDirectionalPatternExtractor(filePipe, fileResult, this.reduceDimension.Checked).Start);
+                worker.Start();
+            });
             this.reduceDimension.Enabled = false;
         }
 
@@ -160,7 +133,7 @@ namespace Tugas_Akhir
         {
             while (true)
             {
-                int progress = (int)((double)fileList.Count / (double)allSourceFiles.Length * 100);
+                int progress = (int)(fileList.Count / (double)allSourceFiles.Length * 100);
                 backgroundWorker1.ReportProgress(progress);
                 Thread.Sleep(1000);
                 if (progress == 100)
@@ -195,12 +168,11 @@ namespace Tugas_Akhir
                     {
                         DRLDPDataModel data; fileList.TryDequeue(out data);
                         MyCommandString.Append(string.Join(",", string.Format("('{0}','{1}','{2}','{3}','{4}','{5}')",
-                                                                             MySqlHelper.EscapeString(data.label),
-                                                                             MySqlHelper.EscapeString(data.dimension.ToString()),
-                                                                             MySqlHelper.EscapeString(data.fileName),
-                                                                             MySqlHelper.EscapeString(data.data),
-                                                                             MySqlHelper.EscapeString(data.size),
-                                                                             MySqlHelper.EscapeString(data.dataset))
+                                                                             MySqlHelper.EscapeString(data.Label),
+                                                                             MySqlHelper.EscapeString(data.Dimension.ToString()),
+                                                                             MySqlHelper.EscapeString(data.FileName),
+                                                                             MySqlHelper.EscapeString(data.Size),
+                                                                             MySqlHelper.EscapeString(data.Dataset))
                                                                              ));
                         counter++;
                         if (!this.fileList.IsEmpty && counter != 800)
@@ -230,44 +202,6 @@ namespace Tugas_Akhir
                     }
                     System.Diagnostics.Debug.WriteLine("pushed to database last");
                 }
-                #region //obsolete code
-                //insert ke dalam database menggunakan dataset dan mysqldataadapter running pada dataset extended yale b gagal karena db server timeout
-                //string ConString = "Server=localhost;Database=face_feature;Uid=root;Pwd=;";
-                //string ComString = "INSERT INTO data_feature(label, dimension, fileName, data, size) VALUES(@label, @dimension, @fileName, @data, @size)";
-                //using (var MySqliCon = new MySqlConnection(ConString))
-                //{
-                //    MySqliCon.Open();
-                //    MySqlTransaction transaction = MySqliCon.BeginTransaction();
-                //    var MySqliAdap = new MySqlDataAdapter("SELECT label, dimension, fileName, data, size FROM data_feature", MySqliCon);
-                //    var dataSet = new DataSet();
-                //    MySqliAdap.Fill(dataSet, "data_feature");
-                //    MySqliAdap = new MySqlDataAdapter();
-                //    MySqliAdap.InsertCommand = new MySqlCommand(ComString, MySqliCon);
-                //    MySqliAdap.InsertCommand.Parameters.Add("@label", MySqlDbType.VarChar, 20, "label");
-                //    MySqliAdap.InsertCommand.Parameters.Add("@dimension", MySqlDbType.Int32, 11, "dimension");
-                //    MySqliAdap.InsertCommand.Parameters.Add("@fileName", MySqlDbType.VarChar, 20, "fileName");
-                //    MySqliAdap.InsertCommand.Parameters.Add("@data", MySqlDbType.Text, 20000000, "data");
-                //    MySqliAdap.InsertCommand.Parameters.Add("@size", MySqlDbType.VarChar, 10, "size");
-                //    MySqliAdap.InsertCommand.UpdatedRowSource = UpdateRowSource.None;
-
-                //    while(!fileResult.IsEmpty)
-                //    {
-                //        DRLDPDataModel data = new DRLDPDataModel();
-                //        fileResult.TryDequeue(out data);
-                //        DataRow row = dataSet.Tables["data_feature"].NewRow();
-                //        row["label"] = data.label;
-                //        row["dimension"] = data.dimension;
-                //        row["filename"] = data.fileName;
-                //        row["data"] = data.data;
-                //        row["size"] = data.size;
-                //        dataSet.Tables["data_feature"].Rows.Add(row);
-                //    }
-                //    MySqliAdap.Update(dataSet, "data_feature");
-
-                //    transaction.Commit();
-                //    MySqliCon.Close();
-                //}
-                #endregion //kodingan lama
                 RunTime.Stop();
                 var elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                 RunTime.Elapsed.Hours, RunTime.Elapsed.Minutes, RunTime.Elapsed.Seconds,
@@ -278,30 +212,6 @@ namespace Tugas_Akhir
             {
                 MessageBox.Show("Error");
             }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            this.minSize = Convert.ToInt32(this.MinSizeBox.Text);
-            this.maxSize = Convert.ToInt32(this.MaxSizeBox.Text);
-            ThreadToResize[] resizeThread = new ThreadToResize[2];
-            string[] partisiAwal = new string[allSourceFiles.Length / 2];
-            string[] partisiAkhir = new string[allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0)];
-            for (int i = 0; i < this.allSourceFiles.Length / 2; i++)
-            {
-                partisiAwal[i] = allSourceFiles[i];
-            }
-            for (int i = 0; i < allSourceFiles.Length / 2 + ((allSourceFiles.Length % 2 == 1) ? 1 : 0); i++)
-            {
-                partisiAkhir[i] = allSourceFiles[i + allSourceFiles.Length / 2];
-            }
-            resizeThread[0] = new ThreadToResize(partisiAwal, this.minSize, this.maxSize, this.pathTarget);
-            resizeThread[1] = new ThreadToResize(partisiAkhir, this.minSize, this.maxSize, this.pathTarget);
-            Thread[] runningThread = new Thread[2];
-            runningThread[0] = new Thread(new ThreadStart(resizeThread[0].Resize));
-            runningThread[1] = new Thread(new ThreadStart(resizeThread[1].Resize));
-            runningThread[0].Start();
-            runningThread[1].Start();
         }
     }
     //selfmade class for dropddown list item
